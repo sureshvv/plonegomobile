@@ -10,5 +10,10 @@ Usage
 
 This product will override views and templates with mobile compatible versions.
 
+Other
+-----
+
+This product is named after Eden of East anime series mysterious "Supporter" character.
+
 
 

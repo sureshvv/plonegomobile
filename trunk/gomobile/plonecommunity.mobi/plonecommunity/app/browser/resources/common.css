@@ -114,7 +114,8 @@ input[type=text],textarea, select {
 }
 
 
-.documentDescription {
+.documentDescription,
+.discreet {
 	color: #666;
 }
 
