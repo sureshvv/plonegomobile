@@ -7,7 +7,6 @@ body {
 	margin: 0;
 	padding: 0;
  	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;	
- 	font-size: 12px;
  	background: #329FD7;
 	color: white;
 }
@@ -222,6 +221,7 @@ dl.error dd {
 	color: white;
 	padding: 1em;
 	padding-top: 10px;
+	font-size: 80%;
 }
 
 .listingBar span {
