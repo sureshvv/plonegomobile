@@ -84,8 +84,9 @@ a:hover,
 }
 
 /* Make text area text more visible than normal grey */
-input[type=text],textarea, select {
+input[type=text],input[type=password],textarea, select {
 	color: black;
+	width: 80%;
 }
 
 /* TODO: Preview mode hack - make sure the actual viewlet is removed */
@@ -111,10 +112,11 @@ input[type=text],textarea, select {
 	margin-bottom: 1em;
 }
 
-
 .documentDescription,
-.discreet {
-	color: #666;
+.discreet,
+.documentByLine {
+	color: #999;
+	font-size: 85%;
 }
 
 /* Forms */
@@ -223,7 +225,8 @@ dl.error dd {
 	font-size: 80%;
 }
 
-.listingBar span {
+.listingBar {
+	margin-top: 1em;
 }
 
 #portal-footer a,
