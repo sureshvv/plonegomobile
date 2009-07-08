@@ -30,26 +30,25 @@ h1 {
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 1.2em;
 }
 
 h1, h2, h3, h4, h5, h6 {
     color: black;
 }
 
-h3, h4, h5, h6 {
-    font-size: 1.2em;
+h2, h3, h4, h5, h6 {
+    font-size: 1.1em;
 }
 
 h3 {
-    margin-top: 20px;
 }
 
 ul {
 }
 
 p {
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
 }
 
 /* Makes easier to hit link lists */
