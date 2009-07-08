@@ -1,0 +1,128 @@
+/**
+ * Styles used by all mobile browsers.
+ * 
+ */
+
+body {
+	margin: 0;
+	padding: 0;
+ 	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;	
+ 	font-size: 12px;
+ 	background: white;
+}
+
+img {
+	border: 0;
+}
+
+.hiddenStructure,
+#kss-spinner {
+	display: none;
+}
+
+h1 {
+    border-bottom: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.documentFirstHeading {
+    margin-top: 15px;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+}
+
+h3, h4, h5, h6 {
+    font-size: 1.2em;
+}
+
+h3 {
+    margin-top: 20px;
+}
+
+ul {
+}
+
+p {
+    margin-bottom: 1.5em;
+}
+
+/* Makes easier to hit link lists */
+li {
+  margin-bottom: 0.5em;
+}
+
+
+/* no link underlinings */
+a,
+a:active,
+a:visited,
+.documentContent li a,
+.documentContent li a:active,
+.documentContent li a:visited,
+.documentContent p a,
+.documentContent p a:visited,
+.documentContent p a:active {
+	border: 0;
+	text-decoration: none;
+	color: #205C90;
+}
+
+a:hover,
+.documentContent li a:hover,
+.documentContent p a:hover {
+  text-decoration: underline;
+}
+
+/* Content styles */
+.image-right, .image-left {
+  border: none;
+}
+
+/* Make text area text more visible than normal grey */
+input[type=text],textarea, select {
+	color: black;
+}
+
+/* TODO: Preview mode hack - make sure the actual viewlet is removed */
+#portal-siteactions { display: none; }
+
+#portal-columns {
+	padding: 1em;
+}
+
+#portal-header {
+	background: #329FD7;
+	color: white;
+	text-align: left;
+}
+
+#portal-breadcrumbs {
+	margin-bottom: 1em;
+}
+
+
+.documentDescription {
+	color: #666;
+}
+
+/* Footer */
+
+#portal-footer {
+	color: white;
+	padding: 1em;
+	padding-top: 10px;
+}
+
+#portal-globalnav { list-style: none; text-align:center; padding: 0; }
+#portal-globalnav li { display: inline; margin-bottom: 1.5px; }
+#portal-globalnav li a { padding: 0.5em; }
+
+#footer-links, #portal-breadcrumbs { text-align: center; }
+
+#copyright { text-align: center; }

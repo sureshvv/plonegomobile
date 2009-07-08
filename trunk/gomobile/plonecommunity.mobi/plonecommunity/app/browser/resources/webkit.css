@@ -1,0 +1,16 @@
+/**
+ * Styles for smartphone browsers (webkit based). 
+ * 
+ * Use images more extensively than lowend.css
+ */
+
+.documentContent ul {
+    list-style-image: url(++resource++plonecommunity.mobi/arrow-blue.png);
+}
+
+/* Footer */
+
+#portal-footer {
+	background: #329FD7 url(footer.gif) repeat-x top left;
+}
+
