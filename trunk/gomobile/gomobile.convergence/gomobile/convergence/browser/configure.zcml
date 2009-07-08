@@ -1,0 +1,49 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:five="http://namespaces.zope.org/five">
+
+  <include package=".portlets" />
+
+  <!-- Show web and mobile content in the sitemap -->
+
+  <browser:page
+      for="*"
+      name="sitemap_view"
+      class=".sitemap.ConvergedSitemapView"
+      permission="zope.Public"
+      layer="..interfaces.IConvergenceBrowserLayer"
+      />
+      
+  <!-- Media portlet form submit target -->
+  <browser:page
+      for="*"
+      name="change_media_strategy"
+      class=".views.ChangeMediaStrategyView"
+      permission="zope.Public"
+      />
+  
+  <!-- Patch breadcrumbs to support mobile content filtering -->    
+  <!--
+  <browser:page
+      for="*"
+      name="breadcrumbs_view"
+      class=".breadcrumbs.PhysicalNavigationBreadcrumbs"
+      permission="zope.Public"
+      allowed_attributes="breadcrumbs"
+      layer="..interfaces.IConvergenceBrowserLayer"
+      />
+  -->
+
+  <!-- Patch portal tabs to support mobile content filtering -->      
+  <browser:page
+      for="*"
+      name="portal_tabs_view"
+      class=".tabs.CatalogNavigationTabs"
+      permission="zope.Public"
+      allowed_attributes="topLevelTabs"
+      layer="..interfaces.IConvergenceBrowserLayer"
+      />      
+      
+      
+
+</configure>

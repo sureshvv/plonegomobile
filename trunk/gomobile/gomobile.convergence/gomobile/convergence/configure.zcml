@@ -1,0 +1,43 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:i18n="http://namespaces.zope.org/i18n"    
+    i18n_domain="plonetheme.twinapex">
+    
+    
+   <include package="plone.browserlayer" />
+
+   <include package="archetypes.schemaextender" />
+   
+   <five:registerPackage package="." initialize=".initialize" />
+  
+   <class class="Products.Archetypes.BaseObject.BaseObject">
+         <implements interface=".interfaces.IConvergenceSupport" />
+   </class>
+      
+   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
+   
+   <adapter factory=".extender.ConvergenceExtender" 
+             provides="archetypes.schemaextender.interfaces.IOrderableSchemaExtender"
+             name="gomobile.convergence.schema_extenter" />
+
+   <adapter factory=".extender.ConvergenceSchemaModifier" 
+             provides="archetypes.schemaextender.interfaces.ISchemaModifier"
+             name="gomobile.convergence.schema_modifier" />
+             
+   <adapter for=".interfaces.IConvergenceSupport
+                  zope.publisher.interfaces.http.IHTTPRequest"
+                  factory=".extender.ExtenterTraverser"
+                  provides="zope.publisher.interfaces.IPublishTraverse" />
+                  
+   <utility
+	 provides="gomobile.convergence.interfaces.IConvergenceMediaFilter"
+	 factory=".filter.ConvergedMediaFilter" />        
+                  
+             
+   <include file="profiles.zcml" />
+   
+    <include package=".browser" />
+</configure>
