@@ -1,17 +1,32 @@
-.. contents::
+plonecommunity.mobi is a demo site for Plone GoMobile product. It aggregates Plone community content for mobile site.
 
-.. Note!
-   -----
-   Update the following URLs to point to your:
+Strategy
+--------
 
-   - code repository
-   - bug tracker
-   - questions/comments feedback mail
-   (do not set a real mail, to avoid spams)
+Feedburner is used to expose various Plone related feeds
 
-   Or remove it if not used.
+Exposes feeds:
 
-- Code repository: http://svn.somewhere.com/...
-- Questions and comments to somemailing_list
-- Report bugs at http://bug.somewhere.com/..
+* *News* http://feeds.plone.org/plonenews
+ 
+* *Releases* http://feeds.plone.org/plonereleases
+
+* *Add on releses* http://feeds.plone.org/ploneaddons
+
+* *Events* http://feeds.plone.org/ploneevents
+
+* *Blogs* http://feeds.plone.org/ploneblogs
+
+* *Forums* 
+
+	* plone-users: http://n2.nabble.com/General-Questions-f293352.xml
+	
+	* add-on product developers: http://n2.nabble.com/Product-Developers-f293354.xml
+	
+* *Twitter* http://search.twitter.com/search.atom?q=%23plone
+
+Configuration
+-------------
+
+Symlink config/buildout.cfg for yourself.
 

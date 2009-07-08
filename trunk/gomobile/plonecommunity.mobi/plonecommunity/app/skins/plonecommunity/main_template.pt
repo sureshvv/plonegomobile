@@ -49,13 +49,13 @@
     <metal:javascriptslot define-slot="javascript_head_slot" />
     	
 	<!-- Hardcoded mobile style sheets -->
-	<link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resources++plonecommunity.app/common.css" />	
-	<link rel="stylesheet" type="text/css" tal:condition="context/mobile_tool/isLowEndPhone" tal:attributes="href string:${portal_url}/++resources++plonecommunity.app/lowend.css" />
-	<link rel="stylesheet" type="text/css" tal:condition="not:context/mobile_tool/isLowEndPhone" tal:attributes="href string:${portal_url}/++resources++plonecommunity.app/webkit.css" />
+	<link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++plonecommunity.app/common.css" />	
+	<link rel="stylesheet" type="text/css" tal:condition="context/@@mobile_tool/isLowEndPhone" tal:attributes="href string:${portal_url}/++resource++plonecommunity.app/lowend.css" />
+	<link rel="stylesheet" type="text/css" tal:condition="not:context/@@mobile_tool/isLowEndPhone" tal:attributes="href string:${portal_url}/++resource++plonecommunity.app/webkit.css" />
 
 	<link rel="stylesheet" type="text/css" tal:condition="context/mobile_tool/isAdminRequest" tal:attributes="href string:${portal_url}/shared.css" />
 
-	<tal:simulator condition="context/mobile_tool/isPreviewRequest">
+	<tal:simulator condition="context/@@mobile_tool/isPreviewRequest">
 		<link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/phone-mode.css" />
 	</tal:simulator>	
 

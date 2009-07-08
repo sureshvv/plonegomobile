@@ -19,7 +19,7 @@
     meta_type="Filesystem Directory View"
     directory="plonecommunity.app:skins/plonecommunity"/>
 
- <skin-path name="plonecommunity.app" based-on="Plone Default">
+ <skin-path name="Plone mobile community" based-on="Plone Mobile">
   <layer name="plonecommunity.app" insert-after="custom"/>
  </skin-path>
 

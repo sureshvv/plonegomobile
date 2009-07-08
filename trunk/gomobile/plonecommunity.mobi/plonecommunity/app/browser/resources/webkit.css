@@ -4,13 +4,22 @@
  * Use images more extensively than lowend.css
  */
 
+/* TODO: convert to CSS sprites */
+
 .documentContent ul {
-    list-style-image: url(++resource++plonecommunity.mobi/arrow-blue.png);
+    list-style-image: url(++resource++plonecommunity.app/arrow-blue.png);
 }
 
-/* Footer */
+#portal-header {
+	background: #329FD7 url(++resource++plonecommunity.app/header.gif) repeat-x bottom left;
+	padding-bottom: 20px;
+}
 
 #portal-footer {
-	background: #329FD7 url(footer.gif) repeat-x top left;
+	padding-top: 20px;
+	background: #329FD7 url(++resource++plonecommunity.app/footer.gif) repeat-x top left;
 }
 
+#portal-columns {
+	background: white url(++resource++plonecommunity.app/gradient.png) repeat-x top left;
+}
