@@ -1,0 +1,24 @@
+Metadata-Version: 1.0
+Name: gomobile.convergence
+Version: 1.0dev-r4
+Summary: Categorize content for web and mobile publishing in Plone
+Home-page: http://www.twinapex.com
+Author: Mikko Ohtamaa
+Author-email: mikko.ohtamaa@twinapex.com
+License: GPL
+Description: Categorize site sections belonging to web, mobile or both.
+        
+        See gomobile.mobile package README for more information.
+        Changelog
+        =========
+        
+        1.0 - Unreleased
+        ----------------
+        
+        * Initial release
+        
+        
+Keywords: mobile
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
