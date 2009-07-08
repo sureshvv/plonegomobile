@@ -4,7 +4,7 @@
     xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"   
     xmlns:browser="http://namespaces.zope.org/browser"	 
-    i18n_domain="twinapex.plone.microsites">
+    i18n_domain="gomobile.supporter">
 
 	<!-- Fix feed listing for mobile -->
     <browser:page

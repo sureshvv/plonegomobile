@@ -9,7 +9,7 @@
    <div metal:fill-slot="body"
       tal:define="results view/item_list;
                   Batch python:modules['Products.CMFPlone'].Batch;
-                  b_size request/b_size|python:20;b_start python:0;b_start request/b_start | b_start;
+                  b_size request/b_size|python:7;b_start python:0;b_start request/b_start | b_start;
                   batch python:Batch(results, b_size, int(b_start), orphan=1);">
 
       <h1 tal:content="context/title_or_id"></h1>

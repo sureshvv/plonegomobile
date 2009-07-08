@@ -1,0 +1,50 @@
+Metadata-Version: 1.0
+Name: gomobile.supporter
+Version: 1.0dev-r9
+Summary: Add mobile support for various Plone add on products
+Home-page: http://www.twinapex.com
+Author: Twinapex Research
+Author-email: mikko.ohtamaa@twinapex.com
+License: GPL
+Description: This package provides mobile support for various Plone add on products.
+        
+        Supported products
+        ------------------
+        
+        * `Feedfeeder <http://plone.org/products/feedfeeder>`_
+        
+        Usage
+        -----
+        
+        This product will override views and templates with mobile compatible versions.
+        
+        
+        
+        
+        Change history
+        **************
+        
+        Changelog
+        =========
+        
+        1.0 (xxxx-xx-xx)
+        ----------------
+        
+        - Created recipe with ZopeSkel
+        [Twinapex Research]
+        
+        Contributors
+        ************
+        
+        Twinapex Research, Author
+        
+        
+        Download
+        ********
+        
+Keywords: mobile plone python
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
