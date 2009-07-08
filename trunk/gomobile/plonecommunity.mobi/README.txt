@@ -7,23 +7,21 @@ Feedburner is used to expose various Plone related feeds
 
 Exposes feeds:
 
-* *News* http://feeds.plone.org/plonenews
+* *news* http://feeds.plone.org/plonenews
  
-* *Releases* http://feeds.plone.org/plonereleases
+* *releases* http://feeds.plone.org/plonereleases http://feeds.plone.org/ploneaddons
 
-* *Add on releses* http://feeds.plone.org/ploneaddons
+* *blogs* http://feeds.plone.org/ploneblogs
 
-* *Events* http://feeds.plone.org/ploneevents
-
-* *Blogs* http://feeds.plone.org/ploneblogs
-
-* *Forums* 
+* *forums* 
 
 	* plone-users: http://n2.nabble.com/General-Questions-f293352.xml
 	
 	* add-on product developers: http://n2.nabble.com/Product-Developers-f293354.xml
 	
 * *Twitter* http://search.twitter.com/search.atom?q=%23plone
+
+* *Events* http://feeds.plone.org/ploneevents
 
 Configuration
 -------------

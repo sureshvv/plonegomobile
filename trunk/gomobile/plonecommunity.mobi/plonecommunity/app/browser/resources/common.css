@@ -118,24 +118,32 @@ input[type=text],textarea, select {
 	color: #666;
 }
 
-/* Footer */
+/* Footer and batching controls */
 
-#portal-footer {
+#portal-footer,
+.listingBar {
 	background: #329FD7;
 	color: white;
 	padding: 1em;
 	padding-top: 10px;
 }
 
+.listingBar span {
+}
+
 #portal-footer a,
 #portal-footer a:visited,
-#portal-footer a:active {
+#portal-footer a:active,
+.listingBar a,
+.listingBar a:visited,
+.listingBar a:active  {
 	color: white;
 	text-decoration: none;
 	font-weight: bold;
 }
 
-#portal-footer a:hover {
+#portal-footer a:hover,
+.listingBar a:hover {
 	background-color:White;
 	color:#329FD7;	
 	text-decoration: none;	

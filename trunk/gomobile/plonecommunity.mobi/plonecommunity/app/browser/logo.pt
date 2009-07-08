@@ -8,5 +8,5 @@
 	    <img tal:condition="view/logo_url" tal:attributes="src string:${view/logo_url};alt view/portal_title" />
 	</a>
 	
-	mobile community portal
+	community mobile portal
 </div>
