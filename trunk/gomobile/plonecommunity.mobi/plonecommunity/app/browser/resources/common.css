@@ -115,9 +115,54 @@ input[type=text],textarea, select {
 
 
 .documentDescription,
-.discreet {
+.discreet {
 	color: #666;
 }
+
+/* Forms */
+
+.field {
+	padding-bottom: 1em;
+}	
+
+.formHelp {
+	color: #666;	
+}
+
+.fieldRequired {
+    background: white url(++resource++gomobile.mobile/required.gif) center left no-repeat;
+    padding: 0 0 0 8px;
+    color: white;
+}
+
+.error .fieldRequired {
+   color: #d00;
+}
+
+.legend,
+label {
+	font-weight: bold;
+}
+
+div.error {
+    /* Class for error indication in forms */
+    background-color: #fdc; 
+    border: 1px solid #d00;
+    padding: 0.5em;
+    margin: 0 0 1em 0;
+    width: 95%;
+}
+
+/* Search */
+
+.searchResults dt {
+	padding-bottom: 1em;
+}
+
+.searchResults dt a {
+	font-size: 120%;
+	font-weight: bold;
+}	
 
 /* Footer and batching controls */
 
