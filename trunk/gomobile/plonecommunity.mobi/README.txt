@@ -28,5 +28,17 @@ Exposes feeds:
 Configuration
 -------------
 
-Symlink config/buildout.cfg for yourself.
+SVN checkout w/Google code authentication::
+
+	cd src
+	svn co https://plonegomobile.googlecode.com/svn/trunk/gomobile gomobile
+	svn co https://mobilesniffer.googlecode.com/svn/trunk/mobile.sniffer mobile.sniffer
+	
+Symlink config/buildout.cfg for yourself::
+
+	cd ..
+	ln -s src/gomobile/plonecommunity.mobi/config/buildout.cfg .
+	bin/buildout
+
+
 
