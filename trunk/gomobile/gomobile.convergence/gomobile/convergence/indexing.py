@@ -15,6 +15,9 @@ from Products.CMFPlone.CatalogTool import registerIndexableAttribute
 
 from interfaces import IConvergenceSupport, IConvergenceMediaFilter
 
+from plone.indexer.decorator import indexer
+  
+@indexer(IConvergenceSupport)
 def getContentMedias(object, portal, **kw):
     """ Provide indexing hooksk for portal_catalog """
 
@@ -30,4 +33,6 @@ def getContentMedias(object, portal, **kw):
             filter = getUtility(IConvergenceMediaFilter)
             return filter.getContentMedia(object)
                     
-registerIndexableAttribute('getContentMedias', getContentMedias)
+
+# Plone 3.2.x code
+#registerIndexableAttribute('getContentMedias', getContentMedias)
