@@ -85,7 +85,6 @@ a:hover,
 
 /* Make text area text more visible than normal grey */
 input[type=text],input[type=password],textarea, select {
-	color: black;
 	width: 80%;
 }
 

@@ -40,7 +40,7 @@
 		
 		        </tal:name>
 		
-		        <span tal:replace="python:toLocalizedTime(child['updated_date'],long_format=0)">
+		        <span tal:replace="python:toLocalizedTime(child['updated_date'],long_format=True)">
 		          August 16, 2001
 		        </span>
 	       </div>			

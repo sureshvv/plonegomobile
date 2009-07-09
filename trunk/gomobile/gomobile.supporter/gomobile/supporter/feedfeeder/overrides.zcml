@@ -6,7 +6,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"	 
     i18n_domain="gomobile.supporter">
 
-	<!-- Fix feed listing for mobile -->
+	<!-- Fix feed listing for mobile compatibility -->
     <browser:page
       name="feed-folder.html"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"
@@ -15,5 +15,14 @@
       allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
       class="Products.feedfeeder.browser.feed.FeedFolderView"
       />
+
+  <!-- Move document actions to the end of the page -->	  
+  <browser:page
+      name="feed-item.html"
+      for="Products.feedfeeder.interfaces.item.IFeedItem"
+      permission="zope2.View"
+      template="feed-item.pt"
+      />
+	  
    
 </configure>
