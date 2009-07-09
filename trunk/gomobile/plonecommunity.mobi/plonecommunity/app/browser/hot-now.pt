@@ -14,7 +14,9 @@
 				<span class="author" tal:content="news/getFeedItemAuthor" />
 				<span class="time" tal:content="news/friendlyTime" />						
 			</div>
-			<p tal:replace="structure news/Description" />
+			<div class="description">
+				<tal:content replace="structure news/Description" />
+			</div>
 		</div>
 		
 	</tal:news>
