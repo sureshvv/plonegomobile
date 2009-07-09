@@ -31,6 +31,8 @@ SVN checkout w/Google code authentication::
 	cd src
 	svn co https://plonegomobile.googlecode.com/svn/trunk/gomobile gomobile
 	svn co https://mobilesniffer.googlecode.com/svn/trunk/mobile.sniffer mobile.sniffer
+	svn co https://svn.plone.org/svn/collective/collective.templateengines/trunk collective.templateengines
+	svn co https://svn.plone.org/svn/collective/collective.easytemplate/trunk collective.easytemplate
 	
 Symlink config/buildout.cfg for yourself::
 
