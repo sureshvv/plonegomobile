@@ -63,8 +63,8 @@
   <viewlet name="plone.contentactions"/>
  </hidden>
  <hidden manager="plone.belowcontentbody" skinname="Plone mobile community">
-  <viewlet name="plone.abovecontenttitle.documentactions"/>
   <viewlet name="plone.belowcontentbody.workflowhistory"/>
+  <viewlet name="plone.abovecontenttitle.documentactions"/>
  </hidden>
  <hidden manager="plone.portalfooter" skinname="Plone mobile community">
   <viewlet name="plone.footer"/>
@@ -75,6 +75,8 @@
   <viewlet name="plone.logo"/>
   <viewlet name="plone.searchbox"/>
   <viewlet name="plone.global_sections"/>
+  <viewlet name="plone.skip_links"/>
+  <viewlet name="plone.site_actions"/>
  </hidden>
  <hidden manager="plone.portaltop" skinname="Plone mobile community">
   <viewlet name="plone.app.i18n.locales.languageselector"/>
