@@ -36,5 +36,14 @@
 		class="gomobile.mobile.browser.viewlets.common.FooterViewlet"
 		layer="plonecommunity.app.interfaces.IThemeLayer"
         />		
-		        		
+		
+	<!-- Page template utilities -->
+    <browser:page
+		for="*"
+		name="hot_now"
+        permission="zope.Public"
+        class=".frontpage.HowNowView"
+		allowed_attributes="items"
+        />    
+		
 </configure>

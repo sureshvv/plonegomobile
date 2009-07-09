@@ -252,3 +252,25 @@ dl.error dd {
 #footer-links, #portal-breadcrumbs { text-align: center; }
 
 #copyright { text-align: center; }
+
+/* Front page special */
+
+.hot-now .news-item {
+	padding: 0.3em;
+}
+
+.hot-now .byline {
+	color: #888;
+}
+
+.hot-now .news-0 {
+	background: #ffff88;
+}	
+
+.hot-now .news-1 {
+	background: #ffffaa;
+}	
+
+.hot-now .news-2 {
+	background: #ffffdd;
+}	

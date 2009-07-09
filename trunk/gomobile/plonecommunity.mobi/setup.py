@@ -60,13 +60,5 @@ setup(name='plonecommunity.mobi',
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
       test_suite = 'plonecommunity.app.tests.test_docs.test_suite',
-      entry_points="""
-      # -*- entry_points -*- 
-      [distutils.setup_keywords]
-      paster_plugins = setuptools.dist:assert_string_list
-
-      [egg_info.writers]
-      paster_plugins.txt = setuptools.command.egg_info:write_arg
-      """,
       paster_plugins = ["ZopeSkel"],
       )

@@ -16,6 +16,7 @@
   
   	<!-- iPhofiny the page -->
     <meta name ="viewport" content ="initial-scale = 1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable = yes" />
+	<link rel="apple-touch-icon" tal:attributes="href string:${portal_url}/++resource++gomobile.mobi/apple-icon.png" />	 
 
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
           tal:define="charset site_properties/default_charset|string:utf-8"
