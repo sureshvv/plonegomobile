@@ -3,8 +3,6 @@ and turns it to valid XHTML-MP code which can be dropped in XHTML MP page.
 
 The code will also filter possible malicious code in external feed content, like <script> tags.
 
-The product is not waterproof, but should cover 90% of normal use cases.
-
 Requirements
 ------------
 
@@ -17,12 +15,12 @@ This package has no dependencies to Plone or GoMobile and can be used with any P
 Features
 --------
 
-* Protect against Cross-Site Scripting Attacks (XSS) and other nastiness, as provided by 
-  * `lxml.html.clean  <http://codespeak.net/lxml/lxmlhtml.html#cleaning-up-html>`_
-  
-* Turn HTML/XHTML to mobile profile compatible   
+* Turn any incoming HTML/XHTML to mobile profile compatible
 
   * Enforce ALT text on images - especially useful for external tracking images (feedburner tracker)
+
+* Protect against Cross-Site Scripting Attacks (XSS) and other nastiness, as provided by 
+  `lxml.html.clean  <http://codespeak.net/lxml/lxmlhtml.html#cleaning-up-html>`_  
 
 * Unicode compliant - eats funky characters
 
@@ -30,12 +28,14 @@ Features
 Usage
 -----
 
-clean_xhtml_mp
-=============
+clean_xhtml_mp(html)
+====================
+
+This function will do everyhing you need.
 
 Run XHTML mobile profile cleaner for HTML code::
         
-	@param html: HTML as a strinrg or lxml Document        
+	@param html: HTML as a string or lxml Document        
 	@return: XHTML, utf-8 encoded string
 	
 Example::
@@ -43,11 +43,10 @@ Example::
 	from gomobile.xhtmlmp.transformers.xhtmlmp_safe import clean_xhtml_mp
 
 	html = '<img src="http://www.foobar.com">'
-    output = clean_xhtml_mp(html)        
-    self.assertEqual(output, '<img src="http://www.foobar.com" alt=""/>', "Got:" + output)
+	output = clean_xhtml_mp(html)        
+	self.assertEqual(output, '<img src="http://www.foobar.com" alt=""/>', "Got:" + output)
     
-    
-
+   
 Roadmap
 -------
 
@@ -60,18 +59,18 @@ Unit tests
 
 Put gomobile.xhtmlmp to your PYTHONPATH.
 
-To run unit tests: 
+Run unit tests normally like:: 
 
 	python tests/test_image.py
 
-Resources
----------
+See also
+--------
 
 * http://en.wikipedia.org/wiki/XHTML_Mobile_Profile
 
 * http://codespeak.net/lxml/lxmlhtml.html#cleaning-up-html
 
-* http://pypi.python.org/pypi/gomobile.mobile/
+* `Plone GoMobile project <http://pypi.python.org/pypi/gomobile.mobile/>`_
 
 Author
 ------
