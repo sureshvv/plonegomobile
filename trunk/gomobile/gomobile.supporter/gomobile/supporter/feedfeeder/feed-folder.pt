@@ -44,7 +44,7 @@
 		          August 16, 2001
 		        </span>
 	       </div>			
-
+		
 	        <p tal:condition="child/summary"
 	             tal:content="structure child/summary"> My summary </p>
 	    </div>
