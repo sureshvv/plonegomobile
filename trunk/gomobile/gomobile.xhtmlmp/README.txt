@@ -66,11 +66,15 @@ Run unit tests normally like::
 See also
 --------
 
+* `Plone GoMobile project <http://pypi.python.org/pypi/gomobile.mobile/>`_
+
 * http://en.wikipedia.org/wiki/XHTML_Mobile_Profile
 
 * http://codespeak.net/lxml/lxmlhtml.html#cleaning-up-html
 
-* `Plone GoMobile project <http://pypi.python.org/pypi/gomobile.mobile/>`_
+* `W3C XHTML mobile validator <http://validator.w3.org/mobile/>`_
+
+* `mobiReady <http://mobiready.com/>`_
 
 Author
 ------

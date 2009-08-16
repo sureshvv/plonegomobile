@@ -28,10 +28,4 @@ class IConvergenceBrowserLayer(Interface):
     
     It will have effects on sitemap etc.
     """
-    
 
-    
-
-    
-    
-    

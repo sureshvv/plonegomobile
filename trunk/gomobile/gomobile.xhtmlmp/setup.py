@@ -5,7 +5,7 @@ version = '0.1'
 
 setup(name='gomobile.xhtmlmp',
       version=version,
-      description="XHTML mobile profiel safe HTML transformer for Pyton",
+      description="XHTML mobile profile HTML transformer and cleaner for Pyhton",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
@@ -15,7 +15,7 @@ setup(name='gomobile.xhtmlmp',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Intended Audience :: Developers',        
         ],
-      keywords='mobile wap safe xhtml profile html cleaner lxml',
+      keywords='mobile wap safe xhtml profile html cleaner lxml transformer',
       author='Mikko Ohtamaa',
       author_email='mikko.ohtamaa@twinapex.com',
       url='http://www.twinapex.com',

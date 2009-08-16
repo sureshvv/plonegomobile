@@ -78,8 +78,7 @@ def _getText(self):
     
     if text:
         # can be None    
-        clean = clean_xhtml_mp(text)
-        print "Cleaned text:" + clean
+        clean = clean_xhtml_mp(text)        
         return clean
     
     return text
