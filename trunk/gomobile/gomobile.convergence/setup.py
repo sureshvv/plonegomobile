@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.1'
 
 setup(name='gomobile.convergence',
       version=version,
@@ -10,6 +10,7 @@ setup(name='gomobile.convergence',
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
+        "Framework :: Plone",
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
@@ -24,6 +25,13 @@ setup(name='gomobile.convergence',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.behavior',
+          'plone.directives.form',
+          'zope.schema',
+          'zope.interface',
+          'zope.component',
+          'gomobile.mobile',
+          '',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
