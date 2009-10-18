@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+    <layer name="Plone Go Mobile Twinapex Theme"
+           interface="gomobiletheme.twinapex.interfaces.IThemeLayer" />
+</layers>
