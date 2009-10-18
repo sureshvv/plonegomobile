@@ -1,0 +1,47 @@
+Buildout instructions
+---------------------
+
+Trunk version
+=============
+
+You need Google Code account for this.
+It is possible to do it anonymously, but gomobile.trunk.cfg
+has set links to https://.
+
+Create Plone buildout as instructed.
+
+Add the following::
+
+    [buildout]
+
+    extends =
+        http://dist.plone.org/release/3.3.1/versions.cfg
+        http://good-py.appspot.com/release/dexterity/1.0a1
+        gomobile.trunk.cfg
+
+    extensions = mr.developer
+
+Do some manual checkouts to get Subversion to store your passwords
+and accept security certificates, so that you don't need to type them all the time.
+
+Manual checkouts recommended::
+
+    svn co https://svn.plone.org/svn/collective/collective.fastview/trunk src/collective.fastview
+    svn co https://mobilesniffer.googlecode.com/svn/trunk/mobile.sniffer src/mobile.sniffer
+    svn co https://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.xhtmlmp src/gomobile.xhtmlmp
+
+Run buildout. Buildout will download and install Mr. Develop for you.
+**Running buildout on the first time always fails. The purpose is to install Mr. Developer only.**
+
+Running buildout::
+
+    bin/buildout
+
+Then run Mr. Developer to checkout all packages::
+
+    bin/develop checkout ""
+
+Then run buildout again::
+
+    bin/buildout
+
