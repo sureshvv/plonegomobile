@@ -42,12 +42,14 @@ Add the following::
 
 Do some manual checkouts to get Subversion to store your passwords
 and accept security certificates, so that you don't need to type them all the time.
+(This is because servers usually lack good root certificates).
 
 Manual checkouts recommended::
 
     svn co https://svn.plone.org/svn/collective/collective.fastview/trunk src/collective.fastview
     svn co https://mobilesniffer.googlecode.com/svn/trunk/mobile.sniffer src/mobile.sniffer
     svn co https://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.xhtmlmp src/gomobile.xhtmlmp
+
 
 Run buildout. Buildout will download and install Mr. Develop for you.
 **Running buildout on the first time always fails. The purpose is to install Mr. Developer only.**
