@@ -1,6 +1,11 @@
 Buildout instructions
 ---------------------
 
+Release version
+===============
+
+
+
 Trunk version
 =============
 
@@ -20,6 +25,16 @@ Add the following::
         gomobile.trunk.cfg
 
     extensions = mr.developer
+
+     eggs =
+        Plone
+        ...
+        ${gomobile.config:eggs}
+
+    [instance]
+    zcml =
+        ...
+        ${gomobile.config:zcml}
 
 Do some manual checkouts to get Subversion to store your passwords
 and accept security certificates, so that you don't need to type them all the time.
