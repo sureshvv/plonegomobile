@@ -1,0 +1,3 @@
+<img tal:condition="viewlet/image_url"
+     alt=""
+     tal:attributes="src viewlet/image_url" />

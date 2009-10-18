@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="gomobiletheme.twinapex">
+
+  <!-- Default views on mobile publishing as defined in views.py -->
+
+  <browser:defaultView
+      for="Products.ATContentTypes.interface.IATDocument"
+      layer=".interfaces.IThemeLayer"
+      name="mobiledocumentdefault"
+      />
+
+</configure>

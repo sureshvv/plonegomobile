@@ -9,7 +9,7 @@
 
   <grok:grok package="." />
 
-  <include package="gomobile.mobile" />
+  <include package="gomobiletheme.basic" />
 
   <five:registerPackage package="." initialize=".initialize" />
 
@@ -20,7 +20,5 @@
       description='Twinapex theme for mobile sites'
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-
-   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
 
 </configure>

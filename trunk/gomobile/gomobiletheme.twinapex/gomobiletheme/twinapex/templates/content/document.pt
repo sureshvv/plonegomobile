@@ -1,0 +1,23 @@
+<metal:master use-macro="here/main_template/macros/master">
+
+    <metal:slot fill-slot="main">
+
+        <img tal:replace="src context/@@viewlets/headerimage" />
+
+        <h1 tal:condition="context/@@viewlets/headerimage/hasTitle" tal:content="context/Title" class="documentFirstHeading">
+            The page's title
+        </h1>
+
+        <div class="description"
+           tal:content="context/Description">
+        The page's description
+        </div>
+
+         <div class="body"
+              tal:content="structure context/getText">
+            The page's body text
+         </div>
+    </metal:slot>
+
+</metal:master>
+

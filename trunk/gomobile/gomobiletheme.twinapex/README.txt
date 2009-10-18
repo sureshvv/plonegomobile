@@ -2,6 +2,26 @@ This is mobile equivalent for `Plone Twinapex Theme <http://plone.org/products/t
 
 This also servers as example how to build your own mobile themes for Plone Go Mobile.
 
+Changes
+-------
+
+This section describes how Twinapex theme modifies Plone Go Mobile default theme
+
+* Override static resources (CSS/images) with Twinapex specific. This is just copy-paste
+  from gomobiletheme.basic/static folder. CSS was hand-modified and images were replaced.
+
+* Override logo viewlet to use Twinapex logo
+
+* Override head viewlet to load Twinapex media
+
+* Add new "header image" viewlet which renders the dynamic header image as set in plonetheme.twinapex
+
+* Override Document and Folder renderers with Twinapex specific. They will place header image
+  to the page if available.
+
+* tests.py is copied from gomobiletheme.basic. Theme name specific parts are changed.
+  Tests for header animation have been added.
+
 Author
 ------
 

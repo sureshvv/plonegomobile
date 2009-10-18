@@ -1,6 +1,6 @@
-from gomobile.mobile.interfaces import IMobileLayer
+import gomobiletheme.basic.interfaces as base
 
-class IThemeLayer(IMobileLayer):
+class IThemeLayer(base.IMobileLayer):
     """ Twinapex mobile theme layer.
 
     """
