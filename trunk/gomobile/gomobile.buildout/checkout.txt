@@ -18,11 +18,15 @@ Create Plone buildout as instructed.
 Add the following::
 
     [buildout]
+    parts =
+        zope2
+        ...
+        ${gomobile.config:parts}
 
     extends =
         http://dist.plone.org/release/3.3.1/versions.cfg
-        http://good-py.appspot.com/release/dexterity/1.0a1
-        gomobile.trunk.cfg
+        http://good-py.appspot.com/release/dexterity/1.0a2
+        http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.trunk.cfg
 
     extensions = mr.developer
 
