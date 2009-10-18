@@ -1,3 +1,6 @@
-<img tal:condition="viewlet/image_url"
-     alt=""
-     tal:attributes="src viewlet/image_url" />
+
+<div id="header-image">
+	<img tal:condition="viewlet/image_url"
+    	 alt=""
+     	tal:attributes="src viewlet/image_url" />
+</div>

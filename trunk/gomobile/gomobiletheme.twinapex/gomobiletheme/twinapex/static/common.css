@@ -95,6 +95,7 @@ input[type=text],input[type=password],textarea, select {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+	background: white;
 }
 
 #content {
@@ -107,6 +108,12 @@ input[type=text],input[type=password],textarea, select {
     background: white;
     color: black;
     text-align: left;
+}
+
+#header-image {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #logo img {
@@ -254,7 +261,7 @@ dl.error dd {
 }
 
 #portal-globalnav { list-style: none; text-align:center; padding: 0; line-height: 200%; }
-#portal-globalnav li { display: inline; margin-bottom: 1.5px; }
+#portal-globalnav li { display: inline; margin: 0.5em; }
 #portal-globalnav li a { padding: 0.5em; }
 
 #footer-links, #portal-breadcrumbs { text-align: center; }
@@ -262,6 +269,18 @@ dl.error dd {
 #footer-text { text-align: center; }
 
 /* Little fixes */
+
+/* Hide unwanted tab */
 li#portaltab-blog {
 	display: none;
+}
+
+/* Customer reference view - float logos */
+.tileImage {
+	float: right;
+}
+
+.tileFooter {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #888;
 }

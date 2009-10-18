@@ -22,3 +22,4 @@ class MobileDocumentDefault(grok.CodeView):
 
     # Render template in collective.fastview global define free mode
     render = PageTemplate("templates/content/document.pt")
+

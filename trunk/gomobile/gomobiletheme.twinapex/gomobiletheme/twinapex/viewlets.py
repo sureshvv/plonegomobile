@@ -23,6 +23,8 @@ from gomobile.mobile.browser.resizer import getUserAgentBasedResizedImageURL
 from gomobiletheme.basic.viewlets import MainViewletManager, getView, gomobiletheme_basic_templatedir
 from gomobiletheme.basic import viewlets as base
 
+from mobile.sniffer.utilities import get_user_agent, get_user_agent_hash
+
 # Layer for which against all our viewlets are registered
 from interfaces import IThemeLayer
 
@@ -56,6 +58,11 @@ class Logo(base.Logo):
     def getLogoPath(self):
         return "++resource++gomobiletheme.twinapex/logo.png"
 
+class Header(base.Header):
+    """
+    """
+
+
 class HeaderImage(grok.Viewlet):
     """
     Viewlet which renders the header image shown on some sections.
@@ -86,18 +93,8 @@ class HeaderImage(grok.Viewlet):
         self.portal_url = portal_state.portal_url()
 
         if self.hasHeaderImage():
-            # Get Zope traversing path for the image
-            #
-            image_path = self.context.getPhysicalPath() + "/headerImage"
-
-            # Generate user-agent based resized image download URL
-            # for the header image
-            self.image_url = getUserAgentBasedResizedImageURL(self.context, self.request,
-                                                         path=image_path,
-                                                         width="auto",
-                                                         height="auto",
-                                                         padding_width=10)
-
+            hash = get_user_agent_hash(self.request)
+            self.image_url = self.context.absolute_url() + "/@@mobileheaderimageresizer?hash=" + hash
         else:
             self.image_url = None
 
