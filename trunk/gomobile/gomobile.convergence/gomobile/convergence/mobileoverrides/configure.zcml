@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="gomobile.convergence">
+
+    <grok:grok package="." />
+
+	<!-- Default mobile overrides storage -->
+    <adapter for="Products.CMFCore.interfaces.IContentish"
+           provides="gomobile.convergence.mobileoverrides.base.IMobileOverrideStorage"
+           factory=".base.getMobileOverrideStorage" />
+
+	<!-- View for TALES condition check whether the context object supports overrides -->
+    <browser:page
+    	  for="*"
+          name="supports_mobile_overrides"
+          class=".checker.MobileOverrideSupportCheckerView"
+          permission="zope2.View"
+          />
+
+	<!-- Document mobile overrides -->
+
+    <adapter for="Products.ATContentTypes.interface.IATDocument"
+           provides="gomobile.convergence.interfaces.IMobileOverrider"
+           factory=".document.DocumentOverrider" />
+
+    <browser:page
+    	  for="Products.ATContentTypes.interface.IATDocument"
+          class=".document.DocumentOverriderFormView"
+          name="edit_mobile_overrides"
+          permission="cmf.ModifyPortalContent" />
+
+
+
+</configure>
