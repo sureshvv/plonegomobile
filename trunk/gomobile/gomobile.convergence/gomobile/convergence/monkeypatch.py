@@ -59,8 +59,13 @@ def mobile_contentItems(self, filter=None):
     filtered = self._filteredItems(ids, filter)
     
     filter = getUtility(IConvergenceMediaFilter)
-    medias = filter.getContentMediaStrategy(self, self.REQUEST)
-
+    
+    # May not be available
+    # - uni tests
+    # - command line client
+    request = getattr(self, "REQUEST", None)
+        
+    medias = filter.getContentMediaStrategy(self, request)
     
     filtered = [ (id, obj) for id, obj in filtered if filter.filterObject(obj,medias) ]
     return filtered

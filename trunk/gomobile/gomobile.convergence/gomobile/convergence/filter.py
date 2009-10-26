@@ -223,7 +223,14 @@ class ConvergedMediaFilter:
         2. If we are in web and not logged in, include web only
 
         3. If we are in mobile, include mobile only
+        
+        @param request: HTTPRequest object or None if not available
         """
+        
+        if request == None:
+            # Default to web
+            return ContentMediaOption.WEB 
+        
         discriminator = getUtility(IMobileRequestDiscriminator)
         request_types = discriminator.discriminate(context, request)
 
