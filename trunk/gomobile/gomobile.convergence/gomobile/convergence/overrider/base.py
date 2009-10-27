@@ -26,10 +26,10 @@ from persistent import Persistent
 from plone.directives import form
 from zope.schema.interfaces import IContextSourceBinder
 
-from gomobile.convergence.interfaces import IMobileOverrider, IMobileOverrideEditView
+from gomobile.convergence.interfaces import IOverrider, IMobileOverrideEditView
 from gomobile.convergence.utilities import make_terms
 
-class IMobileOverrideStorage(zope.interface.Interface):
+class IOverrideStorage(zope.interface.Interface):
     """
     Adapter to store mobile overrides on context objects.
 
@@ -37,7 +37,7 @@ class IMobileOverrideStorage(zope.interface.Interface):
     store data in different database, for example.
     """
 
-class MobileOverrideStorage(Persistent):
+class OverrideStorage(Persistent):
     """
     Persistent object storing z3c.form field values for mobile overrides.
 
@@ -50,7 +50,7 @@ class MobileOverrideStorage(Persistent):
 
     KEY = "mobile_override_values"
 
-def getMobileOverrideStorage(context):
+def getOverrideStorage(context):
     """ Default implementation how to store mobile overridden values for context objects.
 
     Use zope.annotations package to stick data on __annotations__ attribute on the object.
@@ -58,10 +58,10 @@ def getMobileOverrideStorage(context):
 
     annotations = IAnnotations(context)
 
-    value = annotations.get(MobileOverrideStorage.KEY, None)
+    value = annotations.get(OverrideStorage.KEY, None)
     if value is None:
         # Compute value and store it on request object for further look-ups
-        value = annotations[MobileOverrideStorage.KEY] = MobileOverrideStorage()
+        value = annotations[OverrideStorage.KEY] = OverrideStorage()
 
     return value
 
@@ -81,7 +81,7 @@ class Overrider(object):
     from the orignal object in any scenario.
     """
 
-    zope.interface.implements(IMobileOverrider)
+    zope.interface.implements(IOverrider)
 
     # zope.schema object describing overriden fields
     _schema = None
@@ -90,19 +90,19 @@ class Overrider(object):
         self.context = context
 
     def _getOverrideFieldNames(self):
-        return zope.schema.getFieldNames(self._schema)
+        return zope.schema.getFieldNamesInOrder(self._schema)
 
     def _isOverride(self, fieldName):
         """
         @return True: If the field is overridable field
         """
-        return field in self._getOverrideFieldNames()
+        return fieldName in self._getOverrideFieldNames()
 
     def _isOverrideEnabled(self, fieldName, storage):
         """
         Check whether the fieldName appears in "overrided fields list"
         """
-        overrides = get(storage, "enabled_overrides", [])
+        overrides = getattr(storage, "enabled_overrides", [])
         return fieldName in overrides
 
     def _fixCallable(self, fieldName, value):
@@ -125,7 +125,7 @@ class Overrider(object):
         """
         if self._isOverride(fieldName):
 
-            storage = IMobileOverrideStorage(self.context)
+            storage = IOverrideStorage(self.context)
 
             if self._isOverrideEnabled(fieldName, storage):
                 value = getattr(storage, fieldName)
@@ -181,6 +181,6 @@ class OverrideForm(form.EditForm):
     zope.interface.implements(IMobileOverrideEditView)
 
     def getContents(self):
-        storage = IMobileOverrideStorage(self.context)
+        storage = IOverrideStorage(self.context)
         assert storage is not None
         return storage

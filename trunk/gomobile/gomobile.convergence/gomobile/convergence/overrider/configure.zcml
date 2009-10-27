@@ -12,21 +12,21 @@
 
 	<!-- Default mobile overrides storage -->
     <adapter for="Products.CMFCore.interfaces.IContentish"
-           provides="gomobile.convergence.mobileoverrides.base.IMobileOverrideStorage"
-           factory=".base.getMobileOverrideStorage" />
+           provides="gomobile.convergence.overrider.base.IOverrideStorage"
+           factory=".base.getOverrideStorage" />
 
 	<!-- View for TALES condition check whether the context object supports overrides -->
     <browser:page
     	  for="*"
           name="supports_mobile_overrides"
-          class=".checker.MobileOverrideSupportCheckerView"
+          class=".checker.OverrideSupportCheckerView"
           permission="zope2.View"
           />
 
 	<!-- Document mobile overrides -->
 
     <adapter for="Products.ATContentTypes.interface.IATDocument"
-           provides="gomobile.convergence.interfaces.IMobileOverrider"
+           provides="gomobile.convergence.interfaces.IOverrider"
            factory=".document.DocumentOverrider" />
 
     <browser:page

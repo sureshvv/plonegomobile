@@ -41,3 +41,7 @@ class MultiChannelForm(form.EditForm):
     def getContent(self):
         """ @return: Persistent data to edit by form machinery """
         return IMultiChannelBehavior(self.context)
+
+
+
+

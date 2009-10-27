@@ -16,7 +16,7 @@ import zope.interface
 import zope.component
 from zope import schema
 
-from gomobile.convergence.mobileoverrides import base
+from gomobile.convergence.overrider import base
 from gomobile.convergence.utilities import addSchema
 
 from plone.directives import form
@@ -33,8 +33,8 @@ class Schema(form.Schema):
 
     Description = schema.Text(title=u"Description")
 
-    form.widget(GetText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
-    GetText = schema.Text(title=u"Text")
+    form.widget(getText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
+    getText = schema.Text(title=u"Text")
 
 
 class DocumentOverrider(base.Overrider):
