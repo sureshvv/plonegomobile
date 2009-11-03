@@ -39,7 +39,7 @@ class IMultiChannelBehavior(form.Schema):
     )
 
     contentMedias = schema.Choice(vocabulary=contentMediasVocabury,
-                                  title=u"contentMedias",
+                                  title=u"Content medias",
                                   description=u"Does this content appear on web, mobile or both",
                                   default=ContentMediaOption.USE_PARENT,
                                   required=True)
@@ -52,6 +52,8 @@ class MultiChannelBehaviorStorage(object):
 
     This allows to use attribute storage with schema input validation.
     """
+    
+    implements(IMultiChannelBehavior)
 
     contentMedias = FieldPropertyDelegate(IMultiChannelBehavior["contentMedias"])
 

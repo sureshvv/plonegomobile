@@ -32,7 +32,7 @@ class IConvergenceBrowserLayer(Interface):
     It will have effects on sitemap etc.
     """
 
-class IMobileOverrider(Interface):
+class IOverrider(Interface):
     """ Override content fields to have mobile specific values for mobile phones.
 
     This interface provides view-like adapter look-up to extract mobile specific
@@ -77,7 +77,14 @@ class IMobileOverrider(Interface):
 
     """
 
-class IMobileOverrideEditView(IBrowserView):
+class IOverrideForm(IForm):
+    """ Form definition for field-specific override editing.
+    
+    Each content type can have its own form.
+    Used as an adapter.
+    """
+
+class IOverrideEditView(IBrowserView):
     """ Provide form access to edit mobile overrides.
 
     A view which does site editor enabled editing of mobile overrides.

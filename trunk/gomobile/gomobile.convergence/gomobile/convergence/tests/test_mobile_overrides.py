@@ -80,6 +80,16 @@ class TestMobileOverrides(BaseTestCase):
         result = self.portal.doc.restrictedTraverse("@@edit_mobile_overrides")
         result()
 
+    def test_convergence_form(self):
+        self.create_doc()
+
+        result = self.portal.doc.restrictedTraverse("@@convergence")
+        
+        self.assertEqual(result.media_status(), u"Web and mobile")
+        
+        # Test rendeing HTML without errors
+        result()
+
 
 def test_suite():
     suite = unittest.TestSuite()

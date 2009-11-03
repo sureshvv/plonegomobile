@@ -26,7 +26,7 @@ from persistent import Persistent
 from plone.directives import form
 from zope.schema.interfaces import IContextSourceBinder
 
-from gomobile.convergence.interfaces import IOverrider, IMobileOverrideEditView
+from gomobile.convergence.interfaces import IOverrider, IOverrideEditView, IOverrideForm
 from gomobile.convergence.utilities import make_terms
 
 class IOverrideStorage(zope.interface.Interface):
@@ -166,7 +166,6 @@ def get_field_list(context):
 class IOverrideFormSchema(form.Schema):
     """ Base class for editable override forms """
 
-
     form.widget(enable_overrides='z3c.form.browser.checkbox.CheckboxWidget')
     enabled_overrides = zope.schema.Choice(source=get_field_list, title=u"Overridden fields", required=False)
 
@@ -178,7 +177,9 @@ class OverrideForm(form.EditForm):
     grok.baseclass()
     grok.context(IContentish)
 
-    zope.interface.implements(IMobileOverrideEditView)
+    zope.interface.implements(IOverrideForm)
+
+    schema = IOverrideFormSchema
 
     def getContents(self):
         storage = IOverrideStorage(self.context)

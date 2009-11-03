@@ -23,7 +23,7 @@ from plone.directives import form
 from plone.app.z3cform.layout import wrap_form
 from z3c.form import field
 
-class Schema(form.Schema):
+class DocumentOverrideSchema(form.Schema):
     """ Schema for overriden accessors.
 
     Correspond AT accessor names for  Products.ATContentTypes.content.document.ATDocumentSchema.
@@ -43,20 +43,28 @@ class DocumentOverrider(base.Overrider):
     Document is Products.ATContentTypes.content.document.ATDocument object.
     """
 
-    _schema = Schema
+    _schema = DocumentOverrideSchema
 
-class IFormSchema(form.Schema):
+class IFormSchema(base.IOverrideFormSchema):
     """ Schema for "edit mobile overrides" form """
 
+    Title = schema.TextLine(title=u"Title")
 
-addSchema(IFormSchema, base.IOverrideFormSchema)
-addSchema(IFormSchema, Schema)
+    Description = schema.Text(title=u"Description")
+
+    form.widget(getText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
+    getText = schema.Text(title=u"Text")
+
+
+#addSchema(IFormSchema, )
+#addSchema(IFormSchema, DocumentOverrideSchema)
 
 class DocumentOverriderForm(base.OverrideForm):
     """ Edit mobile overrides for the document
     """
+    
+    _schema = IFormSchema
 
     fields = field.Fields(IFormSchema)
-
 
 DocumentOverriderFormView = wrap_form(DocumentOverriderForm)

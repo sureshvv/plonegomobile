@@ -47,23 +47,3 @@ class ChangeMediaStrategyView(BrowserView):
         self.request.response.redirect(self.context.absolute_url())
 
 
-
-class MasterForm(form.Form):
-
-
-
-class PropertiesView(grok.View):
-    """ Allow user to edit convergence options and mobile overrides.
-
-    """
-
-    settings_form =
-
-
-    def getForms(self):
-        """ Get all forms on this view
-        """
-        r
-
-    def constructForm(self):
-

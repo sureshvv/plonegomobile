@@ -44,6 +44,15 @@
       layer="..interfaces.IConvergenceBrowserLayer"
       />      
       
+  <!-- Main form controlling context convergence -->
+  <browser:page
+      for="*"
+      name="convergence"
+      class=".convergenceform.MasterFormView"
+      permission="cmf.ModifyPortalContent"
+      allowed_attributes="publishing override"
+      />
+  
       
 
 </configure>

@@ -29,6 +29,15 @@
            provides="gomobile.convergence.interfaces.IOverrider"
            factory=".document.DocumentOverrider" />
 
+    <adapter for="Products.ATContentTypes.interface.IATDocument"
+           provides="gomobile.convergence.overrider.base.IOverrideFormSchema"
+           factory=".base.getOverrideStorage" />
+           
+    <adapter for="Products.ATContentTypes.interface.IATDocument zope.publisher.interfaces.browser.IBrowserRequest"
+           provides="gomobile.convergence.interfaces.IOverrideForm"
+           factory=".document.DocumentOverriderForm" />
+
+
     <browser:page
     	  for="Products.ATContentTypes.interface.IATDocument"
           class=".document.DocumentOverriderFormView"

@@ -36,9 +36,11 @@ def addSchema(target, source):
     # Schema retains declaration order
     order = 0
 
+    # zope.schema uses order to know the order
+    # of declaration... start from the last field
     fields = zope.schema.getFieldsInOrder(target)
     if len(fields) > 0:
-        order = fields[-1].order + 1
+        order = max([ f.order for f in fields])
 
     for name, field in zope.schema.getFieldsInOrder(source):
         dupe = copy.copy(field)
