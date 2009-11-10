@@ -82,6 +82,47 @@ class TestBehavior(ViewTestCase):
         except ConstraintNotSatisfied:
             pass
 
+    def test_convergence_cataloged(self):
+        """ Test that we are compatible with (old) utility class.
+
+        Check that our options also end up to the portal catalog.
+        """
+
+        self.setDiscriminateMode("admin")
+
+        self.loginAsPortalOwner()
+        from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
+
+        self.filter = getUtility(IConvergenceMediaFilter)
+
+        sample_folder = self.portal
+        sample_folder.invokeFactory("Folder", "mobile_tree", title="Mobile tree")
+        self.filter.setContentMedia(sample_folder.mobile_tree, ContentMediaOption.MOBILE)
+        sample_folder.mobile_tree.reindexObject()
+
+        sample_folder.invokeFactory("Folder", "web_tree", title="Web tree")
+        self.filter.setContentMedia(sample_folder.web_tree, ContentMediaOption.WEB)
+        sample_folder.web_tree.reindexObject()
+
+        behavior = IMultiChannelBehavior(sample_folder.mobile_tree)
+        self.assertEqual(behavior.contentMedias, ContentMediaOption.MOBILE)
+
+        behavior = IMultiChannelBehavior(sample_folder.web_tree)
+        self.assertEqual(behavior.contentMedias, ContentMediaOption.WEB)
+
+        # Check that catalog gives sane results
+        catalog = self.getNavtreeData()
+        #for i in catalog: print i
+
+
+        mobile_tree_brain = catalog[-2] # Assume last, as it has been added last
+        self.assertEqual(mobile_tree_brain["getContentMedias"], ContentMediaOption.MOBILE)
+
+
+        web_tree_brain = catalog[-1] # Assume last, as it has been added last
+        self.assertEqual(web_tree_brain["getContentMedias"], ContentMediaOption.WEB)
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestBehavior))

@@ -15,26 +15,39 @@ __license__ = "GPL v2"
 import zope.interface
 import zope.component
 from zope import schema
+from five import grok
+from zope.schema.fieldproperty import FieldProperty
 
-from gomobile.convergence.overrider import base
-from gomobile.convergence.utilities import addSchema
+from Products.ATContentTypes.interface import IATDocument
 
 from plone.directives import form
 from plone.app.z3cform.layout import wrap_form
 from z3c.form import field
+
+from gomobile.convergence.overrider import base
+from gomobile.convergence.utilities import addSchema
+
+from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
 class DocumentOverrideSchema(form.Schema):
     """ Schema for overriden accessors.
 
     Correspond AT accessor names for  Products.ATContentTypes.content.document.ATDocumentSchema.
     """
-
     Title = schema.TextLine(title=u"Title")
 
     Description = schema.Text(title=u"Description")
 
     form.widget(getText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
     getText = schema.Text(title=u"Text")
+
+
+def get_field_schema(context):
+    """ Adapter to return schema telling which fields can be overridden
+
+    @param: DocumentOverrideSettings persistent instance
+    """
+    return DocumentOverrideSchema
 
 
 class DocumentOverrider(base.Overrider):
@@ -48,23 +61,36 @@ class DocumentOverrider(base.Overrider):
 class IFormSchema(base.IOverrideFormSchema):
     """ Schema for "edit mobile overrides" form """
 
-    Title = schema.TextLine(title=u"Title")
+    Title = schema.TextLine(title=u"Title", required=False)
 
-    Description = schema.Text(title=u"Description")
+    Description = schema.Text(title=u"Description", required=False)
 
-    form.widget(getText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
-    getText = schema.Text(title=u"Text")
+    form.widget(getText=WysiwygFieldWidget)
+    getText = schema.Text(title=u"Text", required=False)
 
 
-#addSchema(IFormSchema, )
-#addSchema(IFormSchema, DocumentOverrideSchema)
+class DocumentOverrideStorage(base.OverrideStorage):
+    """ Store document content type specific override settings
+    """
+    zope.interface.implements(IFormSchema)
+
+    Title = FieldProperty(IFormSchema["Title"])
+    Description = FieldProperty(IFormSchema["Description"])
+    getText = FieldProperty(IFormSchema["getText"])
+
+
+def document_override_storage_factory(context):
+    """ Adapter which creates the persistent object storing document specific overrides.
+
+    """
+    return base.getOverrideStorage(context, DocumentOverrideStorage)
 
 class DocumentOverriderForm(base.OverrideForm):
     """ Edit mobile overrides for the document
     """
-    
-    _schema = IFormSchema
 
-    fields = field.Fields(IFormSchema)
+    grok.context(IATDocument)
+
+    schema = IFormSchema
 
 DocumentOverriderFormView = wrap_form(DocumentOverriderForm)

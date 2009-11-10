@@ -1,8 +1,6 @@
 """
-    Suppoer behavior assignments for non-dexerity objects.
 
-    Define default mechanism to determine whether thr header animation
-    is enabled (the header is editable) on content.
+    Define mechanism for creating editable override field value proxies.
 
 """
 
@@ -15,7 +13,8 @@ __license__ = "GPL v2"
 import zope.interface
 import zope.component
 import zope.schema
-
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.schema.fieldproperty import FieldProperty
 from zope.annotation.interfaces import IAnnotations
 
 from five import grok
@@ -29,41 +28,6 @@ from zope.schema.interfaces import IContextSourceBinder
 from gomobile.convergence.interfaces import IOverrider, IOverrideEditView, IOverrideForm
 from gomobile.convergence.utilities import make_terms
 
-class IOverrideStorage(zope.interface.Interface):
-    """
-    Adapter to store mobile overrides on context objects.
-
-    You can override this adapter to
-    store data in different database, for example.
-    """
-
-class OverrideStorage(Persistent):
-    """
-    Persistent object storing z3c.form field values for mobile overrides.
-
-    Field values are attributes of this.
-
-    - Attribute name is the name of the overriden field (like description)
-
-    - Attribute value is the overriden value for the field
-    """
-
-    KEY = "mobile_override_values"
-
-def getOverrideStorage(context):
-    """ Default implementation how to store mobile overridden values for context objects.
-
-    Use zope.annotations package to stick data on __annotations__ attribute on the object.
-    """
-
-    annotations = IAnnotations(context)
-
-    value = annotations.get(OverrideStorage.KEY, None)
-    if value is None:
-        # Compute value and store it on request object for further look-ups
-        value = annotations[OverrideStorage.KEY] = OverrideStorage()
-
-    return value
 
 class Overrider(object):
     """
@@ -79,6 +43,10 @@ class Overrider(object):
 
     We use underscore to mark functions and attributes which are not proxied
     from the orignal object in any scenario.
+
+    Note that we need special magic for strings: Internally
+    we manage them as unicode, but Archetypes-like interface assumes
+    Title(), Description() etc. return UTF-8.
     """
 
     zope.interface.implements(IOverrider)
@@ -102,13 +70,14 @@ class Overrider(object):
         """
         Check whether the fieldName appears in "overrided fields list"
         """
-        overrides = getattr(storage, "enabled_overrides", [])
+        overrides = storage.enabled_overrides
         return fieldName in overrides
 
     def _fixCallable(self, fieldName, value):
 
         # Check whether the orignal accessed attribute
-        # was callable or not
+        # was callable or not, so we can use
+        # the same mechanism to override methods and attributes
 
         def callable_proxy():
             """ Faux generated function to return the overridden value when accessed as function """
@@ -148,28 +117,82 @@ class Overrider(object):
         else:
             return self._getOverrideOrOrignal(name)
 
+
+class IOverrideFields(zope.interface.Interface):
+    """
+    Marker interface describing schema for overridden fields.
+    """
+
 @grok.provider(IContextSourceBinder)
 def get_field_list(context):
     """ Return available overridable fields for mobile
+
+    @param context: OverrideStorage subclass instance
     """
-    overrider = IMobileOverride(context)
 
-    assert overrider._schema is not None, "Context overrider not sane:" + str(context)
+    schema = IOverrideFields(context)
 
-    fields = zope.schema.getFieldsInOrder(overrider._schema)
+    fields = zope.schema.getFieldsInOrder(schema)
 
-    terms = [ SimpleTerm(value=field.name, token=field.name, title=field.title) for field in fields ]
+    terms = [ SimpleTerm(value=name, token=name, title=field.title) for name, field in fields ]
 
     return SimpleVocabulary(terms)
 
-
+from z3c.form.browser.checkbox import CheckBoxWidget, CheckBoxFieldWidget
 class IOverrideFormSchema(form.Schema):
     """ Base class for editable override forms """
 
-    form.widget(enable_overrides='z3c.form.browser.checkbox.CheckboxWidget')
-    enabled_overrides = zope.schema.Choice(source=get_field_list, title=u"Overridden fields", required=False)
+    form.widget(enabled_overrides=CheckBoxFieldWidget)
+    enabled_overrides = zope.schema.List(title=u"Overridden fields", required=False,
+                                         value_type = zope.schema.Choice(source=get_field_list),
+                                         default=[]
+                                         )
 
-class OverrideForm(form.EditForm):
+
+class IOverrideStorage(zope.interface.Interface):
+    """
+    Adapter to store mobile overrides on context objects.
+
+    You can override this adapter to
+    store data in different database, for example.
+    """
+
+class OverrideStorage(Persistent):
+    """
+    Persistent object storing z3c.form field values for mobile overrides.
+
+    Field values are attributes of this.
+
+    - Attribute name is the name of the overriden field (like description)
+
+    - Attribute value is the overriden value for the field
+    """
+    KEY = "mobile_override_values"
+
+    zope.interface.implements(IOverrideFormSchema)
+
+    enabled_overrides = FieldProperty(IOverrideFormSchema["enabled_overrides"])
+
+def getOverrideStorage(context, storage_class=OverrideStorage):
+    """ Default implementation how to store mobile overridden values for context objects.
+
+    Use zope.annotations package to stick data on __annotations__ attribute on the object.
+
+    @param context: Any plone content object
+
+    @param storage: Storage class implementation we need to construct if this is first time accessing the storage
+    """
+
+    annotations = IAnnotations(context)
+
+    value = annotations.get(storage_class.KEY, None)
+    if value is None:
+        # Compute value and store it on request object for further look-ups
+        value = annotations[storage_class.KEY] = storage_class()
+
+    return value
+
+class OverrideForm(form.SchemaEditForm):
     """ Site editor interface for mobile override attributes.
     """
     ignoreContext = False
@@ -181,7 +204,15 @@ class OverrideForm(form.EditForm):
 
     schema = IOverrideFormSchema
 
-    def getContents(self):
-        storage = IOverrideStorage(self.context)
-        assert storage is not None
-        return storage
+    def __init__(self, context, request):
+        """ Construct the form.
+
+        """
+        self.context = context
+        self.request = request
+
+    def getContent(self):
+        """
+        Adapt for the storage storing override data.
+        """
+        return IOverrideStorage(self.context)

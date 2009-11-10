@@ -22,6 +22,18 @@ class TestMobileOverrides(BaseTestCase):
         self.loginAsPortalOwner()
         self.portal.invokeFactory("Event", "event")
 
+    def test_get_field_list(self):
+        """
+        Test that we populate enabled fields vocabulary correctly from override schema.
+        """
+
+        from gomobile.convergence.overrider.base import get_field_list
+        from gomobile.convergence.overrider.document import DocumentOverrideStorage
+        storage = DocumentOverrideStorage()
+
+        fields = get_field_list(storage)
+        assert "Title" in fields.by_token
+
     def test_has_overrides(self):
         """ Document object overrides are enabled by default
         """
@@ -35,14 +47,20 @@ class TestMobileOverrides(BaseTestCase):
 
         # Set one override enabled and check it is read properly
         storage = IOverrideStorage(doc)
+
         storage.enabled_overrides = ["Title"]
         self.assertEqual(overrider._isOverrideEnabled("Title", storage), True)
+        self.assertEqual(overrider._isOverrideEnabled("Description", storage), False)
 
         # Set overriden title
-        storage.Title = "Foobar"
+        storage.Title = u"Foobar"
 
-        # Call title accessor
-        self.assertEqual(overrider._getOverrideOrOrignal("Title")(), "Foobar")
+        # Call title accessor by emulator IOverrider steps
+        # and see each microstep completes
+        self.assertTrue(overrider._isOverride("Title"))
+        storage = IOverrideStorage(self.portal.doc)
+        self.assertTrue(overrider._isOverrideEnabled("Title", storage))
+        self.assertEqual(overrider._getOverrideOrOrignal("Title")(), u"Foobar")
 
         assert overrider.Title() == u"Foobar"
 
@@ -84,11 +102,14 @@ class TestMobileOverrides(BaseTestCase):
         self.create_doc()
 
         result = self.portal.doc.restrictedTraverse("@@convergence")
-        
+
         self.assertEqual(result.media_status(), u"Web and mobile")
-        
+
         # Test rendeing HTML without errors
         result()
+
+
+
 
 
 def test_suite():

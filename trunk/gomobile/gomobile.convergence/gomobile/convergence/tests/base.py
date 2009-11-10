@@ -15,23 +15,35 @@ from Products.PloneTestCase.layer import onsetup
 from gomobile.mobile.tests import utils
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
 
+
+# ZCML to override media discriminator with test stub
+ZCML_FIXES="""
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+ <utility
+     provides="gomobile.mobile.interfaces.IMobileRequestDiscriminator"
+     factory="gomobile.mobile.tests.utils.TestMobileRequestDiscriminator" />
+</configure>
+"""
+
 @onsetup
 def setup_zcml():
 
     fiveconfigure.debug_mode = True
     import gomobile.convergence
     zcml.load_config('configure.zcml', gomobile.convergence)
+    zcml.load_string(ZCML_FIXES)
     fiveconfigure.debug_mode = False
-    
+
     # We need to tell the testing framework that these products
     # should be available. This can't happen until after we have loaded
     # the ZCML.
 
-    ztc.installPackage('gomobile.mobile')    
+    ztc.installPackage('gomobile.mobile')
     ztc.installPackage('gomobile.convergence')
 
-    
-    
+
+
 # The order here is important.
 setup_zcml()
 #extension_profiles=['Products.CMFPlone:testfixture']
@@ -40,101 +52,120 @@ ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence'],extensio
 class ConvergenceTestCaseMixin:
 
     def afterSetUp(self):
-        self.filter = getUtility(IConvergenceMediaFilter)    
-        
+        self.filter = getUtility(IConvergenceMediaFilter)
+
         # Set up convergence layer on HTTP request,
         # so that configure overrides kick in
 
 
         from plone.browserlayer import utils
-        
+
         # TODO: Put following into a test case
         self.assertTrue(IConvergenceBrowserLayer in utils.registered_layers())
-        
+
         # Make sure that convergence layer is applied on the test request,
         # so that our custom views kick in
         #import pdb ; pdb.set_trace()
         directlyProvides(self.portal.REQUEST, [IConvergenceBrowserLayer] + list(directlyProvidedBy(self.portal.REQUEST)))
 
-        
+
     def setDiscriminateMode(self, mode):
-        """ Set whether we pose as web or mobile client """
-        utils.setDiscriminateMode(self.portal.REQUEST, mode)
-        
-        
+        """
+        Spoof the following HTTP request media.
+
+        @param: "mobile", "web" or other MobileRequestType pseudo-constant
+        """
+        from gomobile.mobile.tests.utils import TestMobileRequestDiscriminator
+        TestMobileRequestDiscriminator.setModes([mode])
+
+        # skin manager must update active skin for the request
+        self._refreshSkinData()
+
+
     def flatten(self, tree):
         """ Turn navigation tree into 1-dimesional array """
         array = []
-        
+
         def flatten(node):
             """ Flatten navigation tree to one dim. array for easier testing """
             for item in node['children']:
                 array.append(item)
                 flatten(item)
-                
+
             return array
-                
+
         return flatten(tree)
-        
+
     def getEntryByPath(self, flat, path):
         """ Search navigation tree entry by its path """
         url = self.portal.absolute_url() + path
 
-        for i in flat:                 
+        for i in flat:
             if i["getURL"] == url:
                 return i
-            
-        raise KeyError("No item:" + path)        
-    
+
+        raise KeyError("No item:" + path)
+
     def getNavtreeData(self):
         """ Create navigation tree data for the site """
         view = getMultiAdapter((self.portal, self.portal.REQUEST),
                                name='sitemap_builder_view')
-        
+
         data = view.siteMap()
-                
+
         data = self.flatten(data)
         return data
-    
+
     def create_sample_structure(self):
         """ Set up sample content structure for testing """
         self.loginAsPortalOwner()
-        
-        #self.portal.invokeFactory("Folder", "folder")        
+
+        #self.portal.invokeFactory("Folder", "folder")
         sample_folder = self.portal
         #self.portal.portal_workflow.doActionFor(sample_folder, "publish")
         #self.portal.reindexObject()
 
-        sample_folder.invokeFactory("Folder", "mobile_tree", title="Mobile tree")   
-        sample_folder.mobile_tree.invokeFactory("Document", "mobile_tree_inside_1")   
-        sample_folder.mobile_tree.invokeFactory("Document", "mobile_tree_inside_2")   
-        sample_folder.invokeFactory("Folder", "web_tree", title="Web tree")        
-        sample_folder.web_tree.invokeFactory("Folder", "web_tree_inside_1") 
+        sample_folder.invokeFactory("Folder", "mobile_tree", title="Mobile tree")
+        sample_folder.mobile_tree.invokeFactory("Document", "mobile_tree_inside_1")
+        sample_folder.mobile_tree.invokeFactory("Document", "mobile_tree_inside_2")
+        sample_folder.invokeFactory("Folder", "web_tree", title="Web tree")
+        sample_folder.web_tree.invokeFactory("Folder", "web_tree_inside_1")
         sample_folder.invokeFactory("Document", "web_doc")
         sample_folder.invokeFactory("Document", "mobile_doc")
         sample_folder.invokeFactory("Folder", "generic_tree", title="Generic tree")
-        sample_folder.generic_tree.invokeFactory("Document", "generic_tree_inside_1")   
-        
+        sample_folder.generic_tree.invokeFactory("Document", "generic_tree_inside_1")
+
         self.filter.setContentMedia(sample_folder.mobile_tree, ContentMediaOption.MOBILE)
         self.filter.setContentMedia(sample_folder.mobile_doc, ContentMediaOption.MOBILE)
         self.filter.setContentMedia(sample_folder.web_tree, ContentMediaOption.WEB)
+        web = self.filter.getContentMedia(sample_folder.web_tree)
+
+        # Super uber duper double check
+        assert web == "web"
+        anno = sample_folder.web_tree.__annotations__["multichannel"]
+        assert anno.contentMedias == "web"
+
+
         self.filter.setContentMedia(sample_folder.web_doc, ContentMediaOption.WEB)
         self.filter.setContentMedia(sample_folder.generic_tree, ContentMediaOption.BOTH)
-        
+
+
+
         # TODO: Had problems with cataloging in unit tests
         # not sure if the following helped
         import transaction
         transaction.get().savepoint()
-        
-        for tree in [ sample_folder, sample_folder.generic_tree, sample_folder.mobile_tree, sample_folder.web_tree ]:        
+
+        for tree in [ sample_folder, sample_folder.generic_tree, sample_folder.mobile_tree, sample_folder.web_tree ]:
+            tree.reindexObject(idxs=["getContentMedias"])
             for id,obj in tree.contentItems():
                 self.portal.portal_workflow.doActionFor(obj, "publish")
                 obj.reindexObject(idxs=["getContentMedias"])
-                        
-        
+
         self.logout()
+
         return sample_folder
-           
+
 
 class BaseTestCase(ConvergenceTestCaseMixin, ptc.PloneTestCase):
     """We use this base class for all the tests in this package. If necessary,
@@ -144,10 +175,10 @@ class BaseTestCase(ConvergenceTestCaseMixin, ptc.PloneTestCase):
 from Products.CMFPlone.tests.PloneTestCase import PloneTestCase
 class ViewTestCase(ConvergenceTestCaseMixin, PloneTestCase):
     """ We need different inherintance for this test case or stock views are not set up properly """
-    
-    def afterSetUp(self):        
+
+    def afterSetUp(self):
         PloneTestCase.afterSetUp(self)
         ConvergenceTestCaseMixin.afterSetUp(self)
-        
+
 class FunctionalTestCase(ConvergenceTestCaseMixin, ptc.FunctionalTestCase):
     pass

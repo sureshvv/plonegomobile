@@ -1,11 +1,14 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
-           xmlns:five="http://namespaces.zope.org/five">
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           >
 
   <include package=".portlets" />
 
-  <!-- Show web and mobile content in the sitemap -->
+  <grok:grok package="." />
 
+  <!-- Show web and mobile content in the sitemap -->
   <browser:page
       for="*"
       name="sitemap_view"
@@ -13,7 +16,7 @@
       permission="zope.Public"
       layer="..interfaces.IConvergenceBrowserLayer"
       />
-      
+
   <!-- Media portlet form submit target -->
   <browser:page
       for="*"
@@ -21,8 +24,16 @@
       class=".views.ChangeMediaStrategyView"
       permission="zope.Public"
       />
-  
-  <!-- Patch breadcrumbs to support mobile content filtering -->    
+
+  <!-- Media portlet form submit target -->
+  <browser:page
+      for="Products.CMFCore.interfaces.IContentish"
+      name="multichannel_overrider"
+      class=".views.OverriderView"
+      permission="zope2.View"
+      />
+
+  <!-- Patch breadcrumbs to support mobile content filtering -->
   <!--
   <browser:page
       for="*"
@@ -34,7 +45,7 @@
       />
   -->
 
-  <!-- Patch portal tabs to support mobile content filtering -->      
+  <!-- Patch portal tabs to support mobile content filtering -->
   <browser:page
       for="*"
       name="portal_tabs_view"
@@ -42,8 +53,8 @@
       permission="zope.Public"
       allowed_attributes="topLevelTabs"
       layer="..interfaces.IConvergenceBrowserLayer"
-      />      
-      
+      />
+
   <!-- Main form controlling context convergence -->
   <browser:page
       for="*"
@@ -52,7 +63,7 @@
       permission="cmf.ModifyPortalContent"
       allowed_attributes="publishing override"
       />
-  
-      
+
+
 
 </configure>

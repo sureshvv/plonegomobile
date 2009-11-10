@@ -30,17 +30,6 @@ import plone.z3cform.templates
 
 from gomobile.convergence.behaviors import IMultiChannelBehavior
 
-class MultiChannelForm(form.EditForm):
-    """ Form which displays options to edit header animation.
-
-    """
-    fields = field.Fields(IMultiChannelBehavior)
-
-    label = u"Multichannel publishing settings"
-
-    def getContent(self):
-        """ @return: Persistent data to edit by form machinery """
-        return IMultiChannelBehavior(self.context)
 
 
 

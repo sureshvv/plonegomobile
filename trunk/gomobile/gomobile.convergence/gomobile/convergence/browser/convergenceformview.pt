@@ -10,18 +10,22 @@
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
+      <h1 class="documentFirstHeading" tal:content="view/label">Title</h1>
+
 	  <div id="currentMediaStatus">
 		<b i18n:translate="media_status">
-			This content is visibile on:
+			The current content is visibile on:
 		</b>
 		<span tal:content="view/media_status" />
 	  </div>
 
 
-      <h1 class="documentFirstHeading" tal:content="view/label">Title</h1>
-
       <div id="skel-contents">
-        <span tal:replace="structure view/contents" />
+
+        <span tal:replace="structure view/render_publishing_form" />
+
+        <span tal:replace="structure view/render_override_form" />
+
       </div>
 
     </tal:main-macro>

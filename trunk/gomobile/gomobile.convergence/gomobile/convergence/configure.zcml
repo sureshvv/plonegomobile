@@ -25,6 +25,8 @@
          <implements interface=".interfaces.IConvergenceSupport" />
    </class>
 
+   <adapter factory='.indexing.getContentMedias' name='getContentMedias' />
+
    <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
 
    <plone:behavior
@@ -32,7 +34,7 @@
         description="Choose publishing content web, mobile or both"
         provides=".behaviors.IMultiChannelBehavior"
         for="gomobile.mobile.interfaces.IMobileContentish"
-        factory=".behaviors.MultiChannelBehaviorStorage"
+        factory=".behaviors.behavior_factory"
         />
 
    <utility

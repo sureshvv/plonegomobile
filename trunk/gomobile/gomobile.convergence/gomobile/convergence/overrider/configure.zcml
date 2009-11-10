@@ -23,16 +23,27 @@
           permission="zope2.View"
           />
 
-	<!-- Document mobile overrides -->
+	<!-- Persistent object storing document override data -->
+    <adapter for="Products.ATContentTypes.interface.IATDocument"
+           provides=".base.IOverrideStorage"
+           factory=".document.document_override_storage_factory" />
 
+	<!-- Class responsible for handling content value override  -->
     <adapter for="Products.ATContentTypes.interface.IATDocument"
            provides="gomobile.convergence.interfaces.IOverrider"
            factory=".document.DocumentOverrider" />
 
+	<!-- This adapter tells field list whose values can be overriden -->
+    <adapter for=".document.DocumentOverrideStorage"
+           provides="gomobile.convergence.overrider.base.IOverrideFields"
+           factory=".document.get_field_schema" />
+
+	<!--  -->
     <adapter for="Products.ATContentTypes.interface.IATDocument"
            provides="gomobile.convergence.overrider.base.IOverrideFormSchema"
            factory=".base.getOverrideStorage" />
-           
+
+	<!-- This adapter tells what form should be used to edit document overriden fields -->
     <adapter for="Products.ATContentTypes.interface.IATDocument zope.publisher.interfaces.browser.IBrowserRequest"
            provides="gomobile.convergence.interfaces.IOverrideForm"
            factory=".document.DocumentOverriderForm" />

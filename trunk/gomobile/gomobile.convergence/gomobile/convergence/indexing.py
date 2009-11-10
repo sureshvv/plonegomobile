@@ -3,9 +3,10 @@
 
 """
 
-__license__ = "GPL 2.1"
+__license__ = "GPL 2"
 __copyright__ = "2009 Twinapex Research"
-
+__author__ = "Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>"
+__docformat__ = "epytext"
 
 from zope.component import getUtility, queryUtility
 
@@ -15,25 +16,38 @@ from interfaces import IConvergenceSupport, IConvergenceMediaFilter
 
 from gomobile.convergence.behaviors import IMultiChannelBehavior
 
+
+def _getContentMedias(object, portal, **kw):
+    """ New and old indexer core """
+
+    try:
+        behavior = IMultiChannelBehavior(object)
+    except TypeError:
+        # OBject is not type which supports behavior adaptions
+        return Missing.Value
+
+    if behavior == None:
+        # Multichannel behavior has been disabled for the object by
+        # behavior assignable
+        return Missing.Value
+
+    medias = behavior.contentMedias
+
+    return medias
+
+
+# Plone 3.3.x way
 try:
     from plone.indexer.decorator import indexer
 
-
     @indexer(IConvergenceSupport)
-    def getContentMedias(object, portal, **kw):
-        """ Provide indexing hooksk for portal_catalog """
+    def getContentMedias(object, **kw):
+        """ Provide indexing hook for portal_catalog for all converged content.
 
-        if IConvergenceSupport.providedBy(object):
+        Store multi channel medias for later nav tree generating.
+        """
+        return _getContentMedias(object, None, **kw)
 
-            schema = object.Schema()
-
-            if not "contentMedias" in schema:
-                # Not real AT object - e.g. criteria
-                # TODO: Do we need to use different marker interface?
-                return Missing.Value
-            else:
-                filter = getUtility(IConvergenceMediaFilter)
-                return filter.getContentMedia(object)
 
 except ImportError:
     # Plone 3.2.x code
@@ -42,31 +56,7 @@ except ImportError:
 
     def getContentMedias(object, portal, **kw):
         """ Provide indexing hooksk for portal_catalog """
+        return _getContentMedias(object, portal, **kw)
 
-        try:
-            behavior = IMultiChannelBehavior(object)
-        except TypeError:
-            # OBject is not type which supports behavior adaptions
-            return Missing.Value
-
-        if behavior == None:
-            # Multichannel behavior has been disabled for the object by
-            # behavior assignable
-            return Missing.Value
-
-        return behavior.contentMedias
-
-
-        if IConvergenceSupport.providedBy(object):
-
-            schema = object.Schema()
-
-            if not "contentMedias" in schema:
-                # Not real AT object - e.g. criteria
-                # TODO: Do we need to use different marker interface?
-                return Missing.Value
-            else:
-                filter = getUtility(IConvergenceMediaFilter)
-                return filter.getContentMedia(object)
 
     registerIndexableAttribute('getContentMedias', getContentMedias)
