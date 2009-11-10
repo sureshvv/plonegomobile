@@ -98,7 +98,8 @@ class HeaderImage(grok.Viewlet):
         else:
             self.image_url = None
 
-
+class Sections(base.Sections):
+    """ Add sitemap link """
 
 
 

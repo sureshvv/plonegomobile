@@ -284,3 +284,9 @@ li#portaltab-blog {
 	padding-bottom: 10px;
 	border-bottom: 1px solid #888;
 }
+
+/* News feed */
+.timestamp {
+	font-size: 80%;
+	color: #aaa;
+}
