@@ -38,7 +38,6 @@ class DocumentOverrideSchema(form.Schema):
 
     Description = schema.Text(title=u"Description")
 
-    form.widget(getText='plone.app.z3cform.wysiwyg.WysiwygFieldWidget')
     getText = schema.Text(title=u"Text")
 
 
