@@ -5,7 +5,7 @@
 
   <genericsetup:registerProfile
       name="default"
-      title="Mobile content convergence"
+      title="Plone Go Mobile Convergence"
       directory="profiles/default"
       description='Publish to web and mobile medias easily'
       provides="Products.GenericSetup.interfaces.EXTENSION"
