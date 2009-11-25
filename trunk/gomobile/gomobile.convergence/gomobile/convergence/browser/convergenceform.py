@@ -25,13 +25,12 @@ from gomobile.convergence.interfaces import IOverrideForm, IOverrider
 from plone.z3cform.layout import FormWrapper, wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 
-from gomobile.convergence.behaviors import contentMediasVocabury, IMultiChannelBehavior
+from gomobile.convergence.behaviors import contentMediasVocabury, IMultiChannelBehavior, multichannel_behavior_factory
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
 from gomobile.convergence.filter import media_options_vocabulary
 from gomobile.convergence.interfaces import IOverrideForm
 
 from gomobile.convergence.overrider.base import IOverrideStorage
-
 
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
@@ -42,6 +41,13 @@ class PublishingForm(z3c.form.form.EditForm):
 
     def update(self):
         return z3c.form.form.EditForm.update(self)
+
+    def applyChanges(self, data):
+        # Call super
+        z3c.form.form.EditForm.applyChanges(self, data)
+
+        # Write behavior to database
+        multichannel_behavior_factory.makePersistent(self.context)
 
 class OverrideForm(z3c.form.form.EditForm):
     """ Fielde specific convergence options """

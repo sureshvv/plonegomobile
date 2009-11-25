@@ -140,16 +140,8 @@ class ConvergenceTestCaseMixin:
         self.filter.setContentMedia(sample_folder.web_tree, ContentMediaOption.WEB)
         web = self.filter.getContentMedia(sample_folder.web_tree)
 
-        # Super uber duper double check
-        assert web == "web"
-        anno = sample_folder.web_tree.__annotations__["multichannel"]
-        assert anno.contentMedias == "web"
-
-
         self.filter.setContentMedia(sample_folder.web_doc, ContentMediaOption.WEB)
         self.filter.setContentMedia(sample_folder.generic_tree, ContentMediaOption.BOTH)
-
-
 
         # TODO: Had problems with cataloging in unit tests
         # not sure if the following helped

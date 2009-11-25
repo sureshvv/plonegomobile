@@ -7,7 +7,7 @@
     xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="gomobile.convergence">
 
-	<include package="plone.behavior" file="meta.zcml" />
+    <include package="plone.behavior" file="meta.zcml" />
 
     <include package="plone.directives.form" file="meta.zcml" />
     <include package="plone.directives.form" />
@@ -34,12 +34,12 @@
         description="Choose publishing content web, mobile or both"
         provides=".behaviors.IMultiChannelBehavior"
         for="gomobile.mobile.interfaces.IMobileContentish"
-        factory=".behaviors.behavior_factory"
+        factory=".behaviors.multichannel_behavior_factory"
         />
 
    <utility
-	 provides="gomobile.convergence.interfaces.IConvergenceMediaFilter"
-	 factory=".filter.ConvergedMediaFilter" />
+     provides="gomobile.convergence.interfaces.IConvergenceMediaFilter"
+     factory=".filter.ConvergedMediaFilter" />
 
    <include file="profiles.zcml" />
 

@@ -22,7 +22,7 @@ from zope.annotation.interfaces import IAnnotations
 from plone.directives import form
 
 from gomobile.mobile.behaviors import FieldPropertyDelegate
-from gomobile.mobile.utilities import VolatileContext
+from gomobile.mobile.utilities import VolatileContext, AnnotationPersistentFactory
 
 from gomobile.convergence.interfaces import ContentMediaOption
 
@@ -68,23 +68,7 @@ class MultiChannelBehaviorStorage(VolatileContext, Persistent):
 
     contentMedias = FieldPropertyDelegate(IMultiChannelBehavior["contentMedias"])
 
-
-KEY = "multichannel"
-
-def behavior_factory(context):
-
-    annotations = IAnnotations(context)
-    if not KEY in annotations:
-        annotations[KEY] = MultiChannelBehaviorStorage(context)
-
-    object = annotations[KEY]
-
-    # Set volatile context for the forms
-    # so they get vocabulary correctly
-    object.context = context
-
-    return object
-
-
+# Create and store multichannel behaviors on the content objects
+multichannel_behavior_factory = AnnotationPersistentFactory(MultiChannelBehaviorStorage, "multichannel")
 
 
