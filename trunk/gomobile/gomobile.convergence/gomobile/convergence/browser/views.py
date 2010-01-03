@@ -27,8 +27,11 @@ from Products.CMFCore import permissions
 from Products.CMFCore.interfaces import IContentish
 
 from gomobile.mobile.interfaces import IMobileUtility, IMobileRequestDiscriminator, IMobileSiteLocationManager, MobileRequestType
+from gomobile.mobile.interfaces import IMobileRedirector
+
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter
 from gomobile.convergence.interfaces import IOverrider
+from gomobile.convergence.interfaces import IConvergenceSupport, ContentMediaOption
 
 class ChangeMediaStrategyView(BrowserView):
     """
@@ -91,3 +94,33 @@ class OverriderView(BrowserView):
 
         # No overrides, use context as is
         return self.context
+    
+class GoToMobileSiteView(BrowserView):
+    """ Helper view to redirect user to the mobile site.
+    
+    This is mostly useful when used as a helper view from site_actions.
+    """
+    
+    def is_available(self, context):
+        """
+        @return: True if the queried is available as a mobile version.
+        """
+        filter = getUtility(IConvergenceMediaFilter)
+        media = filter.solveContentMedia(context)
+        return media in (ContentMediaOption.BOTH, ContentMediaOption.MOBILE)
+        
+    def __call__(self):
+        """ Try to go the current content on the mobile site, otherwise go to the homepage.
+        
+        @return: Nothing but modifies HTTP response to be a redirect
+        """
+        context = self.context.aq_inner
+        if self.is_available(context):
+            redirect_context = context
+        else:
+            portal = context.portal_url.getPortalObject()
+            redirect_context = portal
+        
+        redirector = getMultiAdapter((redirect_context, self.request), IMobileRedirector)
+        return redirector.redirect_url(redirect_context.absolute_url())
+    

@@ -64,6 +64,15 @@
       allowed_attributes="publishing override"
       />
 
+  
+  <browser:page
+        for="*"
+        name="go_to_mobile_site"
+        permission="zope2.View"
+        class=".views.GoToMobileSiteView"
+        />
+
+
 
 
 </configure>
