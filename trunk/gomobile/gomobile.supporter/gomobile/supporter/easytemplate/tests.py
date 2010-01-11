@@ -43,10 +43,15 @@ def setup_zcml():
     fiveconfigure.debug_mode = False
 
 
-ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', "collective.easytemplate", "gomobile.suppoter.easytemplate"],
+ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', "collective.easytemplate", "gomobile.suppoter.easytemplate", 'gomobiletheme.basic'],
                    extension_profiles=['Products.CMFPlone:testfixture'])
 
 class TestEasyTemplateOverrides(BaseTestCase):
+    
+    def afterSetUp(self):
+        BaseTestCase.afterSetUp(self)
+        self._refreshSkinData()
+        self.setDiscriminateMode("mobile")
 
     def create_doc(self):
         self.loginAsPortalOwner()
@@ -225,7 +230,7 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         doc.setTitle("Foobar")
 
         storage = IOverrideStorage(doc)
-        storage.getUnfilteredTemplate = u"Title {{Êcontext.Title() }}"
+        storage.getUnfilteredTemplate = u"Title {{ï¿½context.Title() }}"
 
         self.setDiscriminateMode("web")
         self.browser.open(self.portal.doc.absolute_url())
