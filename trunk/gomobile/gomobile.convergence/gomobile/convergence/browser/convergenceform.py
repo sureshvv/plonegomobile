@@ -25,6 +25,8 @@ from gomobile.convergence.interfaces import IOverrideForm, IOverrider
 from plone.z3cform.layout import FormWrapper, wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 
+from gomobile.mobile.behaviors import IMobileBehavior 
+
 from gomobile.convergence.behaviors import contentMediasVocabury, IMultiChannelBehavior, multichannel_behavior_factory
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
 from gomobile.convergence.filter import media_options_vocabulary
@@ -32,28 +34,65 @@ from gomobile.convergence.interfaces import IOverrideForm
 
 from gomobile.convergence.overrider.base import IOverrideStorage
 
+class MobileForm(z3c.form.form.EditForm):
+    """ Folder/page specific mobile publishing options """
+
+    fields = field.Fields(IMobileBehavior)
+    
+    prefix = "mobile"
+    label = u"Mobile navigation options"
+
+    def update(self):
+        return z3c.form.form.EditForm.update(self)
+    
+    def getContent(self):
+        behavior = IMobileBehavior(self.context)
+        return behavior
+
+    def applyChanges(self, data):
+        # Call super
+        content = self.getContent() 
+        val = z3c.form.form.EditForm.applyChanges(self, data)
+        
+        # Write behavior to database
+        content = self.getContent() 
+        content.save()
+        
+        return val
+
+
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
 
     fields = field.Fields(IMultiChannelBehavior)
 
+    prefix = "publishing"
     label = u"Media options"
 
     def update(self):
         return z3c.form.form.EditForm.update(self)
+    
+    def getContent(self):
+        """
+        """
+        behavior = IMultiChannelBehavior(self.context)
+        return behavior        
 
     def applyChanges(self, data):
         # Call super
-        z3c.form.form.EditForm.applyChanges(self, data)
+        val = z3c.form.form.EditForm.applyChanges(self, data)
 
         # Write behavior to database
-        multichannel_behavior_factory.makePersistent(self.context)
+        self.getContent().save()
+        
+        return val
 
 class OverrideForm(z3c.form.form.EditForm):
     """ Fielde specific convergence options """
 
 
     label = u"Field overrides"
+    prefix = "overrides"
 
     def __init__(self, context, request, content_object):
         self.context = context
@@ -101,9 +140,12 @@ class MasterFormView(BrowserView):
 
         # Assign special contexts for both forms.
         # The form context is derived from the current content object.
-        publishing_context = IMultiChannelBehavior(self.context)
-        self.publishing_form_instance = PublishingForm(publishing_context, self.request)
-
+        #publishing_context = IMultiChannelBehavior(self.context)
+        
+        self.mobile_form_instance = MobileForm(self.context, self.request)
+        
+        self.publishing_form_instance = PublishingForm(self.context, self.request)
+        
         self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
         #override_context = IOverrideStorage(self.context)
         #self.override_form_instance = OverrideForm(override_context, self.request, self.context)
@@ -131,6 +173,9 @@ class MasterFormView(BrowserView):
 
         Called by template."""
         return self.publishing_form_instance()
+    
+    def render_mobile_form(self):
+        return self.mobile_form_instance()
 
     def __call__(self):
 

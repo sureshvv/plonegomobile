@@ -22,8 +22,13 @@
 
       <div id="skel-contents">
 
+        <h2>Media settings</h2>
         <span tal:replace="structure view/render_publishing_form" />
+	
+	<h2>Mobile navigation settings</h2>
+	<span tal:replace="structure view/render_mobile_form" />
 
+        <h2>Mobile content overrides</h2>
         <span tal:replace="structure view/render_override_form" />
 
       </div>
