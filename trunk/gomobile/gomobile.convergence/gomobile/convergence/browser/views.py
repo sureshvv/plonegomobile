@@ -95,11 +95,24 @@ class OverriderView(BrowserView):
         # No overrides, use context as is
         return self.context
     
-class GoToMobileSiteView(BrowserView):
+        
+class AbstractGoToView(BrowserView):
     """ Helper view to redirect user to the mobile site.
     
     This is mostly useful when used as a helper view from site_actions.
     """
+    
+    def get_available_medias(self):
+        """
+        @return: Tuple of ids where the target media must be available to make this link active.
+        """
+        raise NotImplementedError("Abstract method")
+    
+    def get_target_media(self):
+        """
+        @return: "www" or "mobile"
+        """
+        raise NotImplementedError("Abstract method")    
     
     def is_available(self, context):
         """
@@ -107,7 +120,7 @@ class GoToMobileSiteView(BrowserView):
         """
         filter = getUtility(IConvergenceMediaFilter)
         media = filter.solveContentMedia(context)
-        return media in (ContentMediaOption.BOTH, ContentMediaOption.MOBILE)
+        return media in self.get_available_medias()
         
     def __call__(self):
         """ Try to go the current content on the mobile site, otherwise go to the homepage.
@@ -122,5 +135,26 @@ class GoToMobileSiteView(BrowserView):
             redirect_context = portal
         
         redirector = getMultiAdapter((redirect_context, self.request), IMobileRedirector)
-        return redirector.redirect_url(redirect_context.absolute_url())
+        return redirector.redirect_url(redirect_context.absolute_url(), media_type=self.get_target_media())
     
+class GoToMobileSiteView(AbstractGoToView):
+    """    
+    Use ${context/absolute_url}/@@go_to_mobile_site view to redirect visitors manually to mobile version of the site.    
+    """
+    def get_available_medias(self):
+        return (ContentMediaOption.BOTH, ContentMediaOption.MOBILE)
+    
+    def get_target_media(self):
+        return "mobile"
+    
+class GoToWebSiteView(AbstractGoToView):
+    """
+    Use ${context/absolute_url}/@@go_to_web_site view to redirect visitors manually to web version of the site.
+    """
+    
+    def get_available_medias(self):
+        return (ContentMediaOption.BOTH, ContentMediaOption.WEB)
+    
+    def get_target_media(self):
+        return "web"
+            

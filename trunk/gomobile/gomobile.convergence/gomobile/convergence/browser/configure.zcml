@@ -72,6 +72,12 @@
         class=".views.GoToMobileSiteView"
         />
 
+  <browser:page
+        for="*"
+        name="go_to_web_site"
+        permission="zope2.View"
+        class=".views.GoToWebSiteView"
+        />
 
 
 
