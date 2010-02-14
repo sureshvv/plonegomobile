@@ -211,6 +211,8 @@ class ImageInfoUtility(object):
         elif original_mode == 'P':
             image = image.convert('RGBA')
 
+        format = image.format
+
         if conserve_aspect_ration:
             image.thumbnail([w,h], PIL.Image.ANTIALIAS)
         else:
@@ -218,14 +220,15 @@ class ImageInfoUtility(object):
             # PIL has different API for image.thumbnail and resize
             # Now give me vodka....
             image = image.resize([w,h], PIL.Image.ANTIALIAS)
-
-        format = image.format and image.format or default_format
+        
+    
         # decided to only preserve palletted mode
         # for GIF, could also use image.format in ('GIF','PNG')
         if original_mode == 'P' and format == 'GIF':
             image = image.convert('P')
         thumbnail_file = cStringIO.StringIO()
         # quality parameter doesn't affect lossless formats
+
         image.save(thumbnail_file, format, quality=pil_quality)
         thumbnail_file.seek(0)
         return thumbnail_file, format.lower()
