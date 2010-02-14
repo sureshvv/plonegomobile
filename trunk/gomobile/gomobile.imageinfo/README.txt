@@ -19,6 +19,8 @@ TODO
 
 * Management of external images: http:// image links, download and cache
 
+* Tests depends on gomobile.mobile
+
 Author
 ------
 

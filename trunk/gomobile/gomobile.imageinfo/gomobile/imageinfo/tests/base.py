@@ -1,4 +1,4 @@
-__license__ = "GPL 2.1"
+__license__ = "GPL 2"
 __copyright__ = "2009 Twinapex Research"
 
 from Products.Five import zcml
