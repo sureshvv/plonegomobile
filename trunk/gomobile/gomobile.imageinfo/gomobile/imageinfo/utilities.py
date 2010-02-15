@@ -94,7 +94,6 @@ class ImageInfoUtility(object):
         else:
             return [img.width, img.height]
     
-
     def getImageObject(self, path):
         """ Get image handle to traversable Zope object, assuming object is some sort of image
 
@@ -159,15 +158,13 @@ class ImageInfoUtility(object):
         if "//" in url:
             return self.downloadImage(url)
         else:
-            return self.getPIL(url)
+            return self.getPILFromPath(url)
 
-    def getPIL(self, path):
-        """ Return Python Imaging Library manipulation object
 
-        @param path: Zope traversing path
-        @return: PIL manipulation object
+    def getPILFromObject(self, obj):
         """
-        obj = self.getImageObject(path)
+
+        """
 
         if isinstance(obj, ImageFile):
             # Normal file system file
@@ -193,7 +190,16 @@ class ImageInfoUtility(object):
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
         else:
-            raise RuntimeError("Can't handle:" + path)
+            raise RuntimeError("Can't handle:" + str(obj))
+        
+    def getPILFromPath(self, path):
+        """ Return Python Imaging Library manipulation object
+
+        @param path: Zope traversing path
+        @return: PIL manipulation object
+        """
+        obj = self.getImageObject(path)
+        return self.getPILFromObject(obj)
 
     def performResize(self, image, w, h, conserve_aspect_ration=True):
         """ Return resized
@@ -253,7 +259,21 @@ class ImageInfoUtility(object):
 
         @param return: [Image data, format]
         """
-        image = self.getPIL(path)
+        image = self.getPILFromPath(path)
+        return self.performResize(image, w, h, conserve_aspect_ration)
+
+    def resizeImage(self, obj, w, h, conserve_aspect_ration=True):
+        """ Return resized image payload and its format.
+        
+        Format is PIL format string: GIF, PNG or JPG.
+
+        @param obj: Any image-like Zope object
+
+        @param conserve_aspect_ration: Do not stretch image
+
+        @param return: [Image data, format]
+        """
+        image = self.getPILFromObject(obj)
         return self.performResize(image, w, h, conserve_aspect_ration)
 
 
@@ -270,6 +290,7 @@ class ImageInfoUtility(object):
         """
         image = self.getOrDownloadImageObject(path)
         return self.performResize(image, w, h, conserve_aspect_ration)
+
 
 
 
