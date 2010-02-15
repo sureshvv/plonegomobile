@@ -20,6 +20,7 @@ import zope.interface
 import OFS
 from Products.CMFCore.FSImage import FSImage
 from Products.Archetypes.Field import Image as ATFieldImage
+from Products.ATContentTypes.interface import IATImage
 from Products.Five.browser import BrowserView
 
 from zope.app.component.hooks import getSite
@@ -124,6 +125,9 @@ class ImageInfoUtility(object):
         elif isinstance(img, OFS.Image.Image):
             # image uploaded to a portal_skins/custom
             return img
+        elif IATImage.providedBy(img):
+            # Image is uploaded image content type
+            return img.getImage()
         else:
 
             if callable(img):
@@ -180,6 +184,11 @@ class ImageInfoUtility(object):
             return PIL.Image.open(io)
         elif isinstance(obj, ATFieldImage):
             # Read data from object
+            data = obj.data
+            io = cStringIO.StringIO(data)
+            return PIL.Image.open(io)
+        elif IATImage.providedBy(obj):
+            obj = obj.getImage()
             data = obj.data
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
