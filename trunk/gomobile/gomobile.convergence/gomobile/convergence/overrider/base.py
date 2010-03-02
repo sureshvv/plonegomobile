@@ -183,6 +183,9 @@ def getOverrideStorage(context, storage_class=OverrideStorage):
     @param storage: Storage class implementation we need to construct if this is first time accessing the storage
     """
 
+    # Aqwrappers are evil
+    context = context.aq_inner
+
     annotations = IAnnotations(context)
 
     value = annotations.get(storage_class.KEY, None)
