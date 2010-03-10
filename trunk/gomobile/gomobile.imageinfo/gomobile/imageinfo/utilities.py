@@ -177,7 +177,16 @@ class ImageInfoUtility(object):
         elif isinstance(obj, ATFieldImage):
             # Read data from object
             pimage = obj.data
-            io = cStringIO.StringIO(pimage.data)
+            
+            # TODO
+            # WTF CASE THIS ÌS AGAIN... 
+            # 
+            if hasattr(pimage, "data"):
+                data = pimage.data
+            else:
+                data = pimage
+            
+            io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
         elif IATImage.providedBy(obj):
             obj = obj.getImage()
