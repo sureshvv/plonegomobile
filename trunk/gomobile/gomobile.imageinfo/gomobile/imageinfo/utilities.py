@@ -162,8 +162,9 @@ class ImageInfoUtility(object):
 
 
     def getPILFromObject(self, obj):
-        """
+        """ Convert various Zope based image objects to Python Imaging Library image data.
 
+        @param obj: Any Zope imagish object
         """
 
         if isinstance(obj, ImageFile):
@@ -173,20 +174,20 @@ class ImageInfoUtility(object):
             # FSImage
             # Read data from object
             return PIL.Image.open(obj.getObjectFSPath())
-        elif isinstance(obj, OFS.Image.Image):
-            # OFS Image
-            # Held in the portal_skins folder, uploaded via ZMI
-            data = obj.data
-            io = cStringIO.StringIO(data)
-            return PIL.Image.open(io)
         elif isinstance(obj, ATFieldImage):
             # Read data from object
-            data = obj.data
-            io = cStringIO.StringIO(data)
+            pimage = obj.data
+            io = cStringIO.StringIO(pimage.data)
             return PIL.Image.open(io)
         elif IATImage.providedBy(obj):
             obj = obj.getImage()
             data = obj.data
+            io = cStringIO.StringIO(data)
+            return PIL.Image.open(io)
+        elif isinstance(obj, OFS.Image.Image):
+            # OFS Image
+            # Held in the portal_skins folder, uploaded via ZMI
+            data = obj.data            
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
         else:
@@ -213,6 +214,10 @@ class ImageInfoUtility(object):
         default_format = "PNG"
 
         pil_quality = 88
+        
+        format = image.format
+        if format == None:
+            format = default_format        
 
         # consider image mode when scaling
         # source images can be mode '1','L,','P','RGB(A)'
@@ -225,8 +230,6 @@ class ImageInfoUtility(object):
             image = image.convert('L')
         elif original_mode == 'P':
             image = image.convert('RGBA')
-
-        format = image.format
 
         if conserve_aspect_ration:
             image.thumbnail([w,h], PIL.Image.ANTIALIAS)
@@ -243,7 +246,7 @@ class ImageInfoUtility(object):
             image = image.convert('P')
         thumbnail_file = cStringIO.StringIO()
         # quality parameter doesn't affect lossless formats
-
+        
         image.save(thumbnail_file, format, quality=pil_quality)
         thumbnail_file.seek(0)
         return thumbnail_file, format.lower()
