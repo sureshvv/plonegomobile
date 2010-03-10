@@ -215,6 +215,7 @@ class ImageInfoUtility(object):
 
         pil_quality = 88
         
+        # Extract the orignal image format from data
         format = image.format
         if format == None:
             format = default_format        
