@@ -2,7 +2,9 @@
 
     Front page special views.
     
-    Can be called from collective.easytemplate templates.
+    Can be called from collective.easytemplate templates by putting in the following template code::
+    
+        {{ view("hotnow") }}
 
     http://mfabrik.com
 
