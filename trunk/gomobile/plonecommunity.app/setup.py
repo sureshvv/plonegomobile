@@ -55,10 +55,15 @@ setup(name='plonecommunity.app',
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
+                        'five.grok'
                         # -*- Extra requirements: -*-
                         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
       test_suite = 'plonecommunity.app.tests.test_docs.test_suite',
       paster_plugins = ["ZopeSkel"],
+      entry_points="""
+        [z3c.autoinclude.plugin]
+        target = plone
+        """
       )

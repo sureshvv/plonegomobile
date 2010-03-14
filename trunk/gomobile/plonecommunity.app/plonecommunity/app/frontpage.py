@@ -14,10 +14,16 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from Products.ATContentTypes.utils import DT2dt, dt2DT
 
-class HowNowView(BrowserView):    
+# Use templates directory to search for templates.
+grok.templatedir("templates")
+
+class HowNowView(grok.View):    
     """ Mobile site logo """
     
-    template = ViewPageTemplateFile("hot-now.pt")
+
+    # Viewlets are on all content by default.
+    grok.context(Interface)
+
     
     def __call__(self):
         """

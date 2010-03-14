@@ -4,9 +4,14 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="plonecommunity.app"
     xmlns:cmf="http://namespaces.zope.org/cmf"	
-	>
+    xmlns:grok="http://namespaces.zope.org/grok"
+    >
+
 
   <five:registerPackage package="." initialize=".initialize" />
+
+  <include package="five.grok" />
+  <grok:grok package="." />
 
   <!-- Include the sub-packages that use their own configure.zcml files. -->
   <include package=".browser" />
