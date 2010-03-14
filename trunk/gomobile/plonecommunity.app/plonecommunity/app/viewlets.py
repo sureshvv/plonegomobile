@@ -35,29 +35,6 @@ grok.layer(IThemeLayer)
 
 grok.viewletmanager(MainViewletManager)
 
-# NOTE: We do not override any CSS from gomobiletheme.basic
-class Head(base.Head):
-    """
-    Override <head> generation so that we use CSS files 
-    and static resources specific to this skin.
-    """
-    
-    def resource_url(self):
-        """ Get static resource URL.
-        
-        See gomobiletheme.basic.viewlets.Head for more information.
-        """
-        
-        # You need to copy whole gomobiletheme.basic/gomobiletheme/basic/statuc
-        # folder to your own product and refer it here to use its CSS
-        
-        # return self.portal_url + "/" + "++resource++plonecommunity.app"
-        
-    
-# Fix for grok 1.0 template inheritance
-# https://bugs.launchpad.net/grok/+bug/255005
-fix_grok_template_inheritance(Head, base.Head)
-
 
 class AdditionalHead(base.AdditionalHead):
     """ Include some more service  specific CSS files.
@@ -80,3 +57,12 @@ class Logo(base.Logo):
 # Fix for grok 1.0 template inheritance
 # https://bugs.launchpad.net/grok/+bug/255005
 fix_grok_template_inheritance(Logo, base.Logo)
+
+
+
+class FooterText(base.FooterText):
+    """
+    Override footer text in footertext.pt.
+    """
+
+
