@@ -5,7 +5,7 @@
 """
 
 __license__ = "GPL 2"
-__copyright__ = "2009 Twinapex Research"
+__copyright__ = "2020 mFabrik Research Oy"
 __author__ = "Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>"
 __author_url__ = "http://www.twinapex.com"
 __docformat__ = "epytext"
@@ -17,7 +17,6 @@ import lxml.html
 from zope.app.cache import ram
 
 from Products.feedfeeder.content.item import FeedFeederItem
-from gomobile.xhtmlmp.transformers.xhtmlmp_safe import clean_xhtml_mp
 
 logger = logging.getLogger("GoMobile")
 
@@ -44,6 +43,14 @@ def cache(name):
         return replacement
     return decorator
 
+def clean_html(context, request, html):
+    """
+    """
+    from zope.component import getMultiAdapter
+    
+    mobile_image_html_rewriter = getMultiAdapter((context, request), name="mobile_image_html_rewriter")
+    return mobile_image_html_rewriter.processHTML(html, trusted=False, only_for_mobile=False)
+    
 
 def flush_cache(name, context):
     """ Clear entry in RAMCache
@@ -78,13 +85,14 @@ def _getText(self):
     
     if text:
         # can be None    
-        clean = clean_xhtml_mp(text)        
+        request = self.REQUEST
+        clean = clean_html(self, request, text)        
         return clean
     
     return text
     
-def _setText(self, value):
-    FeedFeederItem._old_setText(self, value)    
+def _setText(self, value, *args, **kwargs):
+    FeedFeederItem._old_setText(self, value, *args, **kwargs)    
     flush_cache("text", self) 
 
 @cache("description")
