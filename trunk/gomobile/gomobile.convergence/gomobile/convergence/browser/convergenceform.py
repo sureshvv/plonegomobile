@@ -1,11 +1,17 @@
 """
 
-    Convergence options edit forms
+    Convergence options edit forms.
+    
+    This will override gomobile.mobile Mobile options form
+    by overriding document_actions "mobile_options" action
+    when quick installer is run (actions.xml)
 
+    http://mfabrik.com
+    
 """
 
 __license__ = "GPL 2"
-__copyright__ = "2009 Twinapex Research"
+__copyright__ = "2010 mFabrik Research Oy"
 __author__ = "Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>"
 __docformat__ = "epytext"
 
@@ -26,6 +32,7 @@ from plone.z3cform.layout import FormWrapper, wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 
 from gomobile.mobile.behaviors import IMobileBehavior 
+from gomobile.mobile.forms import MobileForm
 
 from gomobile.convergence.behaviors import contentMediasVocabury, IMultiChannelBehavior, multichannel_behavior_factory
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
@@ -33,33 +40,6 @@ from gomobile.convergence.filter import media_options_vocabulary
 from gomobile.convergence.interfaces import IOverrideForm
 
 from gomobile.convergence.overrider.base import IOverrideStorage
-
-class MobileForm(z3c.form.form.EditForm):
-    """ Folder/page specific mobile publishing options """
-
-    fields = field.Fields(IMobileBehavior)
-    
-    prefix = "mobile"
-    label = u"Mobile navigation options"
-
-    def update(self):
-        return z3c.form.form.EditForm.update(self)
-    
-    def getContent(self):
-        behavior = IMobileBehavior(self.context)
-        return behavior
-
-    def applyChanges(self, data):
-        # Call super
-        content = self.getContent() 
-        val = z3c.form.form.EditForm.applyChanges(self, data)
-        
-        # Write behavior to database
-        content = self.getContent() 
-        content.save()
-        
-        return val
-
 
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
