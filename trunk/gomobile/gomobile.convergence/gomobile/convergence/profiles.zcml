@@ -1,14 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+
     i18n_domain="harvinaiset.skin">
 
-  <genericsetup:registerProfile
-      name="default"
-      title="Plone Go Mobile Convergence"
-      directory="profiles/default"
-      description='Publish to web and mobile medias easily'
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
 
 </configure>
