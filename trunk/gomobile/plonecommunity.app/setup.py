@@ -34,9 +34,9 @@ long_description = (
 
 tests_require=['zope.testing']
 
-setup(name='plonecommunity.mobi',
+setup(name='plonecommunity.app',
       version=version,
-      description="",
+      description="plonecommunity.mobi site source code",
       long_description=long_description,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
@@ -46,9 +46,9 @@ setup(name='plonecommunity.mobi',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='',
-      author='Twinapex Research',
+      author='mFabrik Research Oy',
       author_email='mikko.ohtamaa@twinapex.com',
-      url='http://www.twinapex.com',
+      url='http://mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['plonecommunity', ],
