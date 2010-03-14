@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<layers>
-    <layer name="Plone mobile community " 
-           interface="plonecommunity.app.interfaces.IThemeLayer" />
-</layers>

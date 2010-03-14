@@ -17,6 +17,7 @@ __license__ = "GPL 2"
 import math
 import datetime
 
+from zope.interface import Interface
 from five import grok
  
 from Products.ATContentTypes.utils import DT2dt, dt2DT
@@ -24,7 +25,7 @@ from Products.ATContentTypes.utils import DT2dt, dt2DT
 # Use templates directory to search for templates.
 grok.templatedir("templates")
 
-class HowNowView(grok.View):    
+class HotNow(grok.View):    
     """  
     This view is used on the front page.
     It is rendered through collective.easytemplate tag.

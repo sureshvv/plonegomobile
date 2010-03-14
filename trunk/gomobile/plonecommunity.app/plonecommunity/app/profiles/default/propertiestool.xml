@@ -48,7 +48,7 @@
 	set up in portal_skins.
   
     -->
-  <property name="mobile_skin" type="string" purge="False">Plone mobile community</property>  
+  <property name="mobile_skin" type="string" purge="False">plonecommunity.mobi theme</property>  
   
   <!--
   

@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>1.0</version>
+  
+  <!-- We need to have gomobiletheme.basic installed to function properly 
+       as we depend on its viewlets and skin layer -->
+  <dependencies>
+    <dependency>profile-gomobiletheme.basic:default</dependency>
+  </dependencies>
+  
 </metadata>

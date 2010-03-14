@@ -1,0 +1,2 @@
+
+ <link rel="stylesheet" type="text/css" tal:attributes="href string:${viewlet/resource_url}/plonecommunity.css" />
