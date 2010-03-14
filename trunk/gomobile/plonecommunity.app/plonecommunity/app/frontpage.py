@@ -4,21 +4,31 @@
     
     Can be called from collective.easytemplate templates.
 
+    http://mfabrik.com
+
 """
+
+
+__author__ = "Mikko Ohtamaa <mikko@mfabrik.com>"
+__copyright__ = "2010 mFabrik Research Oy"
+__docformat__ = "epytext"
+__license__ = "GPL 2"
 
 import math
 import datetime
 
-from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
+from five import grok
+ 
 from Products.ATContentTypes.utils import DT2dt, dt2DT
 
 # Use templates directory to search for templates.
 grok.templatedir("templates")
 
 class HowNowView(grok.View):    
-    """ Mobile site logo """
+    """  
+    This view is used on the front page.
+    It is rendered through collective.easytemplate tag.
+    """
     
 
     # Viewlets are on all content by default.
