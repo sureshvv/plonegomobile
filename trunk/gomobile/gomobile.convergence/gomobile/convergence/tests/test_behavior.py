@@ -52,6 +52,7 @@ class TestBehavior(ViewTestCase):
         self.assertEqual(behavior.contentMedias, ContentMediaOption.USE_PARENT)
 
         behavior.contentMedias = ContentMediaOption.WEB
+        behavior.save()
 
         # Recreate behavior
         behavior = IMultiChannelBehavior(doc)
@@ -95,15 +96,18 @@ class TestBehavior(ViewTestCase):
 
         self.filter = getUtility(IConvergenceMediaFilter)
 
+        # Create first a folder structure only for mobile
         sample_folder = self.portal
         sample_folder.invokeFactory("Folder", "mobile_tree", title="Mobile tree")
         self.filter.setContentMedia(sample_folder.mobile_tree, ContentMediaOption.MOBILE)
         sample_folder.mobile_tree.reindexObject()
 
+        # Then create  folder structure for web
         sample_folder.invokeFactory("Folder", "web_tree", title="Web tree")
         self.filter.setContentMedia(sample_folder.web_tree, ContentMediaOption.WEB)
         sample_folder.web_tree.reindexObject()
 
+        # check that our setting is stored correctly
         behavior = IMultiChannelBehavior(sample_folder.mobile_tree)
         self.assertEqual(behavior.contentMedias, ContentMediaOption.MOBILE)
 

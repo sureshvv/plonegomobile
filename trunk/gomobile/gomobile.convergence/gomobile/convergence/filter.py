@@ -28,7 +28,21 @@ media_options_vocabulary = ((ContentMediaOption.USE_PARENT, "Use parent folder s
 
 
 class ConvergedMediaFilter:
-    """ Helper class to deal with media state of content objects. """
+    """ Helper class to deal with media state of content objects. 
+    
+    To use this class:
+    
+        from gomobile.convergence.interfaces import IConvergenceMediaFilter
+        self.filter = getUtility(IConvergenceMediaFilter)
+        
+        
+    .. note ::
+    
+        This class is mostly deprecated and will be removed in the future.
+        Please use IMultiChannelBehavior directly.
+        
+    
+    """
 
     def isConvergedContent(self, content):
         """ See that the content is proper converged supported """
@@ -78,6 +92,9 @@ class ConvergedMediaFilter:
             raise RuntimeError("Content does not support multi channel behavior")
 
         behavior.contentMedias = strategy
+        
+        # Make change persistent
+        behavior.save()
 
 
     def solveContentMedia(self, content):

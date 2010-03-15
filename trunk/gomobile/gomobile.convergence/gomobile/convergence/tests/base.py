@@ -41,13 +41,13 @@ def setup_zcml():
 
     ztc.installPackage('gomobile.mobile')
     ztc.installPackage('gomobile.convergence')
-
+    ztc.installPackage('gomobiletheme.basic')
 
 
 # The order here is important.
 setup_zcml()
 #extension_profiles=['Products.CMFPlone:testfixture']
-ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence'],extension_profiles=['Products.CMFPlone:testfixture'])
+ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', 'gomobiletheme.basic'],extension_profiles=['Products.CMFPlone:testfixture'])
 
 class ConvergenceTestCaseMixin:
 
