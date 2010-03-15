@@ -27,9 +27,15 @@ class IConvergenceMediaFilter(Interface):
     """ Utility to deal with the media state of content objects and catalog brains. """
 
 class IConvergenceBrowserLayer(Interface):
-    """ This layer is applied on the request when Plone Mobile product has been quick installed.
+    """ This layer is applied on the request when Go Mobile Convergenced add on is installed.
 
-    It will have effects on sitemap etc.
+    It will have effects on 
+    
+    * sitemap
+    
+    * portal_tabs
+    
+    * portal breadcrumbs
     """
 
 class IOverrider(Interface):

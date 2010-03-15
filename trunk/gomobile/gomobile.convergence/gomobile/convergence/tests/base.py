@@ -16,23 +16,13 @@ from gomobile.mobile.tests import utils
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
 
 
-# ZCML to override media discriminator with test stub
-ZCML_FIXES="""
-<configure
-    xmlns="http://namespaces.zope.org/zope">
- <utility
-     provides="gomobile.mobile.interfaces.IMobileRequestDiscriminator"
-     factory="gomobile.mobile.tests.utils.TestMobileRequestDiscriminator" />
-</configure>
-"""
-
 @onsetup
 def setup_zcml():
 
     fiveconfigure.debug_mode = True
     import gomobile.convergence
     zcml.load_config('configure.zcml', gomobile.convergence)
-    zcml.load_string(ZCML_FIXES)
+    zcml.load_string(utils.ZCML_INSTALL_TEST_DISCRIMINATOR)
     fiveconfigure.debug_mode = False
 
     # We need to tell the testing framework that these products

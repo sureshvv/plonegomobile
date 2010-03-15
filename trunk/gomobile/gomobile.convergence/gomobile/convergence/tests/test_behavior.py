@@ -1,5 +1,13 @@
-__license__ = "GPL 2.1"
-__copyright__ = "2009 Twinapex Research"
+"""
+
+    Test multi-channel behavior object.
+
+"""
+
+__license__ = "GPL 2"
+__copyright__ = "2010 mFabrik Research Oy"
+__author__ = "Mikko Ohtamaa <mikko@mfabrik.com>"
+__docformat__ = "epytext" 
 
 import unittest
 
