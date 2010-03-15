@@ -32,7 +32,7 @@ from plone.z3cform.layout import FormWrapper, wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 
 from gomobile.mobile.behaviors import IMobileBehavior 
-from gomobile.mobile.forms import MobileForm
+from gomobile.mobile.browser.forms import MobileForm
 
 from gomobile.convergence.behaviors import contentMediasVocabury, IMultiChannelBehavior, multichannel_behavior_factory
 from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMediaFilter, IConvergenceBrowserLayer
