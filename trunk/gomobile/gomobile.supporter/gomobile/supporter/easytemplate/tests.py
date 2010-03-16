@@ -14,11 +14,11 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from gomobile.convergence.interfaces import IOverrider
 from gomobile.convergence.overrider.base import IOverrideStorage
-from gomobile.convergence.tests.base import BaseTestCase, ZCML_FIXES
+from gomobile.convergence.tests.base import BaseTestCase
 from gomobiletheme.basic.tests import MOBILE_HTML_MARKER
 from collective.easytemplate.tests.base import EasyTemplateTestCase
 from gomobile.mobile.interfaces import IMobileLayer
-
+from gomobile.mobile.tests.utils import ZCML_INSTALL_TEST_DISCRIMINATOR
 
 @onsetup
 def setup_zcml():
@@ -28,7 +28,7 @@ def setup_zcml():
 
     import collective.easytemplate
     zcml.load_config('configure.zcml', gomobile.suppoter)
-    zcml.load_string(ZCML_FIXES)
+    zcml.load_string(ZCML_INSTALL_TEST_DISCRIMINATOR)
 
 
     # We need to tell the testing framework that these products
@@ -37,17 +37,20 @@ def setup_zcml():
 
     ztc.installPackage('gomobile.mobile')
     ztc.installPackage('gomobile.convergence')
+    ztc.installPackage('gomobiletheme.basic')
     ztc.installPackage('collective.easytemplate')
     ztc.installPackage('gomobile.supporter.easytemplate')
 
     fiveconfigure.debug_mode = False
 
 
-ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', "collective.easytemplate", "gomobile.suppoter.easytemplate", 'gomobiletheme.basic'],
+ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', 'gomobiletheme.basic', "collective.easytemplate", "gomobile.suppoter.easytemplate", 'gomobiletheme.basic'],
                    extension_profiles=['Products.CMFPlone:testfixture'])
 
 class TestEasyTemplateOverrides(BaseTestCase):
-    
+    """
+    Check that "mobile overrides" feature functions for easy template content.
+    """
     def afterSetUp(self):
         BaseTestCase.afterSetUp(self)
         self._refreshSkinData()
@@ -116,6 +119,9 @@ class TestEasyTemplateOverrides(BaseTestCase):
     def test_override_not_enabled(self):
         """ Do not enable override, but have the field filled in
         """
+        
+        self.setDiscriminateMode("web")
+        
         self.create_doc()
         doc = self.portal.doc
         overrider = IOverrider(doc)
@@ -130,6 +136,8 @@ class TestEasyTemplateOverrides(BaseTestCase):
 
 
     def test_convergence_form(self):
+        self.setDiscriminateMode("web")
+        
         self.create_doc()
 
         result = self.portal.doc.restrictedTraverse("@@convergence")
