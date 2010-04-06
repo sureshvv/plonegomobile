@@ -5,8 +5,5 @@
     title="Content media strategy"
     description="Select how content appears on web and mobile"
     />
-	
-  <assignment name="content-media" category="context" key="/"
-     manager="plone.rightcolumn" type="gomobile.convergence.ContentMedia"/>
-	    
+		    
 </portlets>
