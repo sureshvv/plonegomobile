@@ -3,21 +3,17 @@
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
-        <span>Content media</span>
+        <span i18n:translate="">Content media</span>
         <span class="portletTopRight"></span>
     </dt>
 
     <dd class="portletItem odd">
     	
-		<p>
-			This item is currently displayed on <b tal:content="view/current_media" />.
-		</p>
+		<p i18n:translate="">This item is currently displayed on <b i18n:name="view_current_media" tal:content="view/current_media" />.</p>
     
 		<form method="POST" tal:attributes="action string:${context/absolute_url}/@@change_media_strategy">
 			
-	    	<p>
-		    	Media publishing strategy:
-		    </p>
+	    	<p i18n:translate="">Media publishing strategy:</p>
 			
 			<tal:options repeat="opt view/media_options">
 				<p>
@@ -26,9 +22,7 @@
 				</p>
 			</tal:options>
 												
-			<button type="submit">
-				Change strategy
-			</button>				
+			<button type="submit" i18n:translate="">Change strategy</button>				
 		
 		</form>
 

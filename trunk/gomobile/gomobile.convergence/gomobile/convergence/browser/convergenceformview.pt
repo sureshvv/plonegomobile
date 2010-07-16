@@ -1,8 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
+      xmlns:i18n="http://namespaces.zope.org/i18n"
+
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gomobile.convergence">
 <body>
@@ -10,7 +11,7 @@
   <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
-      <h1 class="documentFirstHeading" tal:content="view/label">Title</h1>
+      <h1 class="documentFirstHeading" tal:content="view/label"><tal:comment replace="nothing">Title</tal:comment></h1>
 
 	  <div id="currentMediaStatus">
 		<b i18n:translate="media_status">
@@ -22,13 +23,13 @@
 
       <div id="skel-contents">
 
-        <h2>Media settings</h2>
+        <h2 i18n:translate="">Media settings</h2>
         <span tal:replace="structure view/render_publishing_form" />
 	
-	<h2>Mobile navigation settings</h2>
+	<h2 i18n:translate="">Mobile navigation settings</h2>
 	<span tal:replace="structure view/render_mobile_form" />
 
-        <h2>Mobile content overrides</h2>
+        <h2 i18n:translate="">Mobile content overrides</h2>
         <span tal:replace="structure view/render_override_form" />
 
       </div>

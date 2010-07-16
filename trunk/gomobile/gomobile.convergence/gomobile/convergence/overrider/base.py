@@ -28,6 +28,7 @@ from zope.schema.interfaces import IContextSourceBinder
 from gomobile.convergence.interfaces import IOverrider, IOverrideEditView, IOverrideForm
 from gomobile.convergence.utilities import make_terms
 
+from gomobile.convergence import GMConvergenceMF as _
 
 class Overrider(object):
     """
@@ -143,7 +144,7 @@ class IOverrideFormSchema(form.Schema):
     """ Base class for editable override forms """
 
     form.widget(enabled_overrides=CheckBoxFieldWidget)
-    enabled_overrides = zope.schema.List(title=u"Overridden fields", required=False,
+    enabled_overrides = zope.schema.List(title=_(u"Overridden fields"), required=False,
                                          value_type = zope.schema.Choice(source=get_field_list),
                                          default=[]
                                          )

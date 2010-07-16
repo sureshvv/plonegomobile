@@ -25,14 +25,15 @@ from plone.directives import form
 from mfabrik.behaviorutilities.volatilecontext import VolatileContext, AnnotationPersistentFactory
 
 from gomobile.convergence.interfaces import ContentMediaOption
+from gomobile.convergence import GMConvergenceMF as _
 
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 items = (
-    (u"User parent folder setting", ContentMediaOption.USE_PARENT),
-    (u"Both", ContentMediaOption.BOTH),
-    (u"Web", ContentMediaOption.WEB),
-    (u"Mobile", ContentMediaOption.MOBILE)
+    (_(u"User parent folder setting"), ContentMediaOption.USE_PARENT),
+    (_(u"Both"), ContentMediaOption.BOTH),
+    (_(u"Web"), ContentMediaOption.WEB),
+    (_(u"Mobile"), ContentMediaOption.MOBILE)
     )
 
 terms = [ SimpleTerm(value=pair[1], token=pair[1], title=pair[0]) for pair in items ]
@@ -49,8 +50,8 @@ class IMultiChannelBehavior(form.Schema):
     )
 
     contentMedias = schema.Choice(vocabulary=contentMediasVocabury,
-                                  title=u"Content medias",
-                                  description=u"Does this content appear on web, mobile or both",
+                                  title=_(u"Content medias"),
+                                  description=_(u"Does this content appear on web, mobile or both"),
                                   default=ContentMediaOption.USE_PARENT,
                                   required=True)
 

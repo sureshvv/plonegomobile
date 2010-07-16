@@ -26,6 +26,7 @@ from z3c.form import field
 
 from gomobile.convergence.overrider import base
 from gomobile.convergence.utilities import addSchema
+from gomobile.convergence import GMConvergenceMF as _
 
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
@@ -34,11 +35,11 @@ class DocumentOverrideSchema(form.Schema):
 
     Correspond AT accessor names for  Products.ATContentTypes.content.document.ATDocumentSchema.
     """
-    Title = schema.TextLine(title=u"Title")
+    Title = schema.TextLine(title=_(u"Title"))
 
-    Description = schema.Text(title=u"Description")
+    Description = schema.Text(title=_(u"Description"))
 
-    getText = schema.Text(title=u"Text")
+    getText = schema.Text(title=_(u"Text"))
 
 
 def get_field_schema(context):
@@ -60,12 +61,12 @@ class DocumentOverrider(base.Overrider):
 class IFormSchema(base.IOverrideFormSchema):
     """ Schema for "edit mobile overrides" form """
 
-    Title = schema.TextLine(title=u"Title", required=False)
+    Title = schema.TextLine(title=_(u"Title"), required=False)
 
-    Description = schema.Text(title=u"Description", required=False)
+    Description = schema.Text(title=_(u"Description"), required=False)
 
     form.widget(getText=WysiwygFieldWidget)
-    getText = schema.Text(title=u"Text", required=False)
+    getText = schema.Text(title=_(u"Text"), required=False)
 
 
 class DocumentOverrideStorage(base.OverrideStorage):

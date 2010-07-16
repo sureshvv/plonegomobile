@@ -20,7 +20,7 @@ from gomobile.mobile.interfaces import IMobileRequestDiscriminator, MobileReques
 from gomobile.convergence.interfaces import IConvergenceMediaFilter
 
 from gomobile.convergence.filter import media_options_vocabulary
-
+from gomobile.convergence import PloneMessageFactory as _
 
 class IMediaPortlet(IPortletDataProvider):
     """ Define buttons for mobile preview """
@@ -76,7 +76,7 @@ class Assignment(base.Assignment):
     """ Assigner for grey static portlet. """
     implements(IMediaPortlet)
 
-    title = "Content medias"
+    title = _(u"Content medias")
 
 
 class AddForm(base.NullAddForm):

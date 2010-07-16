@@ -20,11 +20,12 @@ from gomobile.mobile.interfaces import IMobileUtility, IMobileRequestDiscriminat
 from gomobile.convergence.interfaces import IConvergenceSupport, ContentMediaOption, IConvergenceMediaFilter
 
 from gomobile.convergence.behaviors import IMultiChannelBehavior
+from gomobile.convergence import PloneMessageFactory as _
 
-media_options_vocabulary = ((ContentMediaOption.USE_PARENT, "Use parent folder settings"),
-                                        (ContentMediaOption.WEB, "Web only"),
-                                        (ContentMediaOption.MOBILE, "Mobile only"),
-                                        (ContentMediaOption.BOTH, "Web and mobile"))
+media_options_vocabulary = ((ContentMediaOption.USE_PARENT, _(u"Use parent folder settings")),
+                                        (ContentMediaOption.WEB, _(u"Web only")),
+                                        (ContentMediaOption.MOBILE, _(u"Mobile only")),
+                                        (ContentMediaOption.BOTH, _(u"Web and mobile")))
 
 
 class ConvergedMediaFilter:

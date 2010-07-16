@@ -6,7 +6,7 @@
                     member context/portal_membership/getAuthenticatedMember|nothing;
                     member_id member/getId|nothing;
 					show_content_media options/show_content_media | nothing;
-                    plone_view context/@@plone">
+                    plone_view context/@@plone" i18n:domain="gomobile.convergence">
 
 <metal:main define-macro="nav_main">
 	
@@ -46,15 +46,15 @@
 			<span class="medias discreet" style="margin-left: 1m; margin-top: 8px" tal:condition="show_content_media" tal:define="media node/content_media|nothing">
 				-
 				<span tal:condition="python:media =='both'">
-					in web, mobile
+					<span i18n:translate="">in web, mobile</span>
 			   </span>
 			   
 			   <span tal:condition="python:media =='mobile'">
-					only in mobile
+					<span i18n:translate="">only in mobile</span>
 			   </span>
 	
 			   <span tal:condition="python:media =='web'">
-					only in web
+					<span i18n:translate="">only in web</span>
 			   </span>
 			   
 			   <span class="language" tal:condition="node/Language|nothing">

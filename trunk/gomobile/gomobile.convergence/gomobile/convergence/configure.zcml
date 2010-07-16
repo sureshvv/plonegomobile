@@ -22,6 +22,8 @@
 
    <five:registerPackage package="." initialize=".initialize" />
 
+   <i18n:registerTranslations directory="locales" />
+
    <class class="Products.Archetypes.BaseObject.BaseObject">
          <implements interface=".interfaces.IConvergenceSupport" />
    </class>
@@ -48,6 +50,8 @@
       directory="profiles/default"
       description='Publish to web and mobile medias easily'
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      i18n:attributes="title gs_profiles_default_title;
+                       description gs_profiles_default_description;"
       />
 
 

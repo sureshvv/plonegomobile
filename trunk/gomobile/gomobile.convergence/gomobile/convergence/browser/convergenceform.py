@@ -41,13 +41,15 @@ from gomobile.convergence.interfaces import IOverrideForm
 
 from gomobile.convergence.overrider.base import IOverrideStorage
 
+from gomobile.convergence import GMConvergenceMF as _
+
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
 
     fields = field.Fields(IMultiChannelBehavior)
 
     prefix = "publishing"
-    label = u"Media options"
+    label = _(u"Media options")
 
     def update(self):
         return z3c.form.form.EditForm.update(self)
@@ -71,7 +73,7 @@ class OverrideForm(z3c.form.form.EditForm):
     """ Fielde specific convergence options """
 
 
-    label = u"Field overrides"
+    label = _(u"Field overrides")
     prefix = "overrides"
 
     def __init__(self, context, request, content_object):
@@ -108,7 +110,7 @@ class OverrideForm(z3c.form.form.EditForm):
 class MasterFormView(BrowserView):
     """ Custom view managing two separate forms on the same page """
 
-    label = u"Multichannel management"
+    label = _(u"Multichannel management")
 
     # Page template we are using
     index = FiveViewPageTemplateFile("convergenceformview.pt")
