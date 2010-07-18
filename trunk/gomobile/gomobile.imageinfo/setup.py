@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.1'
 
 setup(name='gomobile.imageinfo',
       version=version,
@@ -12,11 +12,14 @@ setup(name='gomobile.imageinfo',
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Framework :: Plone',
+        'Intended Audience :: Developers',
         ],
-      keywords='',
-      author='Mikko Ohtamaa',
-      author_email='mikko.ohtamaa@twinapex.com',
-      url='http://www.twinapex.com',
+      keywords='zope image resize pil',
+      author='mFabrik Rearch Oy',
+      author_email='research@mfabrik.com',
+      url='http://mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['gomobile'],
