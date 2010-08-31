@@ -134,8 +134,11 @@ class AbstractGoToView(BrowserView):
             portal = context.portal_url.getPortalObject()
             redirect_context = portal
         
+        query_string = self.request["QUERY_STRING"]    
+        
         redirector = getMultiAdapter((redirect_context, self.request), IMobileRedirector)
-        return redirector.redirect_url(redirect_context.absolute_url(), media_type=self.get_target_media())
+        
+        return redirector.redirect_url(redirect_context.absolute_url(), query_string, media_type=self.get_target_media())
     
 class GoToMobileSiteView(AbstractGoToView):
     """    
