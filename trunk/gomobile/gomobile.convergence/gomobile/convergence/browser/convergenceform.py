@@ -57,8 +57,6 @@ class PublishingForm(z3c.form.form.EditForm):
     prefix = "publishing"
     label = _(u"Media options")
 
-    index = ViewPageTemplateFile("embeddedform.pt")   
-
     def update(self):
         return z3c.form.form.EditForm.update(self)
     
