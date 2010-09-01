@@ -17,6 +17,8 @@ from zope.component import getMultiAdapter, queryMultiAdapter
 from zope.app.component.hooks import getSite
 from zope.component import getUtility, queryUtility
 
+from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+
 from five import grok
 from zope.component import queryAdapter, getUtility
 

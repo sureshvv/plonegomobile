@@ -12,8 +12,10 @@
 
 __license__ = "GPL 2"
 __copyright__ = "2010 mFabrik Research Oy"
-__author__ = "Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>"
+__author__ = "Mikko Ohtamaa <mikko@mfabrik.com>"
 __docformat__ = "epytext"
+
+import os
 
 from Acquisition import aq_inner
 import zope.interface
@@ -29,7 +31,10 @@ from z3c.form import group
 
 from gomobile.convergence.interfaces import IOverrideForm, IOverrider
 from plone.z3cform.layout import FormWrapper, wrap_form
+from plone.z3cform.interfaces import IWrappedForm
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
+from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from gomobile.mobile.behaviors import IMobileBehavior 
 from gomobile.mobile.browser.forms import MobileForm
@@ -43,6 +48,7 @@ from gomobile.convergence.overrider.base import IOverrideStorage
 
 from gomobile.convergence import GMConvergenceMF as _
 
+
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
 
@@ -50,6 +56,8 @@ class PublishingForm(z3c.form.form.EditForm):
 
     prefix = "publishing"
     label = _(u"Media options")
+
+    index = ViewPageTemplateFile("embeddedform.pt")   
 
     def update(self):
         return z3c.form.form.EditForm.update(self)
@@ -68,6 +76,7 @@ class PublishingForm(z3c.form.form.EditForm):
         self.getContent().save()
         
         return val
+
 
 class OverrideForm(z3c.form.form.EditForm):
     """ Fielde specific convergence options """
@@ -115,23 +124,6 @@ class MasterFormView(BrowserView):
     # Page template we are using
     index = FiveViewPageTemplateFile("convergenceformview.pt")
 
-    def __init__(self, context, request):
-        BrowserView.__init__(self, context, request)
-
-        # Construct both form instances directly using class
-
-        # Assign special contexts for both forms.
-        # The form context is derived from the current content object.
-        #publishing_context = IMultiChannelBehavior(self.context)
-        
-        self.mobile_form_instance = MobileForm(self.context, self.request)
-        
-        self.publishing_form_instance = PublishingForm(self.context, self.request)
-        
-        self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
-        #override_context = IOverrideStorage(self.context)
-        #self.override_form_instance = OverrideForm(override_context, self.request, self.context)
-
     def media_status(self):
         """ Get human-readable text on which medias the context is available  """
         filter = getUtility(IConvergenceMediaFilter)
@@ -159,12 +151,32 @@ class MasterFormView(BrowserView):
     def render_mobile_form(self):
         return self.mobile_form_instance()
 
+    def init(self):
+        """ Constructor embedded sub forms """
+
+
+        # Construct few embedded forms
+        self.mobile_form_instance = MobileForm(self.context, self.request)
+        zope.interface.alsoProvides(self.mobile_form_instance, IWrappedForm)
+        
+        self.publishing_form_instance = PublishingForm(self.context, self.request)        
+        zope.interface.alsoProvides(self.publishing_form_instance, IWrappedForm)
+        
+        self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
+        zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
+    
+    
     def __call__(self):
 
+
+        self.init()
+        
         # Make z3c.form fields and widgetsre
         import z3c.form.interfaces
         from plone.z3cform import z2
         z2.switch_on(self, request_layer=z3c.form.interfaces.IFormLayer)
+
+        
 
         # Render template
         return self.index()

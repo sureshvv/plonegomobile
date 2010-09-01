@@ -79,6 +79,4 @@
         class=".views.GoToWebSiteView"
         />
 
-
-
 </configure>
