@@ -9,8 +9,6 @@ import monkeypatch # Run navtree monkey patches
 import indexing
 import Missing
 
-from Products.CMFPlone.CatalogTool import registerIndexableAttribute
-
 from interfaces import IConvergenceSupport
 
 def initialize(context):
