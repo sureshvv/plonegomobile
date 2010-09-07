@@ -2,12 +2,14 @@
 
     Tools to manipulate any kind of Zope images using PIL.
 
+    http://mfabrik.com
+
 """
 
 __license__ = "GPL 2"
-__copyright__ = "2009 Twinapex Research"
+__copyright__ = "2010 mFabrik Research Oy"
 __docformat__ = "epytext"
-__author__ = "miohtama"
+__author__ = "Mikko Ohtamaa"
 
 import urlparse
 import urllib2
@@ -179,7 +181,7 @@ class ImageInfoUtility(object):
             pimage = obj.data
             
             # TODO
-            # WTF CASE THIS ÌS AGAIN... 
+            # Not sure what's going on here...
             # 
             if hasattr(pimage, "data"):
                 data = pimage.data
