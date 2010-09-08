@@ -3,7 +3,7 @@
    xmlns:i18n="http://namespaces.zope.org/i18n"
    i18n:domain="plone">
 
- <object name="document_actions" meta_type="CMF Action Category">
+ <object name="object_buttons" meta_type="CMF Action Category">
 
   <object name="mobile_options" meta_type="CMF Action">
    <property name="title" i18n:translate="">Multichannel settings</property>
