@@ -30,6 +30,14 @@ from gomobile.convergence.utilities import make_terms
 
 from gomobile.convergence import GMConvergenceMF as _
 
+
+_internal_methods = []
+
+def internal(func):
+    """ Mark method so that it should not go to the proxied object. """
+    _internal_methods.append(func.__name__)
+    return func
+
 class Overrider(object):
     """
     Base class for mobile overrides.
@@ -54,19 +62,24 @@ class Overrider(object):
 
     # zope.schema object describing overriden fields
     _schema = None
-
+    
+    @internal
     def __init__(self, context):
         self.context = context
 
+        
+    @internal
     def _getOverrideFieldNames(self):
         return zope.schema.getFieldNamesInOrder(self._schema)
-
+    
+    @internal
     def _isOverride(self, fieldName):
         """
         @return True: If the field is overridable field
         """
         return fieldName in self._getOverrideFieldNames()
-
+    
+    @internal
     def _isOverrideEnabled(self, fieldName, storage):
         """
         Check whether the fieldName appears in "overrided fields list"
@@ -74,6 +87,7 @@ class Overrider(object):
         overrides = storage.enabled_overrides
         return fieldName in overrides
 
+    @internal
     def _fixCallable(self, fieldName, value):
 
         # Check whether the orignal accessed attribute
@@ -90,6 +104,7 @@ class Overrider(object):
         else:
             return value
 
+    @internal
     def _getOverrideOrOrignal(self, fieldName):
         """
         """
@@ -105,15 +120,16 @@ class Overrider(object):
         # Fall back to orignal field value
         return getattr(self.context, fieldName)
 
+    @internal
     def __str__(self):
         return "Mobile overrides proxy object for %s" % str(self.context)
 
-
-
     def __getattr__(self, name):
         """ Proxy magic.
+                    
         """
-        if name.startswith("_"):
+        
+        if name in _internal_methods:    
             return self.__dict__[name]
         else:
             return self._getOverrideOrOrignal(name)
