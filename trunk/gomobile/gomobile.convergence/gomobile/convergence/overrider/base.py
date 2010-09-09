@@ -1,13 +1,15 @@
 """
 
     Define mechanism for creating editable override field value proxies.
+    
+    http://mfabrik.com
 
 """
 
-__author__  = 'Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>'
-__author_url__ = "http://www.twinapex.com"
+__author__  = 'Mikko Ohtamaa <mikko.ohtamaa@mfabrik.com>'
+__author_url__ = "http://mfabrik.com"
 __docformat__ = 'epytext'
-__copyright__ = "2009 Twinapex Research"
+__copyright__ = "2009-2010 mFabrik Research Oy"
 __license__ = "GPL v2"
 
 import zope.interface
@@ -128,6 +130,9 @@ class Overrider(object):
         """ Proxy magic.
                     
         """
+        
+        if name in "cooked_text":
+            import pdb ; pdb.set_trace()
         
         if name in _internal_methods:    
             return self.__dict__[name]

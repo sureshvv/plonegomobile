@@ -56,7 +56,7 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
         result = []
         # first the actions
         if actions is not None:
-            for actionInfo in actions.get(category, []):
+            for actionInfo in actions:
                 data = actionInfo.copy()
                 data['name'] = data['title']
                 result.append(data)
