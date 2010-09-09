@@ -139,6 +139,7 @@ class ImageInfoUtility(object):
             return img.getImage()
         else:
 
+            # pointer to exposed ATImage method
             if callable(img):
                 img = img()
 
