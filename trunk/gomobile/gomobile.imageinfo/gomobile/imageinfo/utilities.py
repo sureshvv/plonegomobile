@@ -30,6 +30,12 @@ from zope.component import getUtility, queryUtility
 
 from gomobile.imageinfo.interfaces import IImageInfoUtility
 
+try:
+    from plone.app.blob.field import BlobWrapper
+    HAS_BLOBS = True
+except ImportError:
+    HAS_BLOBS = False
+
 class ImageInfoUtility(object):
     """ Unified interface to access different Zope image objects
 
@@ -102,7 +108,9 @@ class ImageInfoUtility(object):
         Path must not start with slash.
         Path is relative to the site root.
         
+        @param path: Path to Zope object
         
+        @return: Image-like object (heterogenous return values)
         """
         site = getSite()
 
@@ -134,9 +142,16 @@ class ImageInfoUtility(object):
             if callable(img):
                 img = img()
 
+            if HAS_BLOBS:
+                # img might be <bound method ATBlob.getImage of <ATImage at /plone/test_img>
+                # We resolve it to blob above
+                if isinstance(img, BlobWrapper):
+                    return img
+
             if isinstance(img, ATFieldImage):
                 return img
 
+                
             raise RuntimeError("Unknown image object %s:%s" % (path, str(img.__class__)))
 
         return info
@@ -201,6 +216,11 @@ class ImageInfoUtility(object):
             data = obj.data            
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
+        elif HAS_BLOBS and isinstance(obj, BlobWrapper):
+            # Plone 4 BLOB images
+            data = obj.data            
+            io = cStringIO.StringIO(data)
+            return PIL.Image.open(io) 
         else:
             raise RuntimeError("Can't handle:" + str(obj))
         
