@@ -238,7 +238,7 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         doc.setTitle("Foobar")
 
         storage = IOverrideStorage(doc)
-        storage.getUnfilteredTemplate = u"Title {{�context.Title() }}"
+        storage.getUnfilteredTemplate = u"Title {{ context.Title() }}"
 
         self.setDiscriminateMode("web")
         self.browser.open(self.portal.doc.absolute_url())
