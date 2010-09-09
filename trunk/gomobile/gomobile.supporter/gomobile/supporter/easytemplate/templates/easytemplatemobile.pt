@@ -11,7 +11,7 @@
         </div>
 
          <div class="body"
-              tal:content="structure context/cooked_text">
+              tal:content="structure view/cooked_text">
             The page's body text
          </div>
     </metal:slot>

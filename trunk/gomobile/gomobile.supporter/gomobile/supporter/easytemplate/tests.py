@@ -1,4 +1,4 @@
-__license__ = "GPL 2.1"
+c__license__ = "GPL 2.1"
 __copyright__ = "2009 Twinapex Research"
 
 import unittest
@@ -55,6 +55,8 @@ class TestEasyTemplateOverrides(BaseTestCase):
         BaseTestCase.afterSetUp(self)
         self._refreshSkinData()
         self.setDiscriminateMode("mobile")
+        
+        
 
     def create_doc(self):
         self.loginAsPortalOwner()
@@ -160,6 +162,7 @@ class BrowingTestCase(ptc.FunctionalTestCase):
 
         @param: "mobile", "web" or other MobileRequestType pseudo-constant
         """
+        
         from gomobile.mobile.tests.utils import TestMobileRequestDiscriminator
         TestMobileRequestDiscriminator.setModes([mode])
 
@@ -209,13 +212,15 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         """
         self.create_doc()
         doc = self.portal.doc
+        
+        
         overrider = IOverrider(doc)
 
         doc.setTitle("Foobar")
 
         storage = IOverrideStorage(doc)
         storage.enabled_overrides = ["getUnfilteredTemplate"]
-        storage.getUnfilteredTemplate = u"Title {{context.Title()}}"
+        storage.getUnfilteredTemplate = u"Title {{ context.Title() }}"
 
         self.setDiscriminateMode("mobile")
         zope.interface.alsoProvides(self.portal.REQUEST, IMobileLayer)
@@ -224,6 +229,16 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         self.browser.open(self.portal.doc.absolute_url())
         html = self.browser.contents
 
+        if "The page structure contains errors" in html:
+            
+            messages = IStatusMessage(self.portal.REQUEST).showStatusMessages()        
+        
+            if messages:
+                for m in messages: print str(m.message)
+        
+            
+            raise RuntimeError("Bad templated page")
+            
         self.assertTrue(MOBILE_HTML_MARKER in html) # See that we are rendering mobile mode
         self.assertTrue("Title Foobar" in html)
 
@@ -243,6 +258,7 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         self.setDiscriminateMode("web")
         self.browser.open(self.portal.doc.absolute_url())
         html = self.browser.contents # This should be document_view.pt
+        print html
         self.assertFalse(MOBILE_HTML_MARKER in html) # See that we are rendering mobile mode
         self.assertFalse("Title Foobar" in html) # In web we do not run the snippet
 
