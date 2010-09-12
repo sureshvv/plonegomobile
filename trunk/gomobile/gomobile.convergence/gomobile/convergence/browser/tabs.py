@@ -37,6 +37,13 @@ from gomobile.convergence.interfaces import IConvergenceMediaFilter
 
 from Products.CMFPlone.browser.navigation import get_view_url
 
+try: 
+    # Plone 4 and higher 
+    import plone.app.upgrade 
+    PLONE_VERSION = 4 
+except ImportError: 
+    PLONE_VERSION = 3
+
 class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
     """ Filter site tabs for web, mobile and admin.
     
@@ -54,12 +61,24 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
 
         # Build result dict
         result = []
-        # first the actions
-        if actions is not None:
-            for actionInfo in actions:
-                data = actionInfo.copy()
-                data['name'] = data['title']
-                result.append(data)
+        
+        if PLONE_VERSION == 3:
+            # BBB to Plone 3, different actions input signature
+
+            # first the actions
+            if actions is not None:
+                for actionInfo in actions.get(category, []):
+                    data = actionInfo.copy()
+                    data['name'] = data['title']
+                    result.append(data)            
+        else:
+        
+            # first the actions
+            if actions is not None:
+                for actionInfo in actions:
+                    data = actionInfo.copy()
+                    data['name'] = data['title']
+                    result.append(data)
 
         # check whether we only want actions
         if site_properties.getProperty('disable_folder_sections', False):
