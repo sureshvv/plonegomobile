@@ -64,7 +64,7 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
         
         if PLONE_VERSION == 3:
             # BBB to Plone 3, different actions input signature
-
+            # http://svn.plone.org/svn/plone/Plone/tags/3.3.5/Products/CMFPlone/browser/navigation.py
             # first the actions
             if actions is not None:
                 for actionInfo in actions.get(category, []):
