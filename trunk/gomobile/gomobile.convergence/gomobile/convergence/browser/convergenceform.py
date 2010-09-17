@@ -31,8 +31,13 @@ from z3c.form import group
 
 from gomobile.convergence.interfaces import IOverrideForm, IOverrider
 from plone.z3cform.layout import FormWrapper, wrap_form
-from plone.z3cform.interfaces import IWrappedForm
 
+try:
+    from plone.z3cform.interfaces import IWrappedForm
+    HAS_WRAPPER_FORM = True
+except ImportError:
+    HAS_WRAPPER_FORM = False # Old plone.z3cform version
+    
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile as FiveViewPageTemplateFile
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
@@ -155,13 +160,15 @@ class MasterFormView(BrowserView):
 
         # Construct few embedded forms
         self.mobile_form_instance = MobileForm(self.context, self.request)
-        zope.interface.alsoProvides(self.mobile_form_instance, IWrappedForm)
         
         self.publishing_form_instance = PublishingForm(self.context, self.request)        
-        zope.interface.alsoProvides(self.publishing_form_instance, IWrappedForm)
         
         self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
-        zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
+        
+        if HAS_WRAPPER_FORM:
+            zope.interface.alsoProvides(self.publishing_form_instance, IWrappedForm)        
+            zope.interface.alsoProvides(self.mobile_form_instance, IWrappedForm)
+            zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
     
     
     def __call__(self):
