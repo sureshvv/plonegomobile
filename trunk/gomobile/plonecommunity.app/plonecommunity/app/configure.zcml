@@ -8,11 +8,13 @@
     >
 
     <includeDependencies package="." />
-  <five:registerPackage package="." initialize=".initialize" />
+  
+    <five:registerPackage package="." initialize=".initialize" />
 
 
-  <include package="five.grok" />
-  <grok:grok package="." />
+    <include package="five.grok" />
+
+    <grok:grok package="." />
 
   
   <!-- Register the installation GenericSetup extension profile -->

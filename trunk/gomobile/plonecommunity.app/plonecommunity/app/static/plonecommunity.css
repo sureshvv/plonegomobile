@@ -27,5 +27,25 @@
         background: #ffffdd;
 }       
 
+.feed-folder h3 {
+	
+}
+
+.feed-folder-item {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+#content .feed-folder-item p:last-child {
+    margin-bottom: 0;
+}
+
+.feed-folder-item-odd {
+    background: #ddd;
+}
+
+.feed-folder-item-even {
+    background: white;  
+}
  
  

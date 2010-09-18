@@ -58,11 +58,9 @@ class Logo(base.Logo):
 # https://bugs.launchpad.net/grok/+bug/255005
 fix_grok_template_inheritance(Logo, base.Logo)
 
-
-
 class FooterText(base.FooterText):
     """
-    Override footer text in footertext.pt.
+    Override footer text, set by templates/footertext.pt.
     """
 
 

@@ -4,7 +4,7 @@
     
     Can be called from collective.easytemplate templates by putting in the following template code::
     
-        {{ view("hotnow") }}
+        {{ view("hotnow") }}
 
     http://mfabrik.com
 
@@ -18,6 +18,8 @@ __license__ = "GPL 2"
 
 import math
 import datetime
+
+import pytz  # 3rd party
 
 from zope.interface import Interface
 from five import grok
@@ -36,7 +38,8 @@ class HotNow(grok.View):
 
     # Viewlets are on all content by default.
     grok.context(Interface)
-
+    grok.name("hot_now")
+    grok.template("hotnow")
     
     def __call__(self):
         """
@@ -72,7 +75,7 @@ class HotNow(grok.View):
         
         print "Rendering:" + str(self.items)
         
-        return self.template()
+        return grok.View.__call__(self)
             
 
 def format_datetime_friendly_ago(date):
@@ -90,7 +93,10 @@ def format_datetime_friendly_ago(date):
     # See timedelta doc http://docs.python.org/lib/datetime-timedelta.html
     #since = datetime.datetime.utcnow() - date
 
-    since = datetime.datetime.now() - date
+    now = datetime.datetime.utcnow()
+    now = now.replace(tzinfo=pytz.utc)
+
+    since = now - date
       
     seconds = since.seconds + since.microseconds / 1E6 + since.days * 86400
 
