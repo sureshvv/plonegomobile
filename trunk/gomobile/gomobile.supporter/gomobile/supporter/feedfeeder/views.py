@@ -26,7 +26,7 @@ class FeedFolderView(base.FeedFolderView):
         from Products.CMFPlone import Batch
         b_start = self.context.REQUEST.get('b_start', 0)
         b_size = 7
-        batch = Batch(results, b_size, int(b_start), pagerange=3, orphan=0)
+        batch = Batch(results, b_size, int(b_start), pagerange=1, orphan=0)
             
         result = []
         for index, x in enumerate(batch):
