@@ -7,8 +7,16 @@
 
 /* Front page special */
 
+
+
 .hot-now .news-item {
-        padding: 0.3em;
+	background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        padding: 0.3em;        	
+	border-bottom: 1px solid #ddd;
+}
+
+.hot-now .news-item:first-child  {
+	border-top: 1px solid #ddd;
 }
 
 .hot-now .byline {
@@ -16,24 +24,40 @@
 }
 
 .hot-now .news-0 {
-        background: #ffff88;
+        background-color: #ffff88;
 }       
 
 .hot-now .news-1 {
-        background: #ffffaa;
+        background-color: #ffffaa;
 }       
 
 .hot-now .news-2 {
-        background: #ffffdd;
+        background-color: #ffffdd;
 }       
+
+.news-item {
+              
+}
 
 .feed-folder h3 {
 	
 }
 
+
 .feed-folder-item {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+        padding: 0.5em;
+}
+
+.feed-folder-item {
+        background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        padding: 0.3em;         
+        border-bottom: 1px solid #888;
+}
+
+
+/* there is p description before */
+.feed-folder-item:nth-child(2)  {
+        border-top: 1px solid #888;
 }
 
 #content .feed-folder-item p:last-child {
@@ -41,11 +65,11 @@
 }
 
 .feed-folder-item-odd {
-    background: #ddd;
+    background-color: #ddd;
 }
 
 .feed-folder-item-even {
-    background: white;  
+    background-color: white;  
 }
  
  
