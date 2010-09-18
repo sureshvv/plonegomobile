@@ -23,13 +23,11 @@ class FeedFolderView(base.FeedFolderView):
                 portal_type='FeedFeederItem')
 
         
-        print "Creating batch"
         from Products.CMFPlone import Batch
         b_start = self.context.REQUEST.get('b_start', 0)
         b_size = 7
-        batch = Batch(results, b_size, int(b_start), orphan=0)
+        batch = Batch(results, b_size, int(b_start), pagerange=3, orphan=0)
             
-        print "Looping over"
         result = []
         for index, x in enumerate(batch):
             content_url = x.getURL()
@@ -52,11 +50,8 @@ class FeedFolderView(base.FeedFolderView):
                 if not int(x.getHasBody):
                     item['url'] = item['url'] + '/' + enclosures[0]
             
-            print item["summary"]
-            result.append(item)
-            
-        print "Got items:" + str(len(result))
-        
+            result.append(item)        
+
         return batch, result
     
     def __call__(self):

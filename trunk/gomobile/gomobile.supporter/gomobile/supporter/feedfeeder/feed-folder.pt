@@ -19,7 +19,7 @@
 	         tal:condition="context/Description"></p>
 
 
-	    <div tal:repeat="child items"  tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+	    <tal:item tal:repeat="child items"  tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
 
                <div tal:attributes="class python:'feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
 		       <h3>
@@ -46,7 +46,7 @@
 		        <p tal:condition="child/summary"
 		             tal:content="structure child/summary"> My summary </p>
 	        </div>
-	    </div>
+	    </tal:item>
       </div>
 
       <!-- Navigation -->
