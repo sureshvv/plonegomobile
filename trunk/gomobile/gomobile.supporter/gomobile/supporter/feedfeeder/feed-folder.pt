@@ -50,9 +50,8 @@
       </div>
 
       <!-- Navigation -->
-      <!--
       <div metal:use-macro="here/batch_macros/macros/navigation" />
-       -->
+
        
       <div tal:replace="structure provider:plone.documentactions" />
       
