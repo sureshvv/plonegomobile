@@ -13,7 +13,7 @@
       permission="zope2.View"
       template="feed-folder.pt"
       allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
-      class="Products.feedfeeder.browser.feed.FeedFolderView"
+      class=".views.FeedFolderView"
       />
 
   <!-- Move document actions to the end of the page -->	  
