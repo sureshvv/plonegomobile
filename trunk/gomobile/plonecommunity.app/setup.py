@@ -55,7 +55,8 @@ setup(name='plonecommunity.app',
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
-                        'five.grok'
+                        'five.grok',
+                        'gomobiletheme.basic'
                         # -*- Extra requirements: -*-
                         ],
       tests_require=tests_require,
@@ -64,6 +65,6 @@ setup(name='plonecommunity.app',
       paster_plugins = ["ZopeSkel"],
       entry_points="""
         [z3c.autoinclude.plugin]
-        target = plone
+        target = plone        
         """
       )

@@ -7,8 +7,9 @@
     xmlns:grok="http://namespaces.zope.org/grok"
     >
 
-
+    <includeDependencies package="." />
   <five:registerPackage package="." initialize=".initialize" />
+
 
   <include package="five.grok" />
   <grok:grok package="." />
