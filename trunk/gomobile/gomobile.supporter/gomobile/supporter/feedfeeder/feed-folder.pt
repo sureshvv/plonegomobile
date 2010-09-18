@@ -14,14 +14,14 @@
 
       <h1 tal:content="context/title_or_id"></h1>
 
-      <div metal:use-macro="context/document_byline/macros/byline"></div>
+      <div tal:replace="structure provider:plone.belowcontenttitle" />
 
       <p class="documentDescription"
          tal:content="context/Description"
          tal:condition="context/Description"></p>
 
 
-	    <div tal:repeat="child batch">
+	    <div tal:repeat="child batch"  tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
 
 			<h3>
 	          <a tal:attributes="href child/url"
@@ -53,7 +53,7 @@
       <!-- Navigation -->
       <div metal:use-macro="here/batch_macros/macros/navigation" />
       
-      <div metal:use-macro="context/document_actions/macros/document_actions"></div>
+      <div tal:replace="structure provider:plone.documentactions" />
       
    </div>
    </body>

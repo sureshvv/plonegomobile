@@ -8,11 +8,18 @@
   <body>
     <div metal:fill-slot="body"
          tal:define="text context/getText;
-                     creator context/Creator;">
+                     creator context/Creator;
+                     portal context/@@plone_portal_state/portal;
+                     isLocked context/@@plone_context_state/is_locked;
+                     is_editable context/@@plone_context_state/is_editable;
+                     toLocalizedTime nocall:context/@@plone/toLocalizedTime;
+		      mtool context/portal_membership;
+		     ">
+
 
       <h1 tal:content="structure context/title_or_id"></h1>
 
-      <div class="documentByLine">
+      <div class="documentByLine" tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
         <img src="" alt=""
              title="This document is locked."
              tal:define="locked portal/lock_icon.gif;"
@@ -69,8 +76,6 @@
           </div>
         </tal:rights>
 
-        <span metal:use-macro="here/review_history/macros/review_history" />
-
       </div>
 
       <p class="documentDescription"
@@ -110,7 +115,7 @@
 	      </li>
 	  </ul>
 	  
-      <div metal:use-macro="context/document_actions/macros/document_actions"></div>
+        <div tal:replace="structure provider:plone.documentactions" />
 	  
     </div>
   </body>
