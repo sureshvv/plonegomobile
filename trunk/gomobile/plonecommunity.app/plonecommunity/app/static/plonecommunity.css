@@ -13,6 +13,7 @@
 	background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
         padding: 0.3em;        	
 	border-bottom: 1px solid #ddd;
+	padding-right: 20px;
 }
 
 .hot-now .news-item:first-child  {
@@ -43,9 +44,10 @@
 	
 }
 
-
 .feed-folder-item {
         padding: 0.5em;
+/*	word-break: break-all;
+	word-wrap: break-word;*/
 }
 
 .feed-folder-item {
@@ -71,5 +73,14 @@
 .feed-folder-item-even {
     background-color: white;  
 }
- 
+
+.feed-folder-item p,
+.feed-folder-item .discreet {
+    margin: 0.5em 0 0.5em 0;
+} 
+
+.feed-folder-item-wrapped {
+        margin-right: 20px;	
+}
+
  
