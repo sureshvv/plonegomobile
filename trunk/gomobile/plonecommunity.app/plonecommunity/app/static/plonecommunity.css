@@ -67,7 +67,7 @@
 }
 
 .feed-folder-item-odd {
-    background-color: #ddd;
+    background-color: #e3e3e3;
 }
 
 .feed-folder-item-even {
@@ -81,6 +81,8 @@
 
 .feed-folder-item-wrapped {
         margin-right: 20px;	
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 }
 
 /* About page */
