@@ -55,7 +55,7 @@ class HotNow(grok.View):
                                              "sort_limit":count,
                                              "review_state":"published"})
         
-        print "Got items:" + str(items)
+        #print "Got items:" + str(items)
         
         variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
         
@@ -73,7 +73,7 @@ class HotNow(grok.View):
             
         self.items = result
         
-        print "Rendering:" + str(self.items)
+        #print "Rendering:" + str(self.items)
         
         return grok.View.__call__(self)
             
