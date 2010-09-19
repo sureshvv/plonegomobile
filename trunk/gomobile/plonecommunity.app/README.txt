@@ -1,4 +1,9 @@
-plonecommunity.mobi is a demo site for Plone GoMobile product. It aggregates Plone community content for mobile site.
+Introduction
+------------
+
+This Python package provides `plonecommunity.mobi site <http://plonecommunity.mobi>`_.
+plonecommunity.mobi is a demo site for `Go Mobile for Plone <http://webandmobile.mfabrik.com>`_ product. 
+It aggregates Plone community content for mobile site.
 
 Strategy
 --------
@@ -39,6 +44,22 @@ Symlink config/buildout.cfg for yourself::
 	cd ..
 	ln -s src/gomobile/plonecommunity.mobi/config/buildout.cfg .
 	bin/buildout
+
+
+Author
+------
+
+`mFabrik Research Oy <mailto:research@mfabrik.com>`_ - Python and Plone professionals for hire.
+
+* `Web and mobile project - mobilize your Plone site in an instant <http://webandmobile.mfabrik.com>`_
+
+* `mFabrik web site <http://mfabrik.com>`_ 
+
+* `mFabrik mobile site <http://mfabrik.mobi>`_ 
+
+* `Blog <http://blog.mfabrik.com>`_
+
+* `More about Plone <http://mfabrik.com/technology/technologies/content-management-cms/plone>`_ 
 
 
 
