@@ -10,7 +10,7 @@ __copyright__ = "2009 Twinapex Research"
 
 from Acquisition import aq_inner
 from zope.interface import implements
-from zope.component import getMultiAdapter, getUtility
+from zope.component import getMultiAdapter, getUtility, queryUtility
 
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
@@ -120,10 +120,11 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
         rawresult = portal_catalog.searchResults(**query)
         
         # apply mobile media filter for the results
-        media_filter = getUtility(IConvergenceMediaFilter)
-        strategy = media_filter.getContentMediaStrategy(self.context, self.request)
+        media_filter = queryUtility(IConvergenceMediaFilter, None)
         
-        resolved_content_medias = media_filter.solveCatalogBrainContenMedia(self.context, rawresult)
+        if media_filter is not None:
+            strategy = media_filter.getContentMediaStrategy(self.context, self.request)        
+            resolved_content_medias = media_filter.solveCatalogBrainContenMedia(self.context, rawresult)
         
         # now add the content to results
         for item in rawresult:
@@ -134,8 +135,9 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
                         'url'        : item_url,
                         'description': item.Description}
         
-                media = resolved_content_medias[item]
-                if media_filter.checkMediaFilter(media, strategy):
-                    result.append(data)
+                if media_filter is not None:
+                    media = resolved_content_medias[item]
+                    if media_filter.checkMediaFilter(media, strategy):
+                        result.append(data)
                                 
         return result
