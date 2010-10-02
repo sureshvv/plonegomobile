@@ -5,7 +5,7 @@ from zopeskel.base import get_var
 from zopeskel.base import var
 
 class Theme(BasicZope):
-    _template_dir = 'templates/theme'
+    _template_dir = 'templates/gomobile_theme'
     summary = "A theme for Go Mobile for Plone"
     help = """
 """

@@ -9,7 +9,7 @@
     set up in portal_skins.
 
     -->
-  <property name="mobile_skin" type="string" purge="False">Abita Mobile Theme</property>
+  <property name="mobile_skin" type="string" purge="False">${namespace_package}.${package} theme</property>
 
  </object>
 </object>

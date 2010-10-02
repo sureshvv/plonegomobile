@@ -22,7 +22,7 @@
   <interface
     interface=".interfaces.IThemeLayer"
     type="zope.publisher.interfaces.browser.IBrowserSkinType"
-    name="${namespace_package}.${package} theme layer"
+    name="${namespace_package}.${package} theme"
     />
 
 </configure>
