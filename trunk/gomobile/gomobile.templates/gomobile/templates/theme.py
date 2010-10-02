@@ -14,7 +14,12 @@ class Theme(BasicZope):
     use_local_commands = True
     use_cheetah = True
     vars = copy.deepcopy(BasicZope.vars)
+
+    
+    
     get_var(vars, 'namespace_package').default = 'gomobiletheme'
     get_var(vars, 'package').default = 'yourcompany'
     get_var(vars, 'description').default = 'A theme for Go mobile for Plone'
 
+
+            
