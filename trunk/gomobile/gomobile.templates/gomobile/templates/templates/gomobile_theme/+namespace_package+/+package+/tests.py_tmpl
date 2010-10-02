@@ -26,7 +26,7 @@ from Products.PloneTestCase.layer import PloneSite
 from gomobile.mobile.tests import utils as test_utils
 from gomobile.mobile.interfaces import MobileRequestType, IMobileRequestDiscriminator, IMobileImageProcessor
 from gomobile.mobile.tests.utils import TestMobileRequestDiscriminator
-from gomobile.mobile.tests.utils import MOBILE_USER_AGENT
+from gomobile.mobile.tests.utils import MOBILE_USER_AGENT, HIGHEND_MOBILE_USER_AGENT
 from gomobile.mobile.tests.utils import UABrowser
 from gomobile.mobile.tests.utils import ZCML_INSTALL_TEST_DISCRIMINATOR
 
@@ -80,13 +80,19 @@ class ThemeTestCase(BaseTestCase):
         self.browser.open(self.portal.absolute_url())
  
     def test_has_additional_head(self):
-        """ Check that our JS file is included. 
+        """ Check that our JS file is included correctly.
         
         """
 
+        # Switch to high-end mobile phone rendering
         self.setDiscriminateMode(MobileRequestType.MOBILE)
+        self.setUA(HIGHEND_MOBILE_USER_AGENT)
       
-        self.browser.open(self.portal.absolute_url())       
+        self.browser.open(self.portal.absolute_url())     
+        
+        html = self.browser.contents
+    
+        self.assertTrue(("++resource++%s/theme.js" % self.getProductName()) in html)
 
     def test_render_web(self):
         """ Render web page which should have not been altered by the theme. 

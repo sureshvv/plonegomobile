@@ -9,7 +9,6 @@
  */
 
 
-// Plone uses jq() shortcut for jQuery functions
-jq(document).ready(function(){
-		// This Javascript code will be run after DOM construction is ready for every page load
+jQuery(document).ready(function(){
+    // This Javascript code will be run after DOM construction is ready for every page load
 });
