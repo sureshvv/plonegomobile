@@ -3,7 +3,7 @@ __copyright__ = "2009 Twinapex Research"
 
 
 # Various base classes and modules
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from plone.app.layout.navigation import navtree as navtree_base
 from Products.CMFPlone.browser import navtree as cmfplone_navtree
 from Products.CMFCore import PortalFolder
@@ -32,11 +32,17 @@ def mobileAware_buildFolderTree(context, obj=None, query={}, strategy=navtree_ba
     """ Monkey patch Plone's generic navigation tree builder
     """
     
-    filter = getUtility(IConvergenceMediaFilter)
+    
+    filter = queryUtility(IConvergenceMediaFilter, None)
+
     
     # First query nav tree using default plone strategy
     items = old_buildFolderTree(context, obj, query, strategy)
     
+    if filter is None:
+        # gomobile.convergence is not installed
+        return items
+            
     # Then put in converged media info
     filter.retrofitNavTree(items)
             
@@ -58,8 +64,13 @@ def mobile_contentItems(self, filter=None):
     ids = self.objectIds()
     filtered = self._filteredItems(ids, filter)
     
-    filter = getUtility(IConvergenceMediaFilter)
     
+    filter = queryUtility(IConvergenceMediaFilter, None)
+    if filter is None:
+        # gomobile.convergence is not installed
+        return filtered
+        
+        
     # May not be available
     # - uni tests
     # - command line client
