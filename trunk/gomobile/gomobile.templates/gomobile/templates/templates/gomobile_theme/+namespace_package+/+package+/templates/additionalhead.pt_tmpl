@@ -1,7 +1,0 @@
-<tal:comment replace="nothing">
-        <!-- Themes extending gomobiletheme.basic can place their JS and CSS here -->
-</tal:comment>
-
-<tal:helper-javascripts condition="context/@@mobile_tool/shouldRunJavascript">
-    <script tal:attributes="src string:\${viewlet/portal_url}/++resource++${namespace_package}.${package}/theme.js" type="text/javascript"></script>
-</tal:helper-javascripts>

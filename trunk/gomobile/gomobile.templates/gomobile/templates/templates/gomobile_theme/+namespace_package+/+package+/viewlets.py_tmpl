@@ -57,4 +57,16 @@ class AdditionalHead(base.AdditionalHead):
     
     If you want to override the base versions, please consider customizing base.Head instead.
     """
+    
+    def update(self):
+        
+        base.AdditionalHead.update(self)
+        
+        context = self.context.aq_inner
+        
+        portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
+        self.portal_url = portal_state.portal_url()
+        
+        # Absolute URL refering to the static media folder
+        self.resource_url = self.portal_url + "/" + "++resource++${namespace_package}.${package}"
 
