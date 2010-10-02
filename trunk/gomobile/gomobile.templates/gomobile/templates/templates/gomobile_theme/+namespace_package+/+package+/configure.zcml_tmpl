@@ -6,11 +6,14 @@
     xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="${namespace_package}.${package}">
+    
+  <includeDependencies package="." />
 
   <grok:grok package="." />
 
   <include package="gomobiletheme.basic" />
 
+  <!-- Register add-on installer entry in the control panel -->
   <genericsetup:registerProfile
       name="default"
       title="${namespace_package}.${package}"
@@ -19,6 +22,7 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- Register theme layer interface -->
   <interface
     interface=".interfaces.IThemeLayer"
     type="zope.publisher.interfaces.browser.IBrowserSkinType"

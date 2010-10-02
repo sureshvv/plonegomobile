@@ -38,6 +38,7 @@ grok.templatedir('templates')
 # Viewlets are active only when gomobiletheme.basic theme layer is activated
 grok.layer(IThemeLayer)
 
+# All viewlets are registered against this dummy viewlet manager
 grok.viewletmanager(base.MainViewletManager)
 
 class Logo(base.Logo):
@@ -50,4 +51,10 @@ class Logo(base.Logo):
     def getLogoPath(self):
         """ Use Zope 3 resource directory mechanism to pick up the logo file from the static media folder registered by Grok """
         return "++resource++${namespace_package}.${package}/logo.png"
+
+class AdditionalHead(base.AdditionalHead):
+    """ Include our custom CSS and JS in the theme.
+    
+    If you want to override the base versions, please consider customizing base.Head instead.
+    """
 
