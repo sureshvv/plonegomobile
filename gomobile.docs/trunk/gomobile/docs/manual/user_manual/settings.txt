@@ -1,0 +1,179 @@
+==========================================
+ mFabrik Web and Mobile site settings
+==========================================
+
+All Go Mobile settings can be configured through web interface.
+
+.. contents :: :local:
+
+
+mobile_domain_prefixes
+----------------------
+
+List of subdomain names, one per line. If the incoming HTTP request matches one of these
+domain names, the site mobile mode is enabled.
+
+Example value::
+        m
+        mobi
+        
+This setting would cause domain names *mobi.yoursite.com* and *m.yoursite.com* rendered 
+in the mobile mode.
+
+mobile_domain_suffixes
+----------------------
+
+List of top level domain names, one per line. If the incoming HTTP request matches one of these
+domain names, the site mobile mode is enabled.
+
+Example value::
+        mobi
+        
+This setting would cause domain names *yoursite.mobi* rendered 
+in the mobile mode.  
+
+preview_domain_prefixes
+-----------------------
+
+This setting is same as *mobile_domain_prefixes*,
+but meant for mobile browser preview used in the admin inteface.
+When mobile mode is enabled using these domain names, a special 
+cross-site Javascript is enabled to allow preview function correctly. 
+
+Example value::
+        preview
+
+This setting would cause domain names *preview.yoursite.com* rendered 
+in the mobile mode and loading preview related Javascripts.
+        
+web_domain_prefixes
+-------------------
+
+These domains name for web sites.
+
+.. note::
+
+        This setting is not currently used for anything.
+        
+Example value::
+        
+        web
+        www
+
+
+serve_mobile_via_ip
+-------------------
+
+If the site is reached by using numerical IP address serve it in mobile mode.
+
+This is useful if you are testing your site for mobile devices over LAN or WLAN
+using local IP address format, like ``192.168.200.12``. All access
+by IP address is assumed to be mobile traffic is this switch is on. 
+
+mobile_skin
+-----------
+
+Plone theme name which is used on the mobile site.
+
+Example value::
+
+        Plone Mobile
+        
+
+
+image_resizer_secret
+---------------------
+
+Magic string which protects against the denial of service attack by doing
+many requsts to slow down mobile image resizer.
+
+Mobile image resizer HTTP GET query parameters have a special signature
+parameter, *secret*, which is calculated based on other parameters and 
+this key, to make sure that resizer call comes from authenticated source.
+
+You don't generally need to set this value, as automatic random 
+value is generated when Go Mobile is installed on Plone site.
+
+Any string is accepted.
+
+Example value::
+
+        secretfoobar123
+        
+image_resize_cache_path
+------------------------
+      
+File-system path where we store mobile resized copies of images -->
+  
+Default value::  
+        
+        /tmp/gomobile_image_cache
+        
+
+default_canvas_width
+--------------------
+
+Target width of mobile screen for user agents missing user agent record.
+
+This is the maximum image width on the site if user agent detection
+does not yield to results.
+
+Integer values accepted.
+
+Example value::
+        160 
+
+default_canvas_height
+---------------------
+
+Target height of mobile screen for user agents missing user agent record.
+
+This is the maximum image width on the site if user agent detection
+does not yield to results.
+
+Integer values accepted.
+
+Example value::
+        100 
+
+
+tracker_name
+------------
+
+Which mobile analytics and tracking backend the site uses.
+String, the tracker name.
+
+Leave empty if no tracking is used.
+
+Possible values:
+
+* *google* for Google analytics mobile
+        
+* *bango* for Bango  
+        
+* *admob* for AdMob
+
+.. note::
+
+        Bango and AdMob trackers exist, but are not currently officially supported.
+        
+         
+tracking_id
+-----------
+
+Tracker id used.
+
+
+tracker_debug
+--------------
+
+
+Mobile analytics tracker logs/prints out debug information.
+  
+Useful for tracing tracker problems.
+     
+* Sets special HTTP response header
+     
+* Prints console output
+      
+     

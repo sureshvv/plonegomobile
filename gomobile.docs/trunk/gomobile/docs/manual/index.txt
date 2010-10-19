@@ -1,0 +1,13 @@
+Go Mobile documentation
+==================================
+
+This is documentation for mFabrik Web and Mobile mobile CMS product.
+
+Table of Content
+================
+
+.. toctree::
+   :maxdepth: 2
+
+   user_manual/index
+   developer_manual/index

@@ -1,0 +1,349 @@
+====================================
+ Installing Go Mobile for Plone
+====================================
+
+.. contents :: :local:
+
+Introduction
+-------------
+
+This document tells how to install Plone with Go Mobile add-on on your server or development computer.
+
+Supported operating systems are all operating systems which run Plone
+
+* Linux
+
+* OSX 
+
+* Windows
+
+Prerequisitements
+-----------------
+
+The following software stack must be installed to run mFabrik Web and Mobile add-on. 
+All these are covered by the installation instructions here.
+
+* Plone 3 / Python 2.4 
+
+* lxml / libxml2 library
+
+* Python Imaging Library
+
+* Internet connection is needed during the installation process
+
+For development
+===============
+
+The following is also needed for software development:
+
+* GCC compiler (MingW on Windows)
+
+* Python development headers (sudo apt-get install python2.4-dev)
+
+* Subversion client (svn)
+
+Installing prerequisitements
+----------------------------
+
+Windows
+=======
+
+* Run Plone 3 installer 
+
+* Register your Python distribution to Windows registry
+
+* Install lxml: http://pypi.python.org/pypi/lxml/2.2.4 (Download .exe for Python 2.4)
+
+OSX
+===
+
+* Install XCode / OSX SDK
+
+* Use `collective.buildout <http://svn.plone.org/svn/collective/buildout/python/src/docs>`_
+  to create a Python 2.4 interpreter from source
+  
+* Activate virtualenv of Python 2.4 interpreter (this will modify default look-up paths of shell)
+
+::
+
+  source ~/python-buildout/python2.4/bin/activate
+    
+* Install Plone project templates
+
+::
+
+  easy_install ZopeSkel
+  
+* Create Plone 3 buildout
+
+::
+
+  paster create -t plone_buildout plone3_buildout
+  
+Linux
+=====
+
+Install gcc, Python 2.4 and setuptools (may vary depending on the distribution)::
+
+   sudo apt-get install build_essential python2.4 python2.4-dev 
+
+Install Distribute (setuptools replacement) for Python 2.4::
+
+    curl -O http://python-distribute.org/distribute_setup.py
+    python2.4 distribute_setup.py
+
+Install virtualenv::
+
+    easy_install virtualenv
+    
+Create Python environment for your Plone
+
+::
+
+    virtualenv --no-site-packages -p /usr/bin/python2.4 plone-python
+    
+Activate environment
+
+::
+
+    source plone-python/bin/activate
+         
+* Install Plone project templates
+
+::
+
+  easy_install ZopeSkel
+  
+* Create Plone 3 buildout
+
+::
+
+  paster create -t plone_buildout plone3_buildout
+
+Differences between Windows buildout and UNIX buildouts
+-------------------------------------------------------
+
+UNIX buildout comes with PIL and lxml recipes,
+as it is pain to set-up these binaries
+on these platforms otherwise.
+
+On Windows, they are included in the unified installer.
+
+Modifying your hosts file
+--------------------------
+
+`Hosts file <http://en.wikipedia.org/wiki/Hosts_(file)>`_ 
+is your operating system text file which 
+allows you to manually add DNS names on different
+IP addresses. For testing and developing Go Mobile for Plone you 
+need to assign another name for your local computer, also
+known as ``localhost`` or by IP address ``127.0.0.1``. 
+
+After modifications, the following URL will render in web mode (like before modification)::
+
+    http://localhost:8080/Plone
+    
+..but the following will result to the mobile mode::
+
+    http://m.localhost:8080/Plone
+    
+...and the following page is laoded by mobile simulator::
+
+    http://preview.localhost:8080/Plone
+
+hosts file location
+====================
+
+On Windows: C:\\Windows\\SYSTEM32\\Drivers\\etc\\hosts
+
+On UNIX: /etc/hosts
+
+Adding required lines
+=====================
+
+Add the following line to hosts file (note that on UNIX you need to use sudo)::
+
+        127.0.0.1       m.localhost preview.localhost
+
+Starting Plone in debug mode
+----------------------------------
+
+Run command::
+
+        bin/instance fg
+
+On Windows, open the command line and type::
+
+        cd "C:\Program Files\Plone 3"
+        bin\instance.exe fg
+
+Installing add-on products on Plone site
+-----------------------------------------
+
+This step is executed after you have a running Plone instance in place.
+They modify a running Plone site database, so that all 
+stuff needed for running mobile site is there.
+
+Installing add-on products
+==========================
+
+Login to Plone site as administrative user.
+Your admin account has been given you either
+
+* In adminPassword
+
+* In buildout.cfg file (buildout based installations)
+
+Use *Site setup* control panel in Plone and its *Add-on products* tool to install Go Mobile add-on products.
+
+* *Go Mobile* is needed always
+
+* *Go Mobile Default Theme* or any other mobile theme is needed always
+
+* *Go Mobile Convergence* is needed if you wish to publish **both** web and mobile content on the same site
+
+Trunk version installation
+--------------------------
+
+This is needed if you wish to develop Go Mobile for Plone code base.
+
+.. note ::
+
+        Subversion 1.6 or later is required, as otherwise
+        Mr. Developer recipes "ignore certificate errors"
+        does not work. 
+
+Modify buildout to include Go Mobile trunk version sources
+==========================================================
+
+The following buildout extends are available for you:
+
+* Plone 3 anonymous
+
+* Plone 3 commiter
+
+* Plone 4 anonymous
+
+* Plone 4 commiter
+
+See `gomobile.buildout project for available URLs and files <http://code.google.com/p/plonegomobile/source/browse/trunk/gomobile/gomobile.buildout>`_.
+
+Add Go Mobile for Plone snippets to ``buildout.cfg`` as described below::
+
+    [buildout]
+
+     parts =
+        ...
+        ${gomobile.config:parts}
+     
+     
+     # Need to refer to buidout.cfg extension which lives on Google Code servers.
+     extends =
+        http://dist.plone.org/release/4.0/versions.cfg
+        http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.trunk.anonymous.cfg
+        
+     extensions = mr.developer
+
+     eggs =
+        Plone
+        ...
+        ${gomobile.config:eggs}
+
+    [instance]
+    zcml =
+        ...
+        ${gomobile.config:zcml} 
+        
+
+Different trunk version buildout options are 
+
+* http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.plone-4.trunk.cfg
+
+* http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.plone-4.trunk.commit-access.cfg
+
+* (Plone 3) http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.trunk.commit-access.cfg
+
+* (Plone 3) http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout/gomobile.trunk.anomymous.cfg
+
+You can find available versions `here <http://plonegomobile.googlecode.com/svn/trunk/gomobile/gomobile.buildout>`_.
+        
+*gomobile.trunk.cfg* is an buildout extension file defining trunk package versions
+using `Mr. Developer <http://pypi.python.org/pypi/mr.developer>`_ buildout extension.
+You do not want to include this file directly, as depending on the commit access and Plone
+version you need to get one of the options above.
+
+Files ending with *commit-access.cfg* and *anonymous.cfg* are 
+alternative config files extending *gomobile.trunk.cfg* with the 
+setting of HTTP or priviledged HTTPS checkout protocol.
+       
+.. note ::
+
+        Dexterity (new Plone system) component version configuration
+        is used as a base to have a good known set of version
+        for Go Mobile for Plone.
+        
+    
+Running buildout with Mr. Developer
+===================================
+
+You can checkout the all code after accepting the certificates using steps above.
+
+Step 1
+++++++
+
+Activate your Python 2.4 virtual environment (depends on how your Python is installed)::
+
+        ~/python2.4/bin/activate
+
+Step 2
+++++++
+
+Run buildout. This will downlaod remote extensions over HTTP and set-up Mr. Developer scripts::
+
+        bin/buildout 
+        
+This will result an error, but makes *bin/developer* command available.
+
+Step 3
+++++++
+
+Checks out source code for all packages.
+
+        bin/develop co ""
+        
+Step 4
+++++++
+
+Build codebase with checked out source code::
+
+        bin/buildout
+        
+Start Plone
+===========
+
+Run::
+ 
+ 
+    bin/instance fg
+    
+...and hope there was no version incompatibilities between products.
+
+Running automatic test suite
+-----------------------------
+
+After you have succesfully launched Plone, you can 
+run automatic Go Mobile test suite which includes unit and functional tests.
+This will guarantee that your operating system libraries and Python module
+set is compatible with Go Mobile.
+
+To run test suite (using zc.recipe.testrunner)::
+
+	bin/test -m gomobile* -m mobile*
+ 
+After test suite completes, it should report zero failures::
+
+  Total: 119 tests, 0 failures, 0 errors
+
+
+ 
+             

@@ -1,0 +1,35 @@
+=================
+User Manual
+=================
+
+This documentation presents Go Mobile add-on product for Plone CMS. 
+Documentation is for persons who plan to mobilize their site, use and integrate mobile features to their site 
+using Go Mobile mobile CMS product.
+
+.. toctree::
+   :maxdepth: 2
+   
+   features
+   installation
+   license
+   optimal_experience
+   convergence
+   options
+   preview
+   navigation
+   redirector
+   resizing
+   analytics
+   seo
+   sitemap
+   settings
+   sniffing
+   themes
+   varying
+   addons
+   roadmap
+   troubleshooting
+   
+      
+   
+   
