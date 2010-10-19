@@ -42,6 +42,17 @@ ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', 'gomobil
 class ConvergenceTestCaseMixin:
 
     def afterSetUp(self):
+
+        # A hack to force gomobile.convergence install when running multiple tests on P3
+        name = "gomobile.convergence"
+        qi = self.portal.portal_quickinstaller
+        
+        try:
+            qi.uninstallProducts([name])
+        except:
+            pass
+        qi.installProduct(name)        
+        
         self.filter = getUtility(IConvergenceMediaFilter)
 
         # Set up convergence layer on HTTP request,
