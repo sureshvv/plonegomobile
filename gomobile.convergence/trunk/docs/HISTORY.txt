@@ -1,0 +1,12 @@
+Changelog
+=========
+
+1.0 - Unreleased
+----------------
+
+* Added Spanish translation [Leonardo J. Caballero G.]
+* Added full support for i18n [Leonardo J. Caballero G.]
+  [leonardocaballero]
+
+* Initial release
+
