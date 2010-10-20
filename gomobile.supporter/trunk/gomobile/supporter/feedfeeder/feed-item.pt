@@ -35,7 +35,7 @@
             <span tal:replace="context/getFeedItemAuthor"></span>
           </span>
 
-          &mdash;
+          &#8212;
 
         </tal:name>
 
@@ -49,7 +49,7 @@
         <span class="state-expired"
               tal:condition="python:portal.isExpired(here)"
               i18n:translate="time_expired">
-          &mdash; expired
+          &#8212; expired
         </span>
 
         <span tal:define="locked portal/lock_icon.gif"

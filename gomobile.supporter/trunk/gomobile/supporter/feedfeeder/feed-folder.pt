@@ -35,7 +35,7 @@
 			            <span tal:replace="child/author"></span>
 			          </span>
 			
-			          &mdash;
+			          &#8212;
 			
 			        </tal:name>
 			
