@@ -1,21 +1,21 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '0.9'
 
 setup(name='mobile.htmlprocessing',
       version=version,
-      description="HTML processing helpers for mobile sites",
+      description="Turn arbitary HTML content to mobile browser friendly format",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
         ],
-      keywords='html xhtml mobile image processor',
+      keywords='html xhtml mobile image processor plone',
       author='',
       author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['mobile'],

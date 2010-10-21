@@ -4,7 +4,10 @@ Introduction
 ------------
 
 ``mobile.htmlprocessing`` is a Python package providing utilities to sanitize 
-arbitrary HTML content for outputting it to mobile devices.
+arbitrary HTML content into mobile browser friendly format.
+
+It is part of mFabrik `Web and Mobile <http://webandmobile.mfabrik.com>`_ solutions package
+to build multichannel content management with Python.
 
 Features
 --------
@@ -58,29 +61,31 @@ See also
 
 * `W3C XHTML mobile validator <http://validator.w3.org/mobile/>`_
 
-Source code
-------------
+Source code and issue tracking
+-----------------------------------
 
-Source code is available via Google Code.
+The project is hosted at `Google Code project repository <http://code.google.com/p/plonegomobile>`_.
 
-* http://code.google.com/p/mobilesniffer/source/browse/#svn/trunk/mobile.htmlprocessing
+Commercial support and development
+-----------------------------------
 
-Beta software
--------------
+This package is licenced under open source GPL 2 license.
 
-This software is still in much development and aimed for advanced Python developers only.
+`Commercial CMS and mobile development support options <http://webandmobile.mfabrik.com/services>`_
+are available from mFabrik's Web and Mobile product site.
 
+Our top class Python developers are ready to help you with 
+any software development needs.
+  
 Author
 ------
 
 `mFabrik Research Oy <mailto:info@mfabrik.com>`_ - Python and Plone professionals for hire.
+
+* `mFabrik Web & Mobile - multichannel CMS made easy <http://webandmobile.mfabrik.com>`_ 
 
 * `mFabrik web site <http://mfabrik.com>`_ 
 
 * `mFabrik mobile site <http://mfabrik.mobi>`_ 
 
 * `Blog <http://blog.mfabrik.com>`_
-
-* `About Plone CMS <http://mfabrik.com/technology/technologies/content-management-cms/plone>`_ 
-
-
