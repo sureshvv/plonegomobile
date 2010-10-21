@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '0.9'
 
 setup(name='gomobile.imageinfo',
       version=version,
-      description="Unified interface to access image data in different Zope image objects",
+      description="Extract and manipulate different Zope image objects",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
@@ -16,10 +16,10 @@ setup(name='gomobile.imageinfo',
         'Framework :: Plone',
         'Intended Audience :: Developers',
         ],
-      keywords='zope image resize pil',
+      keywords='zope image resize pil plone',
       author='mFabrik Rearch Oy',
       author_email='research@mfabrik.com',
-      url='http://mfabrik.com',
+      url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['gomobile'],

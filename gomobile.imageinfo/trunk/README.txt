@@ -5,7 +5,10 @@ Introduction
 
 ``gomobile.imageinfo`` is abstraction layer to access image data in different Zope image objects. 
 It takes in any image object or traversable path and returns Python Imaging Library object for it.
-    
+
+The package is a part of mFabrik `Web and Mobile <http://webandmobile.mfabrik.com>`_ solutions package
+to build multichannel content management with Python.
+
 Supported different image objects include
     
 * Skin layer images, both file system based and ZMI uploads
@@ -30,30 +33,31 @@ TODO
 
 * Tests depends on ``gomobile.mobile`` presence
 
-Source code
-------------
+Source code and issue tracking
+-----------------------------------
 
-Source code is available via Google Code.
+The project is hosted at `Google Code project repository <http://code.google.com/p/plonegomobile>`_.
 
-* http://code.google.com/p/plonegomobile/source/browse/#svn/trunk/gomobile/gomobile.imageinfo
+Commercial support and development
+-----------------------------------
 
-Beta software
--------------
+This package is licenced under open source GPL 2 license.
 
-This software is still in much development and aimed for advanced Python developers only.
+`Commercial CMS and mobile development support options <http://webandmobile.mfabrik.com/services>`_
+are available from mFabrik's Web and Mobile product site.
 
+Our top class Python developers are ready to help you with 
+any software development needs.
+  
 Author
 ------
 
 `mFabrik Research Oy <mailto:info@mfabrik.com>`_ - Python and Plone professionals for hire.
+
+* `mFabrik Web & Mobile - multichannel CMS made easy <http://webandmobile.mfabrik.com>`_ 
 
 * `mFabrik web site <http://mfabrik.com>`_ 
 
 * `mFabrik mobile site <http://mfabrik.mobi>`_ 
 
 * `Blog <http://blog.mfabrik.com>`_
-
-* `About Plone CMS <http://mfabrik.com/technology/technologies/content-management-cms/plone>`_ 
-
-
-
