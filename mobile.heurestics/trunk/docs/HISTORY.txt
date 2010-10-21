@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.9
+-------------------
+
+- Major project restructuring [miohtama]
+
+
 0.1
 -------------------
 

@@ -1,23 +1,23 @@
+.. contents ::
+
+Introduction
+------------
+
 This package contains heurestics (rules-of-thumbs) for dealing with mobile phones in web systems.
 
-Heurestics are divided to two categories
-
-* mobile.heurestics.useragent: User agent based rules. Need *mobile.sniffer* package support.
-  Heurestics are performed based on digged data from mobile agent user database.
-
-* mobile.heurestics.simple: Rules are applied based on plain HTTP headers. User agent matching
-  is self-contained and done dummily (if "iPhone" in user_agent...). 
-
+The package is a part of mFabrik `Web and Mobile <http://webandmobile.mfabrik.com>`_ solutions package
+to build multichannel content management with Python.
+  
 Features
 -------------
 
 * Extracting user agent information from HTTP headers
 
-* Detecting high-end and low-end mobile phones: simple.py
+* Detecting high-end and low-end mobile phones, Javascript and CSS support: simple.py
 
 * Formatting phone number links (iPhone / WTAI): simple.py
 
-* Creating Google Maps / waypoint links: poi.py / 
+* Creating Google Maps / waypoint links: poi.py 
 
 * Creating downloadable contact cards: vcard.py
 
@@ -37,29 +37,31 @@ Dependencies
 If mobile.heurestic Python egg is installed via dependency aware installer (easy_install) 
 the dependencies are automatically installed.
 
-Source code
-------------
+Source code and issue tracking
+-----------------------------------
 
-Source code is available via Google Code.
+The project is hosted at `Google Code project repository <http://code.google.com/p/plonegomobile>`_.
 
-* http://code.google.com/p/mobilesniffer/source/browse/#svn/trunk/mobile.heurestics
+Commercial support and development
+-----------------------------------
 
-Beta software
--------------
+This package is licenced under open source GPL 2 license.
 
-This software is still in much development and aimed for advanced Python developers only.
+`Commercial CMS and mobile development support options <http://webandmobile.mfabrik.com/services>`_
+are available from mFabrik's Web and Mobile product site.
 
+Our top class Python developers are ready to help you with 
+any software development needs.
+  
 Author
 ------
 
 `mFabrik Research Oy <mailto:info@mfabrik.com>`_ - Python and Plone professionals for hire.
+
+* `mFabrik Web & Mobile - multichannel CMS made easy <http://webandmobile.mfabrik.com>`_ 
 
 * `mFabrik web site <http://mfabrik.com>`_ 
 
 * `mFabrik mobile site <http://mfabrik.mobi>`_ 
 
 * `Blog <http://blog.mfabrik.com>`_
-
-* `About Plone CMS <http://mfabrik.com/technology/technologies/content-management-cms/plone>`_ 
-
-
