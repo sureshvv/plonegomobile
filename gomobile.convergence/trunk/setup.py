@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '0.9'
 
 setup(name='gomobile.convergence',
       version=version,
-      description="Categorize content for web and mobile publishing in Plone",
+      description="Multichannel content discrimination and overrides for Plone CMS",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
