@@ -28,8 +28,13 @@ setup(name='gomobile.imageinfo',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+
       ],
       entry_points="""
       # -*- Entry points: -*-
+
+
+      [z3c.autoinclude.plugin]
+      target = plone        
       """,
       )
