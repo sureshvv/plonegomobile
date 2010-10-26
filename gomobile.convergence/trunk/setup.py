@@ -36,5 +36,9 @@ setup(name='gomobile.convergence',
       ],
       entry_points="""
       # -*- Entry points: -*-
+
+
+      [z3c.autoinclude.plugin]
+      target = plone        
       """,
       )
