@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '1.0'
+version = '0.9'
 
 long_description = (
     read('README.txt')
@@ -41,9 +41,9 @@ setup(name='gomobile.supporter',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='mobile plone python',
-      author='Twinapex Research',
-      author_email='mikko.ohtamaa@twinapex.com',
-      url='http://www.twinapex.com',
+      author='mFabrik Research Oy',
+      author_email='research@mfabrik.com',
+      url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['gomobile', ],
