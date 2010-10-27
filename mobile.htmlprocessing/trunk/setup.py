@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.9'
+version = '0.9.1'
 
 setup(name='mobile.htmlprocessing',
       version=version,
@@ -13,8 +13,8 @@ setup(name='mobile.htmlprocessing',
         "Programming Language :: Python",
         ],
       keywords='html xhtml mobile image processor plone',
-      author='',
-      author_email='',
+      author='mFabrik Research Oy',
+      author_email='research@mfabrik.com',
       url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),

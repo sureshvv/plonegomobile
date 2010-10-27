@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.9 - 0.9.1
+----------------
+
+* Fixed maintainer information [miohtama]
+
 0.9
 ----------------
 
