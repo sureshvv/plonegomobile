@@ -24,6 +24,7 @@ setup(name='mobile.htmlprocessing',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'lxml'
       ],
       entry_points="""
       # -*- Entry points: -*-
