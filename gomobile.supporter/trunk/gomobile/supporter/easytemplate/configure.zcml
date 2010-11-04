@@ -9,6 +9,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="gomobile.supporter">
 
+	<include package="five.grok" />
     <include package="collective.easytemplate" />
 
     <grok:grok package="." />
