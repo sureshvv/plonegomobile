@@ -6,6 +6,8 @@ Changelog
 
 * Added zcml autoinclude [miohtama]
 
+* Updated copyright in setup.py [miohtama]
+
 0.9
 ---
 

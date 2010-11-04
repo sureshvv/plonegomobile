@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.9'
+version = '0.9.1'
 
 setup(name='gomobile.convergence',
       version=version,
@@ -14,10 +14,10 @@ setup(name='gomobile.convergence',
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='mobile',
-      author='Mikko Ohtamaa',
-      author_email='mikko.ohtamaa@twinapex.com',
-      url='http://www.twinapex.com',
+      keywords='mobile web cms plone zope',
+      author='mFabrik Research Oy',
+      author_email='research@mfabrik.com',
+      url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['gomobile'],
