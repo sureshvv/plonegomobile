@@ -6,6 +6,8 @@ Changelog
 
 * Fixed portal_tabs monkey patch for Plone 3 and when gomobile.convergence was not installed [miohtama]
 
+* Fixed @@go_to_mobile_site on the sites where gomobile.convergence is not installed, but the view is still referred [miohtama]
+
 0.9.0 - 0.9.1
 -------------
 
