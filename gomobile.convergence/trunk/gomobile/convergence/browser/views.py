@@ -120,7 +120,11 @@ class AbstractGoToView(BrowserView):
         """
         @return: True if the queried is available as a mobile version.
         """
-        filter = getUtility(IConvergenceMediaFilter)
+        filter = queryUtility(IConvergenceMediaFilter, None)
+        if filter is None:
+            # convergence is not quickinstalled, assume always available
+            return True
+            
         media = filter.solveContentMedia(context)
         return media in self.get_available_medias()
         
