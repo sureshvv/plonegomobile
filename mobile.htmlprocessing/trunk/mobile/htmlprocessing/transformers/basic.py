@@ -14,17 +14,25 @@ __docformat__ = "epytext"
 import re
 import copy
 
+import logging
+
+logger = logging.getLogger("mobile.htmlprocessing")
+
 try:
     import lxml
-except ImportError:
+
+    from lxml.html import defs
+    from lxml.html import fromstring, tostring, XHTML_NAMESPACE
+    from lxml.html import _nons, _transform_result
+    
+    from lxml.html.clean import Cleaner
+
+except ImportError, e:
     #raise RuntimeError("Please install lxml: http://pypi.python.org/pypi/lxml/")
-    pass
+    logger.exception(e)
+    logger.error("Could not import lxml - probably not installed or too old version")
+    
 
-from lxml.html import defs
-from lxml.html import fromstring, tostring, XHTML_NAMESPACE
-from lxml.html import _nons, _transform_result
-
-from lxml.html.clean import Cleaner
 
 class BasicCleaner(Cleaner):
     """ Clean incoming HTML to be valid XHTML mobile profile without any nastiness """
