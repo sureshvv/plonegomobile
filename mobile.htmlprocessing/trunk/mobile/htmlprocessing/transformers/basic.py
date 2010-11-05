@@ -32,7 +32,10 @@ except ImportError, e:
     logger.exception(e)
     logger.error("Could not import lxml - probably not installed or too old version")
     
-
+    class BasicCleaner(object):
+        def __init__(self, trusted=False):
+            pass
+        
 
 class BasicCleaner(Cleaner):
     """ Clean incoming HTML to be valid XHTML mobile profile without any nastiness """
