@@ -94,7 +94,7 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
         query['path'] = {'query' : rootPath, 'depth' : 1}
 
         query['portal_type'] = utils.typesToList(context)
-
+        
         sortAttribute = navtree_properties.getProperty('sortAttribute', None)
         if sortAttribute is not None:
             query['sort_on'] = sortAttribute
@@ -118,7 +118,7 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
             excludedIds[id]=1
 
         rawresult = portal_catalog.searchResults(**query)
-        
+                
         # apply mobile media filter for the results
         media_filter = queryUtility(IConvergenceMediaFilter, None)
         
@@ -136,8 +136,12 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
                         'description': item.Description}
         
                 if media_filter is not None:
+                    # Behavior with gomobile.convergence
                     media = resolved_content_medias[item]
                     if media_filter.checkMediaFilter(media, strategy):
                         result.append(data)
+                else:
+                    # The default behavior
+                    result.append(data)                    
                                 
         return result
