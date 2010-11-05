@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.9.1 - current
+----------------
+
+* Fixed portal_tabs monkey patch for Plone 3 and when gomobile.convergence was not installed [miohtama]
+
 0.9.0 - 0.9.1
 -------------
 
