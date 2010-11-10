@@ -20,6 +20,7 @@ from PIL.ImageFile import ImageFile
 import zope.interface
 
 import OFS
+from AccessControl import Unauthorized
 from Products.CMFCore.FSImage import FSImage
 from Products.Archetypes.Field import Image as ATFieldImage
 from Products.ATContentTypes.interface import IATImage
@@ -114,7 +115,16 @@ class ImageInfoUtility(object):
         """
         site = getSite()
 
-        img = site.restrictedTraverse(path)
+        try:
+            img = site.unrestrictedTraverse(path)
+        except Unauthorized:
+            # The parent folder might be private and the image public,
+            # in which case we should be able to view the image after all.
+            parent_path = '/'.join(path.split('/')[:-1])
+            image_path = path.split('/')[-1]
+            parent = site.unrestrictedTraverse(parent_path)
+            img = parent.restrictedTraverse(image_path)
+
 
         # UGH... the resource based image isn't a real class but some
         # dynamically generated Five metaclass... no fucking clue
