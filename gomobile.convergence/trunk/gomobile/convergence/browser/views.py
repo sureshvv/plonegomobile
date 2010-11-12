@@ -35,6 +35,8 @@ from gomobile.convergence.interfaces import ContentMediaOption, IConvergenceMedi
 from gomobile.convergence.interfaces import IOverrider
 from gomobile.convergence.interfaces import IConvergenceSupport, ContentMediaOption
 
+from gomobile.convergence.filter import getConvergenceMediaFilter
+
 class ChangeMediaStrategyView(BrowserView):
     """
     Handle change media strategy portlet form posts.
@@ -56,7 +58,7 @@ class ChangeMediaStrategyView(BrowserView):
         else:
             instance = self.context
 
-        filter = getUtility(IConvergenceMediaFilter)
+        filter = getConvergenceMediaFilter()
 
         filter.setContentMedia(instance, strategy)
 

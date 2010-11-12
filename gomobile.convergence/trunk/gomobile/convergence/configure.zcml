@@ -18,21 +18,21 @@
 
     <grok:grok package=".behaviors" />
 
-   <include package="plone.browserlayer" />
+    <include package="plone.browserlayer" />
 
-   <five:registerPackage package="." initialize=".initialize" />
+    <five:registerPackage package="." initialize=".initialize" />
 
-   <i18n:registerTranslations directory="locales" />
+    <i18n:registerTranslations directory="locales" />
 
-   <class class="Products.Archetypes.BaseObject.BaseObject">
+    <class class="Products.Archetypes.BaseObject.BaseObject">
          <implements interface=".interfaces.IConvergenceSupport" />
-   </class>
+    </class>
 
-   <adapter factory='.indexing.getContentMedias' name='getContentMedias' />
+    <adapter factory='.indexing.getContentMedias' name='getContentMedias' />
 
-   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
+    <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
 
-   <plone:behavior
+    <plone:behavior
         title="Multichannel"
         description="Choose publishing content web, mobile or both"
         provides=".behaviors.IMultiChannelBehavior"
@@ -44,7 +44,7 @@
      provides="gomobile.convergence.interfaces.IConvergenceMediaFilter"
      factory=".filter.ConvergedMediaFilter" />
 
-  <genericsetup:registerProfile
+   <genericsetup:registerProfile
       name="default"
       title="Go Mobile Convergence"
       directory="profiles/default"
@@ -53,6 +53,5 @@
       i18n:attributes="title gs_profiles_default_title;
                        description gs_profiles_default_description;"
       />
-
 
 </configure>

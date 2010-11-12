@@ -52,7 +52,7 @@ from gomobile.convergence.interfaces import IOverrideForm
 from gomobile.convergence.overrider.base import IOverrideStorage
 
 from gomobile.convergence import GMConvergenceMF as _
-
+from gomobile.convergence.filter import getConvergenceMediaFilter
 
 class PublishingForm(z3c.form.form.EditForm):
     """ Folder/page specific convergence options """
@@ -129,8 +129,10 @@ class MasterFormView(BrowserView):
 
     def media_status(self):
         """ Get human-readable text on which medias the context is available  """
-        filter = getUtility(IConvergenceMediaFilter)
+        
         context = self.context.aq_inner
+        
+        filter = getConvergenceMediaFilter()
         media = filter.solveContentMedia(context)
 
         # Translate vocabulary
@@ -180,8 +182,6 @@ class MasterFormView(BrowserView):
         import z3c.form.interfaces
         from plone.z3cform import z2
         z2.switch_on(self, request_layer=z3c.form.interfaces.IFormLayer)
-
-        
 
         # Render template
         return self.index()
