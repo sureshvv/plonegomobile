@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.9.2 - current
+0.9.2 - 0.9.3
 ----------------
 
 * Fixed strange error where getUtility() failed for global utility
