@@ -20,7 +20,7 @@ import os
 from Acquisition import aq_inner
 import zope.interface
 from zope import schema
-from zope.component import getUtility, queryUtility
+from zope.component import getUtility, queryUtility, ComponentLookupError
 from zope.component import getMultiAdapter, queryMultiAdapter
 from Products.Five.browser import BrowserView
 
@@ -165,12 +165,17 @@ class MasterFormView(BrowserView):
         
         self.publishing_form_instance = PublishingForm(self.context, self.request)        
         
-        self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
+        try:
+            self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
+        except ComponentLookupError:
+            # This component doesn't support field overrides
+            self.override_form_instance = None
         
         if HAS_WRAPPER_FORM:
             zope.interface.alsoProvides(self.publishing_form_instance, IWrappedForm)        
             zope.interface.alsoProvides(self.mobile_form_instance, IWrappedForm)
-            zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
+            if self.override_form_instance is not None: 
+                zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
     
     
     def __call__(self):

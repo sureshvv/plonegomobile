@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.9.3 - current
+----------------
+
+* Do not yell on convergence form if no override adapter for the content type [miohtama]
+
 0.9.2 - 0.9.3
 ----------------
 
