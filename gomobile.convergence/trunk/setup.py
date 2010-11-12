@@ -25,11 +25,6 @@ setup(name='gomobile.convergence',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'plone.behavior',
-          'plone.directives.form',
-          'zope.schema',
-          'zope.interface',
-          'zope.component',
           'gomobile.mobile',
           '',
           # -*- Extra requirements: -*-

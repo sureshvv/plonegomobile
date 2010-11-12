@@ -22,6 +22,8 @@ from gomobile.convergence.interfaces import IConvergenceMediaFilter
 from gomobile.convergence.filter import media_options_vocabulary
 from gomobile.convergence import PloneMessageFactory as _
 
+from gomobile.convergence.filter import getConvergenceMediaFilter
+
 class IMediaPortlet(IPortletDataProvider):
     """ Define buttons for mobile preview """
     pass
@@ -34,7 +36,7 @@ class Renderer(base.Renderer):
     def __init__(self, context, request, view, manager, data):
         base.Renderer.__init__(self, context, request, view, manager, data)
         self.site_url = getToolByName(context, 'portal_url')
-        self.filter = getUtility(IConvergenceMediaFilter)
+        self.filter = getConvergenceMediaFilter()
         self.discriminator = getUtility(IMobileRequestDiscriminator)
         self.context_state = getMultiAdapter((self.context, self.request), name='plone_context_state')
 

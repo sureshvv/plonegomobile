@@ -4,14 +4,15 @@
 
     This is the core of convergence: determining what to show and where.
 
-
 """
 
-__license__ = "GPL 2.1"
-__copyright__ = "2009 Twinapex Research"
+__license__ = "GPL 2"
+__copyright__ = "2010 mFabrik Research Oy"
+__author__ = "Mikko Ohtamaa <mikko@mfabrik.com>"
 
 import Missing
 
+import zope.interface
 from zope.component import getUtility
 
 from Products import AdvancedQuery
@@ -28,10 +29,10 @@ media_options_vocabulary = ((ContentMediaOption.USE_PARENT, _(u"Use parent folde
                                         (ContentMediaOption.BOTH, _(u"Web and mobile")))
 
 
-class ConvergedMediaFilter:
+class ConvergedMediaFilter(object):
     """ Helper class to deal with media state of content objects. 
     
-    To use this class:
+    To use this class::
     
         from gomobile.convergence.interfaces import IConvergenceMediaFilter
         self.filter = getUtility(IConvergenceMediaFilter)
@@ -44,7 +45,9 @@ class ConvergedMediaFilter:
         
     
     """
-
+    
+    zope.interface.implements(IConvergenceMediaFilter)
+    
     def isConvergedContent(self, content):
         """ See that the content is proper converged supported """
 
@@ -382,3 +385,15 @@ class ConvergedMediaFilter:
         return result
 
 
+def getConvergenceMediaFilter():
+    """
+    Helper method to make sure things work.
+    """
+    
+    # Workaround for getUtility() bug 
+    # getUtility() works not, getUtilitiesFor() works
+    from zope.app import zapi
+    gsm = zapi.getGlobalSiteManager()
+    return gsm.getUtility(IConvergenceMediaFilter)
+
+  

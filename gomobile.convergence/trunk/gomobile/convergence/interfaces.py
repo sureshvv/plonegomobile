@@ -1,5 +1,11 @@
+"""
+
+    Convergence options and content support interfaces.
+
+"""
+
 __license__ = "GPL 2"
-__copyright__ = "2009 Twinapex Research"
+__copyright__ = "2009-2010 mFabrik Research Oy"
 
 from zope import schema
 from zope.interface import Interface
@@ -12,7 +18,7 @@ from z3c.form.interfaces import IForm
 
 from zope.publisher.interfaces.browser import IBrowserView
 
-class ContentMediaOption:
+class ContentMediaOption(object):
     """ Pseudo-constants defining on which medias content should apper """
     WEB = "web"
     MOBILE = "mobile"
