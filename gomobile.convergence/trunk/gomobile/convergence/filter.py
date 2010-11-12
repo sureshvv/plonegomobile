@@ -393,7 +393,7 @@ def getConvergenceMediaFilter():
     # Workaround for getUtility() bug 
     # getUtility() works not, getUtilitiesFor() works
     from zope.component import getGlobalSiteManager
-    gsm = zapi.getGlobalSiteManager()
+    gsm = getGlobalSiteManager()
     return gsm.getUtility(IConvergenceMediaFilter)
 
   
