@@ -1,5 +1,13 @@
-__license__ = "GPL 2.1"
-__copyright__ = "2009 Twinapex Research"
+"""
+
+    Convergence test base classes
+    
+    http://webandmobile.mfabrik.com
+
+"""
+
+__license__ = "GPL 2"
+__copyright__ = "2010 mFabrik Research Oy"
 
 from Products.Five import zcml
 from Products.Five import fiveconfigure
@@ -37,7 +45,7 @@ def setup_zcml():
 # The order here is important.
 setup_zcml()
 #extension_profiles=['Products.CMFPlone:testfixture']
-ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', 'gomobiletheme.basic'],extension_profiles=['Products.CMFPlone:testfixture'])
+ptc.setupPloneSite(products=['gomobile.mobile', 'gomobile.convergence', 'plone.app.z3cform', 'gomobiletheme.basic'],extension_profiles=['Products.CMFPlone:testfixture'])
 
 class ConvergenceTestCaseMixin:
 
