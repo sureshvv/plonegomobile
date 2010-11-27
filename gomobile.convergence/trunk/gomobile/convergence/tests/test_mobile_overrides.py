@@ -16,7 +16,7 @@ from Products.CMFCore.utils import getToolByName
 from gomobile.convergence.interfaces import IOverrider
 from gomobile.convergence.overrider.base import IOverrideStorage
 
-from base import BaseTestCase
+from base import BaseTestCase, FunctionalTestCase
 
 class TestMobileOverrides(BaseTestCase):
 
@@ -115,12 +115,65 @@ class TestMobileOverrides(BaseTestCase):
         result()
 
 
+class TestMobileOverridesFunctional(FunctionalTestCase):
+    """ Functional tests for mobile overrides settings page. """
+    
+    def test_set_mobile_title_override(self):
+        """
+        Check that mobile folder listing page setting can be toggled properly.
+        """
+        
+        doc = self.create_doc()
+        
+        self.loginAsAdmin()
+        
+        self.browser.open(doc.absolute_url() + "/@@convergence")
+        #self.assertNotDefaultPloneTheme(self.browser.contents)
+        #self.browser.open(self.portal.doc.absolute_url())
+        html = self.browser.contents
+        
+        # Assume we have good settings page
+        self.assertTrue("form-widgets-Title" in html, "Was not a convergence settings pages")
+        
+        form = self.browser.getForm(index=3)        
+        form.getControl(name=u"form.widgets.enabled_overrides:list").value = [u"Title"]
+        form.getControl(name=u"form.widgets.Title").value = u"Overriden title text"
+        save = form.getControl(name=u"form.buttons.save")
+        save.click()
+    
+        # back to View mode    
+        html = self.browser.contents
+        self.assertTrue("Changes saved" in html)
+        
+        # Go to back to settings and see the setting has been saved
+        self.browser.open(doc.absolute_url() + "/@@convergence")
+        form = self.browser.getForm(index=3)
+        value = form.getControl(name=u"form.widgets.enabled_overrides:list").value 
+        self.assertEqual(value, [u"Title"], "Title override setting properly stored")
+        value = form.getControl(name=u"form.widgets.Title").value
+        self.assertEqual(value, u"Overriden title text")
+        
+        # Now ensure title has been changed in mobile rendering
+        self.useMobileMode()
+        self.browser.open(doc.absolute_url())
+        html = self.browser.contents
+        self.assertTrue("Overriden title text" in html)
 
+
+    def test_set_mobile_folder_listing_setting(self):
+        pass
+    
+    def create_doc(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory("Document", "doc")
+        
+        return self.portal.doc
 
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestMobileOverrides))
+    suite.addTest(unittest.makeSuite(TestMobileOverridesFunctional))
     return suite
 
 

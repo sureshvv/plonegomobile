@@ -181,5 +181,9 @@ class ViewTestCase(ConvergenceTestCaseMixin, PloneTestCase):
         PloneTestCase.afterSetUp(self)
         ConvergenceTestCaseMixin.afterSetUp(self)
 
-class FunctionalTestCase(ConvergenceTestCaseMixin, ptc.FunctionalTestCase):
-    pass
+from gomobiletheme.basic.tests import BaseTestCase as FunctionalBaseTestCase
+class FunctionalTestCase(ConvergenceTestCaseMixin, FunctionalBaseTestCase):
+
+    def afterSetUp(self):
+        FunctionalBaseTestCase.afterSetUp(self)
+        ConvergenceTestCaseMixin.afterSetUp(self)
