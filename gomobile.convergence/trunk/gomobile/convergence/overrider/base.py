@@ -251,4 +251,3 @@ class OverrideForm(form.SchemaForm):
             self.status = self.formErrorsMessage
             return
         self.applyChanges(data)
-        self.request.response.redirect(self.context.absolute_url())
