@@ -15,6 +15,7 @@ __copyright__ = "2010 mFabrik Research Oy"
 __author__ = "Mikko Ohtamaa <mikko@mfabrik.com>"
 __docformat__ = "epytext"
 
+import copy
 import os
 
 from Acquisition import aq_inner
@@ -28,6 +29,7 @@ import z3c.form.form
 from z3c.form import subform
 from z3c.form import field
 from z3c.form import group
+from z3c.form import button
 
 from gomobile.convergence.interfaces import IOverrideForm, IOverrider
 from plone.z3cform.layout import FormWrapper, wrap_form
@@ -117,15 +119,90 @@ class OverrideForm(z3c.form.form.EditForm):
 
         return fields
 
+class MasterForm(z3c.form.form.EditForm):
+    """ Bring together three different mobile related settings forms. """
+    
+    label = _(u"Mobile settings")
+
+    @button.buttonAndHandler(_('Save'), name='save')
+    def handleSave(self, action):
+        """ Delegate Save button press to individual form handlers.
+        """
+        
+        # buttonAndHandler decorator has converted the actual button methods to Handler instances
+        # they take arguments (form, action)
+        self.publishing_form_instance.handleApply(self.publishing_form_instance, action)
+        
+        self.mobile_form_instance.handleApply(self.mobile_form_instance, action)
+        
+        if self.override_form_instance is not None:
+            self.override_form_instance.handleApply(self.mobile_form_instance, action)
+
+    def convertToSubForm(self, form_instance):
+        """
+        Make existing form object behave like subform object.
+        
+        * Do not render <form> frame
+            
+        * Do not render actions
+    
+        @param form_instance: Constructed z3c.form.form.Form object
+        """
+
+        # Create mutable copy which you can manipulate
+        form_instance.buttons = copy.deepcopy(form_instance.buttons)
+        
+        # Remove subform action buttons using dictionary style delete
+        for button_id in form_instance.buttons.keys():
+            del form_instance.buttons[button_id]
+
+        if HAS_WRAPPER_FORM:
+            # Plone 4 / Plone 3 compatibility
+            zope.interface.alsoProvides(form_instance, IWrappedForm)        
+
+        # Use subform template - this prevents getting embedded <form>
+        # elements inside the master <form>
+        import plone.z3cform
+        from zope.app.pagetemplate import ViewPageTemplateFile as Zope3PageTemplateFile
+        from zope.app.pagetemplate.viewpagetemplatefile import BoundPageTemplate
+        template = Zope3PageTemplateFile('subform.pt', os.path.join(os.path.dirname(plone.z3cform.__file__), "templates"))        
+        form_instance.template = BoundPageTemplate(template, form_instance)
 
 
-class MasterFormView(BrowserView):
-    """ Custom view managing two separate forms on the same page """
+    def update(self):
+        """ Constructor embedded sub forms """
+                
+        # Construct few embedded forms
+        self.mobile_form_instance = MobileForm(self.context, self.request)
+        
+        self.publishing_form_instance = PublishingForm(self.context, self.request)        
 
-    label = _(u"Multichannel management")
+        # Hide form buttons
+        self.convertToSubForm(self.mobile_form_instance)
+        self.convertToSubForm(self.publishing_form_instance)
 
-    # Page template we are using
-    index = FiveViewPageTemplateFile("convergenceformview.pt")
+
+        self.mobile_form_instance.update()
+        self.publishing_form_instance.update()
+        
+        # Override form is present only if the content supports overrideable settings
+        try:
+            self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
+            self.override_form_instance.update()
+            self.convertToSubForm(self.override_form_instance)
+            
+        
+        except ComponentLookupError:
+            # This component doesn't support field overrides
+            self.override_form_instance = None
+        
+        z3c.form.form.EditForm.update(self)
+
+class MasterFormView(FormWrapper):
+    
+    form = MasterForm
+    
+    index = FiveViewPageTemplateFile("convergenceform.pt") 
 
     def media_status(self):
         """ Get human-readable text on which medias the context is available  """
@@ -140,53 +217,25 @@ class MasterFormView(BrowserView):
             if id == media:
                 return text
 
+    def setSubformTemplate(self, form_instance):
+        pass
+
     def render_override_form(self):
         """ Update and render one of forms on this view.
 
         Called by template.
         """
-        return self.override_form_instance()
+        return self.form_instance.override_form_instance()
 
     def render_publishing_form(self):
         """ Update and render one of forms on this view.
 
         Called by template."""
-        return self.publishing_form_instance()
+        return self.form_instance.publishing_form_instance()
     
     def render_mobile_form(self):
-        return self.mobile_form_instance()
-
-    def init(self):
-        """ Constructor embedded sub forms """
-
-
-        # Construct few embedded forms
-        self.mobile_form_instance = MobileForm(self.context, self.request)
         
-        self.publishing_form_instance = PublishingForm(self.context, self.request)        
-        
-        try:
-            self.override_form_instance = getMultiAdapter((self.context, self.request), IOverrideForm)
-        except ComponentLookupError:
-            # This component doesn't support field overrides
-            self.override_form_instance = None
-        
-        if HAS_WRAPPER_FORM:
-            zope.interface.alsoProvides(self.publishing_form_instance, IWrappedForm)        
-            zope.interface.alsoProvides(self.mobile_form_instance, IWrappedForm)
-            if self.override_form_instance is not None: 
-                zope.interface.alsoProvides(self.override_form_instance, IWrappedForm)
+        self.setSubformTemplate(self.form_instance.mobile_form_instance)        
+        return self.form_instance.mobile_form_instance()
+
     
-    
-    def __call__(self):
-
-
-        self.init()
-        
-        # Make z3c.form fields and widgetsre
-        import z3c.form.interfaces
-        from plone.z3cform import z2
-        z2.switch_on(self, request_layer=z3c.form.interfaces.IFormLayer)
-
-        # Render template
-        return self.index()

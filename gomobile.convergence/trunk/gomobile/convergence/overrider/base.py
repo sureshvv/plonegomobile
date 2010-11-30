@@ -15,6 +15,7 @@ __license__ = "GPL v2"
 import zope.interface
 import zope.component
 import zope.schema
+from z3c.form import button
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.fieldproperty import FieldProperty
 from zope.annotation.interfaces import IAnnotations
@@ -217,7 +218,8 @@ def getOverrideStorage(context, storage_class=OverrideStorage):
 
     return value
 
-class OverrideForm(form.SchemaEditForm):
+#class OverrideForm(form.SchemaEditForm):
+class OverrideForm(form.SchemaForm):
     """ Site editor interface for mobile override attributes.
     """
     ignoreContext = False
@@ -241,3 +243,12 @@ class OverrideForm(form.SchemaEditForm):
         Adapt for the storage storing override data.
         """
         return IOverrideStorage(self.context)
+    
+    @button.buttonAndHandler(_(u'Save'), name='save')
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        self.applyChanges(data)
+        self.request.response.redirect(self.context.absolute_url())
