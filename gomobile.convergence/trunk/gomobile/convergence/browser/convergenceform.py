@@ -137,6 +137,10 @@ class MasterForm(z3c.form.form.EditForm):
         
         if self.override_form_instance is not None:
             self.override_form_instance.handleApply(self.mobile_form_instance, action)
+        
+        # Make sure no funny redirects happen
+        
+        self.status = self.successMessage
 
     def convertToSubForm(self, form_instance):
         """
