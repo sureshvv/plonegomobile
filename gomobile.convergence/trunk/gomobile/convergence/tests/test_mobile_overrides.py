@@ -160,12 +160,39 @@ class TestMobileOverridesFunctional(FunctionalTestCase):
         self.assertTrue("Overriden title text" in html)
 
 
-    def test_set_mobile_folder_listing_setting(self):
-        pass
+    def test_set_appear_in_mobile_folder_listing_setting(self):
+        """ 
+        Check that this setting is correctly set and effective.
+        """
+        
+        doc = self.create_doc()
+        
+        self.loginAsAdmin()
+        
+        # Set the setting
+        self.browser.open(doc.absolute_url() + "/@@convergence")        
+        form = self.browser.getForm(index=2)        
+        form.getControl(name=u"mobile.widgets.mobileFolderListing:list").value = [u"true"]
+        save = form.getControl(name=u"mobile.buttons.apply")
+        save.click()
+        
+        # Assume we get the happy response
+        # back to View mode    
+        html = self.browser.contents
+        self.assertTrue("Changes saved" in html)  
+
+        # Then reload the page to see if the change was persistent
+        self.browser.open(doc.absolute_url() + "/@@convergence")        
+        form = self.browser.getForm(index=2)        
+        value = form.getControl(name=u"mobile.widgets.mobileFolderListing:list").value
+        self.assertEqual(value, [u"true"], "Setting was not properly perisistent")
+        
     
+        # Then check if the folder list still appears
     def create_doc(self):
         self.loginAsPortalOwner()
         self.portal.invokeFactory("Document", "doc")
+        self.portal.invokeFactory("Document", "doc2")
         
         return self.portal.doc
 
