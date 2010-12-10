@@ -4,6 +4,10 @@ Changelog
 0.9.3 - 0.9.4
 ----------------
 
+* Moved the addition of our getContentMedias catalog index from
+  catalog.xml to the setuphandlers.
+  [maurits]
+
 * Added flag file so our special GenericSetup import step is only run
   when applying our own profile.  This avoids lots of reindexing.
   [maurits]
