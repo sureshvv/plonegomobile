@@ -4,6 +4,10 @@ Changelog
 0.9.3 - 0.9.4
 ----------------
 
+* Added flag file so our special GenericSetup import step is only run
+  when applying our own profile.  This avoids lots of reindexing.
+  [maurits]
+
 * Do not yell on convergence form if no override adapter for the content type [miohtama]
 
 0.9.2 - 0.9.3
