@@ -73,6 +73,11 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
                     result.append(data)            
         else:
         
+            if actions is None:
+                context_state = getMultiAdapter((context, self.request),
+                                                name=u'plone_context_state')
+                actions = context_state.actions(category)
+
             # first the actions
             if actions is not None:
                 for actionInfo in actions:
@@ -126,8 +131,10 @@ class CatalogNavigationTabs(navigation.CatalogNavigationTabs):
             strategy = media_filter.getContentMediaStrategy(self.context, self.request)        
             resolved_content_medias = media_filter.solveCatalogBrainContenMedia(self.context, rawresult)
         
+        #import pdb ; pdb.set_trace()
         # now add the content to results
         for item in rawresult:
+            
             if not (excludedIds.has_key(item.getId) or item.exclude_from_nav):
                 id, item_url = get_view_url(item)
                 data = {'name'      : utils.pretty_title_or_id(context, item),
