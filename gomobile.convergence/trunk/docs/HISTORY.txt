@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Current
+1.0.0
 ---------
 
 * Fixed missing Home tab on Plone 4 after installation [miohtama]

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.9.4'
+version = '1.0.0'
 
 setup(name='gomobile.convergence',
       version=version,
@@ -14,7 +14,7 @@ setup(name='gomobile.convergence',
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='mobile web cms plone zope',
+      keywords='mobile web cms plone zope applications apps iphone android',
       author='mFabrik Research Oy',
       author_email='research@mfabrik.com',
       url='http://webandmobile.mfabrik.com',
