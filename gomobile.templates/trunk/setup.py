@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.9'
+version = '1.0'
 
 setup(name='gomobile.templates',
       version=version,
-      description="Code templates creating Go Mobile for Plone add-ons",
+      description="Project templates creating Web and Mobile themes for Plone",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
