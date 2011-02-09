@@ -14,6 +14,7 @@ Include paster in buildout and include this egg as related to paster::
 
 	[buildout]
 	parts =
+           ...
 	   paster
 	
 	[paster]
@@ -34,14 +35,21 @@ gomobile_theme
 
 Create easily a code skeleton for your own theme.
 
+For more information, see
+
+* http://code.google.com/p/plonegomobile/source/browse/gomobile.docs/trunk/gomobile/docs/manual/developer-manual/theming.txt
+
+After setting up buildout as instructed above, you can do::
+
+        bin/paster create -t gomobile_theme src/gomobiletheme.mythemename
+
+
 Author
 ------
 
-`mFabrik Research Oy <mailto:info@mfabrik.com>`_ - Python and Plone professionals for hire.
+`mFabrik Research Oy - Python and Plone professionals for hire. <http://mfabrik.com>`_
 
 * `mFabrik Web & Mobile multichannel CMS solutions <http://webandmobile.mfabrik.com>`_ 
-
-* `mFabrik web site <http://mfabrik.com>`_ 
 
 * `Blog <http://blog.mfabrik.com>`_
 
