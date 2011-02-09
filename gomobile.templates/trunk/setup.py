@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.0.1'
 
 setup(name='gomobile.templates',
       version=version,
@@ -14,9 +14,9 @@ setup(name='gomobile.templates',
         "Framework :: Plone",
         "Programming Language :: Python",
         ],
-      keywords='',
-      author='',
-      author_email='',
+      keywords='skeleton web mobile templates plone apps',
+      author='mFabrik Research Oy',
+      author_email='research@mfabrik.com',
       url='http://webandmobile.mfabrik.com',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),

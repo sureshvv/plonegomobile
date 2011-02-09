@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0 - 1.0.1
+--------------
+
+- PyPi package metadata update [miohtama]
+
 1.0
 -----
 
