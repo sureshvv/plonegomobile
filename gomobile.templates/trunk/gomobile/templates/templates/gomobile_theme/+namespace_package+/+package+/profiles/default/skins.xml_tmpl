@@ -5,8 +5,8 @@
                 <layer name="${namespace_package}_${package}" insert-after="custom"/>
          </skin-path>
 
-	 <object name="${namespace_package}.${package}"
+	 <object name="${namespace_package}_${package}"
 	    meta_type="Filesystem Directory View"
-	    directory="${namespace_package}.${package}:skins/${namespace_package}.${package}"/>
+	    directory="${namespace_package}.${package}:skins/${namespace_package}_${package}"/>
 
 </object>
