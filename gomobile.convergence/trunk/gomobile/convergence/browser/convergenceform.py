@@ -122,6 +122,7 @@ class OverrideForm(z3c.form.form.EditForm):
 class MasterForm(z3c.form.form.EditForm):
     """ Bring together three different mobile related settings forms. """
     
+    name = "mobile-settings"
     label = _(u"Mobile settings")
 
     @button.buttonAndHandler(_('Save'), name='save')

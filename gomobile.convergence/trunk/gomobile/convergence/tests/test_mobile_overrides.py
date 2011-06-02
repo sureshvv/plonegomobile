@@ -5,7 +5,7 @@
 """
 
 __license__ = "GPL 2"
-__copyright__ = "2009-2010 mFabrik Research Oy"
+__copyright__ = "2009-2011 mFabrik Research Oy"
 
 import unittest
 
@@ -17,6 +17,9 @@ from gomobile.convergence.interfaces import IOverrider
 from gomobile.convergence.overrider.base import IOverrideStorage
 
 from base import BaseTestCase, FunctionalTestCase
+
+# TODO: This depends on z3c.form version?
+SAVE_OK = "Data successfully updated"
 
 class TestMobileOverrides(BaseTestCase):
 
@@ -135,7 +138,7 @@ class TestMobileOverridesFunctional(FunctionalTestCase):
         # Assume we have good settings page
         self.assertTrue("form-widgets-Title" in html, "Was not a convergence settings pages")
         
-        form = self.browser.getForm(index=3)        
+        form = self.browser.getForm(name="convergence")        
         form.getControl(name=u"form.widgets.enabled_overrides:list").value = [u"Title"]
         form.getControl(name=u"form.widgets.Title").value = u"Overriden title text"
         save = form.getControl(name=u"form.buttons.save")
@@ -143,11 +146,11 @@ class TestMobileOverridesFunctional(FunctionalTestCase):
     
         # back to View mode    
         html = self.browser.contents
-        self.assertTrue("Changes saved" in html)
+        self.assertTrue(SAVE_OK in html)
         
         # Go to back to settings and see the setting has been saved
         self.browser.open(doc.absolute_url() + "/@@convergence")
-        form = self.browser.getForm(index=3)
+        form = self.browser.getForm(name="convergence")
         value = form.getControl(name=u"form.widgets.enabled_overrides:list").value 
         self.assertEqual(value, [u"Title"], "Title override setting properly stored")
         value = form.getControl(name=u"form.widgets.Title").value
@@ -171,23 +174,25 @@ class TestMobileOverridesFunctional(FunctionalTestCase):
         
         # Set the setting
         self.browser.open(doc.absolute_url() + "/@@convergence")        
-        form = self.browser.getForm(index=2)        
+        form = self.browser.getForm(name="convergence")        
         form.getControl(name=u"mobile.widgets.mobileFolderListing:list").value = [u"true"]
-        save = form.getControl(name=u"mobile.buttons.apply")
+        save = form.getControl(name=u"form.buttons.save")
         save.click()
         
         # Assume we get the happy response
         # back to View mode    
         html = self.browser.contents
-        self.assertTrue("Changes saved" in html)  
+        self.assertTrue(SAVE_OK in html)  
 
         # Then reload the page to see if the change was persistent
         self.browser.open(doc.absolute_url() + "/@@convergence")        
-        form = self.browser.getForm(index=2)        
+        form = self.browser.getForm(name="convergence")        
         value = form.getControl(name=u"mobile.widgets.mobileFolderListing:list").value
-        self.assertEqual(value, [u"true"], "Setting was not properly perisistent")
         
-    
+        if value[0] not in [u"true", "selected"]:
+            # TODO: selected = new z3c.form? Used to be true.
+            raise AssertationError("Setting was not properly perisistent:" + str(value)
+        
         # Then check if the folder list still appears
     def create_doc(self):
         self.loginAsPortalOwner()
