@@ -1,0 +1,10 @@
+<div id="footer-text">
+    <p class="slogan">
+        MobiPublic: the latest news and best mobile sites of Kenya in your mobile phone
+    </p>
+    
+    <p>
+    	<a tal:attributes="href string:${context/portal_url}/contact-info">Contact MobiPublic.com team</a>
+    </p>
+</div>
+

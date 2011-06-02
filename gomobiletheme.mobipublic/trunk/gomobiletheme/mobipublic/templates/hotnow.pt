@@ -1,0 +1,23 @@
+<h2>Hot now</h2>
+
+<p class="discreet">The bleeding edge of what's happening in the community</p>
+
+<div class="hot-now">
+
+	<tal:news tal:repeat="news view/items">	
+	
+		<div tal:attributes="class string:news-item news-${repeat/news/index}">
+			<a tal:attributes="href string:${news/link}" tal:content="news/Title" />
+			
+			<div class="byline">
+				by 
+				<span class="author" tal:content="news/getFeedItemAuthor" />
+				<span class="time" tal:content="news/friendlyTime" />						
+			</div>
+			<div class="description">
+				<tal:content replace="structure news/Description" />
+			</div>
+		</div>
+		
+	</tal:news>
+</div>
