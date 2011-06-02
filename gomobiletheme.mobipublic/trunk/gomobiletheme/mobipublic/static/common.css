@@ -40,7 +40,7 @@
 }
 
 .feed-folder-item-even {
-    background-color: white;  
+    background-color: #f4f4f4;  
 }
 
 .feed-folder-item p,
@@ -69,5 +69,45 @@
 }
 
 .thumb-rating button:hover {
-        background: #eee;	
+        text-decoration: underline;	
 }
+
+/* Feed item view */
+
+.documentDescription {
+    color: #999999;
+    font-size: 120%;
+    color: black;
+}
+
+/* Front page */
+
+ * 
+.hot-now .news-item {
+        background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        padding: 0.3em;         
+        border-bottom: 1px solid #ddd;
+        padding-right: 20px;
+}
+
+.hot-now .news-item:first-child  {
+        border-top: 1px solid #ddd;
+}
+
+.hot-now .byline {
+        color: #888;
+}
+
+.hot-now .news-0 {
+        background-color: #ffff88;
+}       
+
+.hot-now .news-1 {
+        background-color: #ffffaa;
+}       
+
+.hot-now .news-2 {
+        background-color: #ffffdd;
+}       
+
+ 

@@ -29,5 +29,8 @@
     name="gomobiletheme.mobipublic theme"
     />
 
+<class class="Products.feedfeeder.content.item.FeedFeederItem">
+       <implements interface="cioppino.twothumbs.interfaces.ILoveThumbsDontYou" />
+</class>
 
 </configure>

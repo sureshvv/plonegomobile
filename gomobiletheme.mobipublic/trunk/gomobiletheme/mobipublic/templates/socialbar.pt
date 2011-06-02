@@ -10,4 +10,9 @@
         </a>
 
         <form tal:replace="structure python:view.getThumbsForm()()" />
+
+        <a rel="nofollow" tal:attributes="href view/getOrignalURL">
+                <span>Orignal</span>                
+        </a>
+
 </div>

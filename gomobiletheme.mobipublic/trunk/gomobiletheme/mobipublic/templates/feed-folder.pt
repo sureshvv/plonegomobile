@@ -9,7 +9,7 @@
    <div metal:fill-slot="body"
       tal:define="batch view/batch; items view/batched_items">
 
-      Latest News in <h1 tal:content="context/title_or_id"></h1>
+      <h1>Latest News in <span tal:content="context/title_or_id" /></h1>
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
 

@@ -14,7 +14,7 @@ grok.context(Interface)
 grok.templatedir('templates')
 
 # Viewlets are active only when gomobiletheme.basic theme layer is activated
-grok.layer(IThemeLayer)
+#grok.layer(IThemeLayer)
 
 
 class SocialBar(grok.View):
@@ -30,20 +30,32 @@ class SocialBar(grok.View):
         """
         self.targetContent = targetContent
     
-    def getOutgoingURL(self):
+    def getOutgoingURL(self):        
+        """ What we share in social media """
         return self.targetContent.absolute_url()
+
+    def getOrignalURL(self):        
+        """ RSS feed link """
+        
+        remote_url = getattr(self.targetContent, "remote_url", None)
+        if remote_url:
+            return remote_url()
+        
+        return self.targetContent.absolute_url()
+
 
     def getFacebookSharingLink(self):
         link = self.getOutgoingURL()
         # http://m.facebook.com/sharer.php?u=http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229&t=Eduskuntaryhm%C3%A4t+koolle+hallitusneuvotteluista+tiistaina
         return "http://m.facebook.com/sharer.php?u=" + urllib.quote(link)
+        #return "http://m.facebook.com/sharer.php?u=" + link
 
     # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
     def getTwitterSharingLink(self):
         link = self.getOutgoingURL()
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
         return "http://mobile.twitter.com/home?status=" + urllib.quote(link)
-
+        
     def getVoteFormLink(self):
         link = self.targetContent.absolute_url()
         return link + "/@@vote"
