@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.0 - 1.0.1
+---------------
+
+* Fixed unit tests for Plone 4.1 / Dexterity 1.0. May break tests on older releases [miohtama]
+
 1.0.0
 ---------
 
