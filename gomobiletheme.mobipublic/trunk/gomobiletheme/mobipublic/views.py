@@ -1,4 +1,6 @@
 from zope.interface import Interface
+import urllib
+from zope.component import getMultiAdapter
 
 from five import grok
 
@@ -30,8 +32,45 @@ class SocialBar(grok.View):
     
     def getOutgoingURL(self):
         return self.targetContent.absolute_url()
+
+    def getFacebookSharingLink(self):
+        link = self.getOutgoingURL()
+        # http://m.facebook.com/sharer.php?u=http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229&t=Eduskuntaryhm%C3%A4t+koolle+hallitusneuvotteluista+tiistaina
+        return "http://m.facebook.com/sharer.php?u=" + urllib.quote(link)
+
+    # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
+    def getTwitterSharingLink(self):
+        link = self.getOutgoingURL()
+        # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
+        return "http://mobile.twitter.com/home?status=" + urllib.quote(link)
+
+    def getVoteFormLink(self):
+        link = self.targetContent.absolute_url()
+        return link + "/@@vote"
     
+    def getThumbsForm(self):
+        view = getMultiAdapter((self.context, self.request), name="thumbs")
+        
+        #import pdb ;pdb.set_trace()
+        return view
+
+
     def update(self):
         if not hasattr(self, "targetContent"):
             self.targetContent = self.context
+    
+    
+class Vote(grok.CodeView):
+    """
+    Custom vote manager.
+    """
+
+    def render(self, REQUEST, RESPONSE):
+        form = self.request.form
+        if form.get('form.lovinit', False):
+            rate.loveIt(self.context)
+        elif form.get('form.hatedit', False):
+            rate.hateIt(self.context)
+            
+            
     

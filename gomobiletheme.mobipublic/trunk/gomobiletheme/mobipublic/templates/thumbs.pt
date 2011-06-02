@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      tal:omit-tag=""
+      i18n:domain="cioppino.twothumbs">
+
+<div tal:define="stats view/getStats;
+                 canRate view/canRate;
+                 myVote view/myVote;"
+                 class="thumb-rating">
+    
+    	<form action="likeform" method="post"
+        tal:attributes="class python:canRate and 'enabled' or 'disabled';
+                        action  string:${context/absolute_url}/likeform">
+
+
+		
+        <span
+            tal:attributes="class   python:'thumbs-up' + (myVote==1 and ' selected' or '')">
+            <button type="submit" name="form.lovinit" 
+                class="allowMultiSubmit like-button"
+                i18n:attributes="value"
+                tal:attributes="id  string:${context/id}_submit_like;
+                                    disabled python:not canRate and 'disabled' or '';
+                                    alt  view/getTwoThumbsAlt"> 
+                     <img alt="" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/thumbs-up-on.png" />         
+                     <span>Like</span>                       				    
+
+	        <span class="total-thumbs-up" i18n:translate="">
+	            (
+		    <span class="tally-total" tal:content="stats/ups"
+	                  i18n:name="likes" />			  
+	            <span tal:condition="python:myVote==1"> inc. you</span>
+		    )
+	        </span>
+
+	    </button>
+        </span>
+
+        
+	
+	<span
+            tal:attributes="class   python:'thumbs-down' + (myVote==-1 and ' selected' or '')">
+           
+	    <button type="submit" name="form.hatedit" 
+                 class="allowMultiSubmit dislike-button"
+                 tal:attributes="id  string:${context/id}_submit_like;
+                                     disabled python:not canRate and 'disabled' or '';">
+                     <img alt="" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/thumbs-down-on.png" />         
+                     <span>Dislike</span>                	
+
+
+	        <span class="total-thumbs-down" i18n:translate="">
+	            (
+		    <span class="tally-total" tal:content="stats/downs"
+	                  i18n:name="dislikes" />
+		    <span tal:condition="python:myVote==-1"> inc. you</span>
+		    )
+	        </span>
+	
+
+            </button>
+
+                                                                          
+        </span>
+    </form>
+    
+    
+</div>
+
+</html>

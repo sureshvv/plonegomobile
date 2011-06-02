@@ -9,7 +9,7 @@
    <div metal:fill-slot="body"
       tal:define="batch view/batch; items view/batched_items">
 
-      <h1 tal:content="context/title_or_id"></h1>
+      Latest News in <h1 tal:content="context/title_or_id"></h1>
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
 
@@ -48,7 +48,7 @@
 		             tal:content="structure child/summary"> My summary </p>
 			     
 		       <tal:social-bar define="socialbar python:view.getSocialBar(child)">
-		       	      <div tal:replace="socialbar" />
+		       	      <div tal:replace="structure socialbar" />
 		       </tal:social-bar>
 	            </div>
 	         </div>
