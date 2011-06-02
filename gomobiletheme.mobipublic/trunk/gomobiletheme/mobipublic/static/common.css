@@ -53,3 +53,21 @@
         padding-top: 0.5em;
         padding-bottom: 0.5em;
 }
+
+/* Social bar */
+.thumb-rating,
+.thumb-rating form {
+	display: inline;
+}
+
+.thumb-rating input,
+.thumb-rating button {
+	display: inline;
+	background: transparent;
+	color: #205C90;
+	border: none;
+}
+
+.thumb-rating button:hover {
+        background: #eee;	
+}

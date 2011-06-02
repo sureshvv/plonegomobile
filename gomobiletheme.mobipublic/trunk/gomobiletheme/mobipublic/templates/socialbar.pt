@@ -1,5 +1,13 @@
 <div class="social-bar">
-        <a tal:attributes="href view/getFacebookSharingLink">
-        	
+        <a rel="nofollow" tal:attributes="href view/getFacebookSharingLink">
+        	<img alt="" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/facebook.png" />
+                <span>Share</span>
+	</a>
+
+        <a rel="nofollow" tal:attributes="href view/getTwitterSharingLink">
+                <img alt="" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/twitter.png" />
+                <span>Share</span>                
         </a>
+
+        <form tal:replace="structure python:view.getThumbsForm()()" />
 </div>
