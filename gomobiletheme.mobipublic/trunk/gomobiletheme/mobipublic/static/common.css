@@ -7,3 +7,49 @@
  * @license GPL"
  *
  */
+
+ 
+.feed-folder h3 {
+        
+}
+
+.feed-folder-item {
+        padding: 0.5em;
+/*      word-break: break-all;
+        word-wrap: break-word;*/
+}
+
+.feed-folder-item {
+        background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        padding: 0.3em;         
+        border-bottom: 1px solid #888;
+}
+
+
+/* there is p description before */
+.feed-folder-item:nth-child(2)  {
+        border-top: 1px solid #888;
+}
+
+#content .feed-folder-item p:last-child {
+    margin-bottom: 0;
+}
+
+.feed-folder-item-odd {
+    background-color: #e3e3e3;
+}
+
+.feed-folder-item-even {
+    background-color: white;  
+}
+
+.feed-folder-item p,
+.feed-folder-item .discreet {
+    margin: 0.5em 0 0.5em 0;
+} 
+
+.feed-folder-item-wrapped {
+        margin-right: 20px;     
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+}

@@ -1,0 +1,5 @@
+<div class="social-bar">
+        <a tal:attributes="href view/getFacebookSharingLink">
+        	
+        </a>
+</div>

@@ -51,7 +51,12 @@ class Logo(base.Logo):
     def getLogoPath(self):
         """ Use Zope 3 resource directory mechanism to pick up the logo file from the static media folder registered by Grok """
         return "++resource++gomobiletheme.mobipublic/logo.png"
-
+    
+    def update(self):
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        self.portal_url = portal_state.portal_url()
+        self.logo_url = self.portal_url + "/" + self.getLogoPath()
+        
 class AdditionalHead(base.AdditionalHead):
     """ Include our custom CSS and JS in the theme.
     
@@ -69,4 +74,10 @@ class AdditionalHead(base.AdditionalHead):
         
         # Absolute URL refering to the static media folder
         self.resource_url = self.portal_url + "/" + "++resource++gomobiletheme.mobipublic"
+
+class FooterText(base.FooterText):
+    """
+    Override footer text, set by templates/footertext.pt.
+    """
+
 
