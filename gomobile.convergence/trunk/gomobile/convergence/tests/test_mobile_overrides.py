@@ -120,6 +120,11 @@ class TestMobileOverrides(BaseTestCase):
 
 class TestMobileOverridesFunctional(FunctionalTestCase):
     """ Functional tests for mobile overrides settings page. """
+
+    def create_doc(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory("Document", "doc")
+        return self.portal.doc
     
     def test_set_mobile_title_override(self):
         """
@@ -191,15 +196,12 @@ class TestMobileOverridesFunctional(FunctionalTestCase):
         
         if value[0] not in [u"true", "selected"]:
             # TODO: selected = new z3c.form? Used to be true.
-            raise AssertationError("Setting was not properly perisistent:" + str(value)
+            raise AssetionError("Setting was not properly perisistent:" + str(value))
         
         # Then check if the folder list still appears
-    def create_doc(self):
         self.loginAsPortalOwner()
-        self.portal.invokeFactory("Document", "doc")
-        self.portal.invokeFactory("Document", "doc2")
-        
-        return self.portal.doc
+
+
 
 
 def test_suite():
