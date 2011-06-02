@@ -18,9 +18,6 @@ grok.context(Interface)
 # Use templates directory to search for templates.
 grok.templatedir('templates')
 
-# Viewlets are active only when gomobiletheme.basic theme layer is activated
-grok.layer(IThemeLayer)
-
 
 class Thumbs(grok.View):
     """ Display the like/unlike widget. """
@@ -64,7 +61,7 @@ class LikeForm(grok.CodeView):
             rate.hateIt(self.context)
             msg = u"You don't like it!"
         else:
-            msg = "Like button fail"
+            msg = "Like fail"
             print self.request.form.items()
         
         from Products.statusmessages.interfaces import IStatusMessage

@@ -1,6 +1,6 @@
-<h2>Hot now</h2>
+<h2>Hot news</h2>
 
-<p class="discreet">The bleeding edge of what's happening in the community</p>
+<p>Most liked news during the last 24 h</p>
 
 <div class="hot-now">
 
@@ -17,6 +17,8 @@
 			<div class="description">
 				<tal:content replace="structure news/Description" />
 			</div>
+			
+			<div tal:replace="structure news/object/@@socialbar" />
 		</div>
 		
 	</tal:news>
