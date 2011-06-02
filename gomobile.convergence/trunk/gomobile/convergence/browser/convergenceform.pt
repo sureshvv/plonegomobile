@@ -31,7 +31,7 @@
 	               <dd tal:content="view/form_instance/status" />
 	        </dl>
 	
-	        <form action="." method="post"
+	        <form name="convergence" action="." method="post"
 	              tal:attributes="action request/getURL">
 	              
 			              	
