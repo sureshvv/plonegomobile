@@ -100,4 +100,9 @@ class Vote(grok.CodeView):
             rate.hateIt(self.context)
             
             
+class Empty(grok.View):
+    """
+    Empty folder listing
+    """
     
+    grok.context(Interface)
