@@ -1,9 +1,21 @@
 <div id="logo" i18n:domain="gomobiletheme.basic">
+  
   <a tal:attributes="href string:${viewlet/portal_url}" alt="Home" i18n:attributes="alt">
     <img tal:attributes="src string:${viewlet/logo_url}; 
          alt context/@@plone_portal_state/portal_title" 
          />
   </a>
   
-  <p class="slogan">Your number one mobile news and site source in Kenya </p>
+  <p class="slogan">#1 mobile news and site source in Kenya </p>
+  
+  <div style="clear: both"><!-- --></div>
+  
+  <ul class="main-menu">
+  	<li tal:repeat="section viewlet/getSections">
+  		<a tal:condition="python:section != None" tal:attributes="href section/absolute_url">
+  			<span tal:content="section/Title" />
+  		</a>
+  	</li>
+  </ul>
+  
 </div>

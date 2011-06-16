@@ -8,6 +8,36 @@
  *
  */
 
+#logo {
+	color: black;
+}
+
+#logo img {
+	float: left;
+}
+
+.slogan {
+	color: black;
+	padding: 5px;
+	margin-left: 10px;
+	float: right;
+}
+
+.main-menu ul,
+.main-menu li {
+	display: inline;
+	list-style: none;
+	border-left: 1px solid #888;
+	margin-left: 5px;
+	padding-left: 5px;
+}
+
+.main-menu li:first-child {
+        border-left: 0;
+        margin-left: 0;
+        padding-left: 0;
+}
+
  
 .feed-folder h3 {
         
