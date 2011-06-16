@@ -7,7 +7,9 @@
 	<tal:news tal:repeat="news view/items">	
 	
 		<div tal:attributes="class string:news-item news-${repeat/news/index}">
+			<h3>
 			<a tal:attributes="href string:${news/link}" tal:content="news/Title" />
+			</h3>
 			
 			<div class="byline">
 				by 
