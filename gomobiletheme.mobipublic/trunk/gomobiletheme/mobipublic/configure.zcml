@@ -33,4 +33,14 @@
        <implements interface="cioppino.twothumbs.interfaces.ILoveThumbsDontYou" />
 </class>
 
+
+  <browser:menuItem
+        for="Products.ATContentTypes.interface.IATFolder"
+        menu="plone_displayviews"
+        title="Empty"
+        action="@@empty"
+        description="Do not summarize content"
+        />
+
+
 </configure>
