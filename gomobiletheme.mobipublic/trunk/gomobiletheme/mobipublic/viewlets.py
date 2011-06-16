@@ -11,7 +11,6 @@
 
 """
 
-__author__ = " <>"
 __docformat__ = "epytext"
 __license__ = "GPL"
 
@@ -20,6 +19,7 @@ from zope.component import getMultiAdapter
 from zope.interface import Interface
 
 from five import grok
+from Products.CMFCore.interfaces import IFolderish
 
 from gomobiletheme.basic import viewlets as base
 from gomobile.mobile.interfaces import IMobileImageProcessor
@@ -53,9 +53,17 @@ class Logo(base.Logo):
         return "++resource++gomobiletheme.mobipublic/logo.png"
     
     def update(self):
-        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        self.portal_state = portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")        
         self.portal_url = portal_state.portal_url()
         self.logo_url = self.portal_url + "/" + self.getLogoPath()
+        
+    def getSections(self):
+        portal = self.portal_state.portal()
+        items = portal.getFolderContents()
+        for brain in items:
+            obj = brain.getObject()
+            if IFolderish.providedBy(obj):
+                yield obj
         
 class AdditionalHead(base.AdditionalHead):
     """ Include our custom CSS and JS in the theme.

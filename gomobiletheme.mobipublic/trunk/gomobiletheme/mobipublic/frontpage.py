@@ -107,9 +107,12 @@ def format_datetime_friendly_ago(date):
     # See timedelta doc http://docs.python.org/lib/datetime-timedelta.html
     #since = datetime.datetime.utcnow() - date
 
+    from pytz import timezone
+    helsinki = timezone('Europe/Helsinki')
     now = datetime.datetime.utcnow()
-    now = now.replace(tzinfo=pytz.utc)
+    now = now.replace(tzinfo=helsinki)
 
+    date = date.replace(tzinfo=helsinki)
     since = now - date
       
     seconds = since.seconds + since.microseconds / 1E6 + since.days * 86400
