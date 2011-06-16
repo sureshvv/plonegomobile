@@ -13,6 +13,7 @@ __docformat__ = "epytext"
 import logging
 
 import lxml.html
+from lxml.etree import ParserError
 
 from zope.app.cache import ram
 
@@ -104,7 +105,12 @@ def _Description(self):
          
     # Remove any HTML formatting in the description
     if text:
-        parsed = lxml.html.fromstring(text.decode("utf-8"))
+        try:
+            parsed = lxml.html.fromstring(text.decode("utf-8"))
+        except ParserError:
+            # Empty document and so on
+            return u""
+        
         clean = lxml.html.tostring(parsed, encoding="utf-8", method="text").decode("utf-8")
         #print "Cleaned decsription:" + clean
         return clean
