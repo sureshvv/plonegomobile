@@ -16,6 +16,7 @@ grok.templatedir('templates')
 # Viewlets are active only when gomobiletheme.basic theme layer is activated
 #grok.layer(IThemeLayer)
 
+from plone.app.discussion.interfaces import IConversation
 
 class SocialBar(grok.View):
     """
@@ -55,6 +56,21 @@ class SocialBar(grok.View):
         link = self.getOutgoingURL()
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
         return "http://mobile.twitter.com/home?status=" + urllib.quote(link)
+
+    def getDiscussionLink(self):
+        link = "foobar"
+        # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
+        return self.targetContent.absolute_url() + "#discussion"
+
+    def getDiscussionCount(self):
+        try:
+            # plone.app.discussion.conversation object 
+            # fetched via IConversation adapter
+            conversation = IConversation(self.targetContent)
+        except:
+            return 0
+        
+        return conversation.total_comments
         
     def getVoteFormLink(self):
         link = self.targetContent.absolute_url()
@@ -65,8 +81,7 @@ class SocialBar(grok.View):
         
         #import pdb ;pdb.set_trace()
         return view
-
-
+    
     def update(self):
         if not hasattr(self, "targetContent"):
             self.targetContent = self.context
