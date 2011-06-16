@@ -127,9 +127,6 @@ class EasyTemplateMobile(grok.View):
         if not output:
             return ERROR_MESSAGE
 
-        transforms = getToolByName(self, 'portal_transforms')
-        output = transforms.convertTo("text/x-html-safe", output)
-
         return unicode(output).encode("utf-8")
 
 
