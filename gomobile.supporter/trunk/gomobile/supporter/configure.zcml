@@ -9,4 +9,7 @@
 
    <include zcml:condition="installed collective.easytemplate" package=".easytemplate" />
 
+   <include zcml:condition="installed plone.app.discussion" package=".discussion" />
+
+
 </configure>
