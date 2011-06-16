@@ -19,8 +19,12 @@ function makeTileLinks() {
 	       var parent = a.parents("div").filter(':first');
 	       parent.css("cursor", "pointer");
                
-	       parent.click(function() {
-	       	       window.location = target;
+	       parent.click(function() {	       	
+		      if(a.parents(".social-bar").size() > 0) {
+                        // Special case for thumbs up links on front page, others
+			return;		      	
+		      }				            
+	       	      window.location = target;
 	       });	
 	});
 }
