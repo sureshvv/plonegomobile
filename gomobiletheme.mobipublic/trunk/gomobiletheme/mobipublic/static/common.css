@@ -17,14 +17,10 @@
         padding: 0.5em;
 /*      word-break: break-all;
         word-wrap: break-word;*/
-}
-
-.feed-folder-item {
         background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
         padding: 0.3em;         
         border-bottom: 1px solid #888;
 }
-
 
 /* there is p description before */
 .feed-folder-item:nth-child(2)  {
@@ -168,7 +164,8 @@
  
 #commenting legend {
 	font-weight: bold;
-	color: black;	
+	color: black;
+	font-size: 120%;	
 }
 
 #formfield-form-widgets-in_reply_to,
