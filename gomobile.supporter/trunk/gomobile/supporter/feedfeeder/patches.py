@@ -82,7 +82,11 @@ FeedFeederItem._old_setDescription = FeedFeederItem.setDescription
 @cache("text")
 def _getText(self):
     """ Body text accessor """
-    text = FeedFeederItem._old_getText(self)
+    
+    try:
+        text = FeedFeederItem._old_getText(self)
+    except UnicodeEncodeError:
+        return "Bad unicode"
     
     if text:
         # can be None    
