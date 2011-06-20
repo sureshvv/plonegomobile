@@ -54,20 +54,22 @@ class HotNewsToday(grok.View):
         
         #end = dt2DT(end)
         #start = dt2DT(start)
-        end = DateTime.DateTime()
-        start = DateTime.DateTime() - 7*24*3600.0
         
-        date_range_query = {'date': { 'query':(start,end), 'range': 'min:max'} }
+        # DateTime deltas are days as floating points
+        end = DateTime.DateTime() + 0.1 # If we have some clock skew peek a little to the future
+        start = DateTime.DateTime() - 1
         
+        date_range_query = { 'query':(start,end), 'range': 'min:max'} 
+                
         items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
-                                             #"created" : date_range_query,
+                                             "created" : date_range_query,
                                              "sort_on":"positive_ratings",
                                              "sort_order":"reverse",
                                              "sort_limit":count,
                                              "review_state":"published"})
         
         #print "Got items:" + str(items)
-        
+        #import pdb ; pdb.set_trace()
         variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
         
         # Convert brain objects to dictionaries and stuff in some custom variables
