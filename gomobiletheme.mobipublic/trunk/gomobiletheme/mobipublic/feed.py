@@ -2,6 +2,18 @@ from Products.feedfeeder.browser import feed as base
 
 from zope.component import getMultiAdapter, ComponentLookupError
 
+
+def fix_description(desc):
+    """ """
+    
+    if not desc:
+        return desc
+    
+    if len(desc) > 380:
+        desc = desc[0:380] + "..."
+        
+    return desc
+
 class FeedFolderView(base.FeedFolderView):
     
     def get_batched_items(self):
@@ -37,7 +49,7 @@ class FeedFolderView(base.FeedFolderView):
                         url = content_url,
                         content_url = content_url,
                         title = x.Title,
-                        summary = x.Description,
+                        summary = fix_description(x.Description),
                         author = x.getFeedItemAuthor,
                         has_text = x.getHasBody,
                         target_link = x.getLink,
