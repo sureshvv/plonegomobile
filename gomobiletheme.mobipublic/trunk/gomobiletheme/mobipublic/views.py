@@ -1,8 +1,14 @@
+import logging
+
 from zope.interface import Interface
 import urllib
 from zope.component import getMultiAdapter
 
 from five import grok
+
+from plone.app.discussion.interfaces import IConversation
+
+import bitlyapi
 
 # Layer for which against all our viewlets are registered
 from interfaces import IThemeLayer
@@ -16,7 +22,8 @@ grok.templatedir('templates')
 # Viewlets are active only when gomobiletheme.basic theme layer is activated
 #grok.layer(IThemeLayer)
 
-from plone.app.discussion.interfaces import IConversation
+
+logger = logging.getLogger("mobipublic")
 
 class SocialBar(grok.View):
     """
@@ -44,6 +51,37 @@ class SocialBar(grok.View):
         
         return self.targetContent.absolute_url()
 
+    def getShortenedURL(self):        
+        """ Create a shortened URL to the target.
+        
+        Cache the result on the object.
+        """
+        
+        shortened = getattr(self.targetContent, "_shortened_url", None)
+        if shortened:
+            # Has a cached version
+            return shortened
+        
+        link = self.targetContent.absolute_url()
+        
+        try:
+            # Read the site settings
+            settings = self.context.portal_properties.mobipublic_properties
+                    
+            api = bitlyapi.BitLy(settings.bitly_login, settings.bitly_api_key)
+        
+            res = api.shorten(longUrl=link)
+            
+            shortened = res["url"]
+            
+            self.targetContent._shortened_url = shortened
+            
+            return shortened
+            
+        except Exception, e:
+            # API down, wrong API key?
+            logger.exception(e)
+            return None
 
     def getFacebookSharingLink(self):
         link = self.getOutgoingURL()
@@ -51,11 +89,26 @@ class SocialBar(grok.View):
         return "http://m.facebook.com/sharer.php?u=" + urllib.quote(link)
         #return "http://m.facebook.com/sharer.php?u=" + link
 
+
     # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
     def getTwitterSharingLink(self):
-        link = self.getOutgoingURL()
+
+        link = self.getShortenedURL()
+        
+        if link == None:
+            # The case when bit.ly API is down
+            link = ""
+        
+        title = self.targetContent.Title()
+        
+        if len(title) > 120:
+            status = title[0:120] + "... " + link
+        else:
+            status = title + " " + link
+        
+        
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
-        return "http://mobile.twitter.com/home?status=" + urllib.quote(link)
+        return "http://mobile.twitter.com/home?status=" + urllib.quote(status)
 
     def getDiscussionLink(self):
         link = "foobar"
