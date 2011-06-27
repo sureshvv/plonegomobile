@@ -212,3 +212,33 @@
 #commenting .formControls input:first-child {
         margin-right: 20px;	
 }
+
+
+/* Info boxes on Find It */
+
+
+.info-box {
+        background:none repeat scroll 0 0 #eee;
+        border:4px solid #03302D;
+        color:#303030;
+        margin-bottom: 1em;
+        font-size: 14px;
+}
+
+.info-box table {
+        width: 100%;
+}
+
+.info-box td, .info-box th {
+        text-align:left;
+        padding: 5px;   
+}
+
+.info-box th {
+        font-weight: normal;
+        font-size: 120%;
+        border-bottom: 1px dashed #03302D;
+        padding-top: 10px;
+}
+.info-box td {
+}
