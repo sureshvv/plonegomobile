@@ -6,9 +6,9 @@
 """
 
 __license__ = "GPL 2"
-__copyright__ = "2009 Twinapex Research"
-__author__ = "Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>"
-__author_url__ = "http://www.twinapex.com"
+__copyright__ = "2009-2011 mFabrik Research Oy"
+__author__ = "Mikko Ohtamaa <mikko.ohtamaa@mfabrik.com>"
+__author_url__ = "http://webandmobile.mfabrik.com"
 __docformat__ = "epytext"
 
 import re
@@ -24,6 +24,8 @@ try:
     from lxml.html import defs
     from lxml.html import fromstring, tostring, XHTML_NAMESPACE
     from lxml.html import _nons, _transform_result
+    
+    from lxml.etree import ParserError 
     
     from lxml.html.clean import Cleaner
     
@@ -81,8 +83,13 @@ if LXML:
             # Check whether we got ready parse-tree or string input
             result_type = type(html)
     
+            
             if isinstance(html, basestring):
-                doc = fromstring(html)
+                try:
+                    doc = fromstring(html)
+                except ParserError:
+                    # Can't handle malformed doc, empty doc, etc.
+                    return html
             else:
                 doc = copy.deepcopy(html)
     
