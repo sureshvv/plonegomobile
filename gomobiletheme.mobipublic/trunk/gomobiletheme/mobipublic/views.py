@@ -92,23 +92,25 @@ class SocialBar(grok.View):
 
     # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
     def getTwitterSharingLink(self):
-
+        """ Create a Twitter status update link with content item title + shortened URL """
         link = self.getShortenedURL()
         
         if link == None:
             # The case when bit.ly API is down
-            link = ""
+            link = u""
         
-        title = self.targetContent.Title()
+        title = self.targetContent.Title().decode("utf-8")
         
         if len(title) > 120:
-            status = title[0:120] + "... " + link
+            status = title[0:120] + u"... " + link
         else:
-            status = title + " " + link
-        
-        
+            status = title + u" " + link
+                 
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
-        return "http://mobile.twitter.com/home?status=" + urllib.quote(status)
+        
+        status = status.encode("utf-8")
+        
+        return u"http://mobile.twitter.com/home?status=" + urllib.quote(status)
 
     def getDiscussionLink(self):
         link = "foobar"
