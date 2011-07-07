@@ -88,4 +88,11 @@ class FooterText(base.FooterText):
     Override footer text, set by templates/footertext.pt.
     """
 
+class TopActions(base.TopActions):
+    """ """
+
+class Sections(base.Sections):
+    """ """
+        
+    
 

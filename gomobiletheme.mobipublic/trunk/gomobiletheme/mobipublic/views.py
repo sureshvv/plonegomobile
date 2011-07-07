@@ -40,7 +40,7 @@ class SocialBar(grok.View):
     
     def getOutgoingURL(self):        
         """ What we share in social media """
-        return self.targetContent.absolute_url()
+        return self.getOrignalURL()
 
     def getOrignalURL(self):        
         """ RSS feed link """
@@ -69,8 +69,9 @@ class SocialBar(grok.View):
             settings = self.context.portal_properties.mobipublic_properties
                     
             api = bitlyapi.BitLy(settings.bitly_login, settings.bitly_api_key)
-        
+                
             res = api.shorten(longUrl=link)
+            # You'll get APIError: Bit.ly API error: 500: INVALID_URI for localhost here
             
             shortened = res["url"]
             

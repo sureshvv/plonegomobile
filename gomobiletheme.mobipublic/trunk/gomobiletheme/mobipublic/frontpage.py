@@ -19,10 +19,12 @@ __license__ = "GPL 2"
 import math
 import datetime
 import DateTime
+import logging
 
 import pytz  # 3rd party
 
 from zope.component import getMultiAdapter
+from zope.app.component.hooks import getSite
 from zope.interface import Interface
 from five import grok
  
@@ -30,6 +32,8 @@ from Products.ATContentTypes.utils import DT2dt, dt2DT
 
 # Use templates directory to search for templates.
 grok.templatedir("templates")
+
+logger = logging.getLogger("mobipublic")
 
 class HotNewsToday(grok.View):    
     """  
@@ -92,7 +96,90 @@ class HotNewsToday(grok.View):
             
         self.items = result
         
+
+
+class Deals(grok.View):    
+    """  
+    Show 1 automatic deal (RSS) + all manual deals
+    """
+    
+
+    # Viewlets are on all content by default.
+    grok.context(Interface)
+    
+    def update(self):
+        """
+        """
+        
+        portal_catalog = self.context.portal_catalog
+        
+        count = 1
+        
+        #end = datetime.datetime.utcnow() + datetime.timedelta(3600)
+        #start = datetime.datetime.utcnow()- datetime.timedelta(3600*24)
+        
+        #end = dt2DT(end)
+        #start = dt2DT(start)
+              
+                
+        items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
+                                             "sort_on":"positive_ratings",
+                                             "sort_order":"reverse",
+                                             "sort_limit":1,
+                                             "review_state":"published"})
+        
+        #print "Got items:" + str(items)
+        #import pdb ; pdb.set_trace()
+        variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
+        
+        # Convert brain objects to dictionaries and stuff in some custom variables
+        result = []
+        for i in items:
+            t = {}
+            for v in variables:
+                t[v] = i[v]
             
+            t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
+            t["link"] = i.getURL()
+            t["object"] = i.getObject()
+            try:
+                t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
+            except:
+                # Web mode
+                t["socialbar"] = None
+                
+            result.append(t)
+            
+            
+        # Add manual pages
+        try:
+            #import pdb; pdb.set_trace()
+            deals = getSite().unrestrictedTraverse("deals-discounts")
+            
+            pages = deals.listFolderContents(contentFilter={"portal_type" : "News Item"})
+    
+            for i in pages:
+                t = {}
+            
+                #t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
+                t["link"] = i.absolute_url()
+                t["Title"] = i.Title()
+                t["Description"] = i.Description()
+                t["object"] = i
+                try:
+                    t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
+                except:
+                    # Web mode
+                    t["socialbar"] = None
+
+                result.append(t)
+            
+        except Exception, e:
+            logger.exception(e)
+            
+                                                                    
+        self.items = result
+                    
 
 def format_datetime_friendly_ago(date):
     """ Format date & time using site specific settings.

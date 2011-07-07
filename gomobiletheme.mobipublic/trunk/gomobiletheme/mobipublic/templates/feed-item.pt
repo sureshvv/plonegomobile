@@ -106,7 +106,8 @@
       </tal:enclosures>
 
       <div tal:replace="structure context/socialbar" />
-        
+
+      <a name="comment></a>        
       <div tal:replace="structure context/@@viewlets/plone.comments" />
 	  
       <div tal:replace="structure provider:plone.documentactions" />
