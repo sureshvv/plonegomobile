@@ -1,7 +1,3 @@
-<h2>Hot news</h2>
-
-<p>Most liked news during the last 24 h</p>
-
 <div class="hot-now">
 
 	<tal:news tal:repeat="news view/items">	
