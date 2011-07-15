@@ -14,7 +14,11 @@
 				<tal:content replace="structure news/Description" />
 			</div>
 			
-			<div tal:replace="structure news/object/@@socialbar" />
+			<div class="valid-until" tal:condition="news/validUntil|nothing">
+		              Valid thru: <span tal:content="news/validUntil" />
+		        </div>
+			
+			<div tal:replace="structure news/socialbar" />
 		</div>
 		
 	</tal:news>
