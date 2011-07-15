@@ -24,7 +24,7 @@
                <div tal:attributes="class python:'feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
                   <div class="feed-folder-item-wrapped">
 		       <h3>
-		          <a tal:attributes="href child/url" tal:content="structure child/title"> My Title </a>
+		          <a tal:attributes="href child/target_link" tal:content="structure child/title"> My Title </a>
 		       </h3>				 
 	
 		       <div class="discreet">
