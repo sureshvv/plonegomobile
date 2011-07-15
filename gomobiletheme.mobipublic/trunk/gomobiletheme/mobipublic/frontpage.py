@@ -19,6 +19,7 @@ __license__ = "GPL 2"
 import math
 import datetime
 import DateTime
+from DateTime import DateTime as DateTimeClass
 import logging
 
 import pytz  # 3rd party
@@ -29,6 +30,8 @@ from zope.interface import Interface
 from five import grok
  
 from Products.ATContentTypes.utils import DT2dt, dt2DT
+
+from gomobiletheme.mobipublic.utils import shorten_description
 
 # Use templates directory to search for templates.
 grok.templatedir("templates")
@@ -128,12 +131,11 @@ class Deals(grok.View):
                                              "sort_limit":1,
                                              "review_state":"published"})
         
-        #print "Got items:" + str(items)
-        #import pdb ; pdb.set_trace()
-        variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
         
         # Convert brain objects to dictionaries and stuff in some custom variables
         result = []
+        variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
+
         for i in items:
             t = {}
             for v in variables:
@@ -142,6 +144,7 @@ class Deals(grok.View):
             t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
             t["link"] = i.getURL()
             t["object"] = i.getObject()
+            t["Description"] = shorten_description(i.Description)
             try:
                 t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
             except:
@@ -153,10 +156,9 @@ class Deals(grok.View):
             
         # Add manual pages
         try:
-            #import pdb; pdb.set_trace()
             deals = getSite().unrestrictedTraverse("deals-discounts")
             
-            pages = deals.listFolderContents(contentFilter={"portal_type" : "News Item"})
+            pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
     
             for i in pages:
                 t = {}
@@ -166,6 +168,12 @@ class Deals(grok.View):
                 t["Title"] = i.Title()
                 t["Description"] = i.Description()
                 t["object"] = i
+                
+                if hasattr(i, "validUntil") and i.validUntil is not None:
+                    t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
+                else:
+                    t["validUntil"] = None
+                
                 try:
                     t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
                 except:
@@ -190,7 +198,9 @@ def format_datetime_friendly_ago(date):
     if date == None:
         return ""
     
-    date = DT2dt(date) # zope DateTime -> python datetime
+    
+    if isinstance(date, DateTimeClass):
+        date = DT2dt(date) # zope DateTime -> python datetime
 
     # How long ago the timestamp is
     # See timedelta doc http://docs.python.org/lib/datetime-timedelta.html
@@ -208,9 +218,9 @@ def format_datetime_friendly_ago(date):
 
     days = math.floor(seconds / (3600*24))
 
-    if days <= 0 and seconds <= 0:
+    if days < 0:
         # Timezone confusion, is in future
-        return "moment ago"
+        return date.strftime("%d.%m.%Y %H:%M")
 
     if days > 7:
         # Full date
