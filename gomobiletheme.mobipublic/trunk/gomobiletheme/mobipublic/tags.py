@@ -2,8 +2,9 @@ import logging
 
 import zope.interface
 from zope.component import getMultiAdapter
+from zope.app.component.hooks import getSite 
 
-from collective.easytemplate.interfaces import ITag
+from collective.templateengines.interfaces import ITag
 
 from five import grok
 
@@ -17,22 +18,26 @@ grok.templatedir('templates')
 
 logger = logging.getLogger("mobipublic")
 
-class FrontPageBlock(object):
+class FrontPageBlockTag(object):
     """ """
     zope.interface.implements(ITag)
     
     def getName(self):
         return "front_page_block"
     
-    def render(self, scriptingContext, path, portalType, title, count):
+    def render(self, scriptingContext, path, itemPortalType, folderPortalType,  title, count):
         """ """
         
         # Look up the view by name
         
-        view = getMultiAdapter((scriptingContext.context. scriptingContext.request), name="front_page_block")
+        mappings = scriptingContext.getMappings()
+        context = mappings['context']
+        request = mappings['request']
+        view = getMultiAdapter((context, request), name="front_page_block")
         
         view.path = path
-        view.portalType = portalType
+        view.itemPortalType = itemPortalType
+        view.folderPortalType = folderPortalType
         view.title = title
         view.count = count
         return view()
@@ -40,21 +45,59 @@ class FrontPageBlock(object):
         
 class BlockView(grok.View):
     """
+    Define a view which is called thru script tag, with special parameters 
+    set up by the tag class.
     """
     
     grok.name("front_page_block")        
+    grok.template("front_page_block")
+    
+    def getMasterItem(self):
+        folder = self.context.unrestrictedTraverse(self.path)
+        return folder 
                 
     def getItems(self):
         """
-        """
-        #folder = self.context.unrestrictedTraverse(self.path)
-        #listing = folder.getFolderListing()        
-        
+        Get X amount of nested item from folder hierarchy by portal type, sorted by creation.
+        """        
         if self.count > 0:
-            return self.context.portal_catalog(path={ "query": self.path }, portal_type=self.portalType,  sort_on="created", sort_order="reverse")[0:self.count]
+            
+            site = getSite()
+            
+            
+            # Make string path relative to the site root
+            # E.g. string path "news" becomes "/yoursiteid/news"
+            site_path = site.getPhysicalPath();
+            
+            path = "/".join(site_path) + "/" + self.path         
+            
+            items = self.context.portal_catalog(path={ "query": path, "depth" :4 }, 
+                                                portal_type=self.itemPortalType,  
+                                                sort_on="created", 
+                                                sort_order="reverse")[0:self.count]
+        else:
+            items = []
+            
+        
+        return items
         
     def getSlots(self):
         """
         """
-        folder = self.context.unrestrictedTraverse(self.path)
-        return self.folder.listFolderContents()
+        
+        site = getSite()
+        
+        if self.path != "":
+            folder = site.unrestrictedTraverse(self.path)
+            items = folder.listFolderContents()
+        else:
+            items = []
+        
+        return items
+        
+        
+from collective.easytemplate.tagconfig import tags as tag_list
+from collective.easytemplate.engine import setDefaultEngine 
+
+tag_list.append(FrontPageBlockTag())        
+setDefaultEngine() # Refresh tag list        
