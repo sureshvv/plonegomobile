@@ -77,8 +77,7 @@ class BlockView(grok.View):
                                                 sort_order="reverse")[0:self.count]
         else:
             items = []
-            
-        
+                    
         return items
         
     def getSlots(self):
