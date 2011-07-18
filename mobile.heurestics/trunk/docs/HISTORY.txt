@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.9 - current
+--------------------
+
+* Handle cases were user agent is missing in Javascript support check [miohtama]
+
 0.9
 -------------------
 
