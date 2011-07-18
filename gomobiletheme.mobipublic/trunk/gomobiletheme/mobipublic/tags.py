@@ -86,7 +86,7 @@ class BlockView(grok.View):
                                                 portal_type=types,  
                                                 sort_on="created", 
                                                 sort_order="reverse")[0:self.itemCount]
-            items += list(content_by_type)
+            items += [ brain.getObject() for brain in content_by_type ]
         else:
             items = []
                     
