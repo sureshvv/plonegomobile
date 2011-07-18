@@ -81,6 +81,9 @@ def is_javascript_supported(request):
     @param request: HTTP request object (WSGI/Zope/Django)
     """
     user_agent = get_user_agent(request)
+    
+    if user_agent is None:
+        return False
 
     if "opera" in user_agent:
         # Opera mini javascript support is
