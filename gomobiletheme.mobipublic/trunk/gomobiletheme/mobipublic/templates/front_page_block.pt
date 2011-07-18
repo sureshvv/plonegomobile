@@ -1,23 +1,27 @@
 <div class="front-page-block" tal:define="master view/getMasterItem">
 
-        <h2>
-        	<a tal:attributes="href string:${master/absolute_url}" tal:content="master/Title" />
+        <h2 tal:condition="python:len(view.title)>0">
+        	<a tal:attributes="href string:${master/absolute_url}" tal:content="view/title" />
         </h2>
 
-        <div class="highlights front-page-links">
-                <tal:item repeat="item view/getItems">
-                        <a tal:define="screenshot item/screenshot|nothing" tal:attributes="href item/getURL; class python:screenshot != None and 'screenshot' or ''">
-                               <span class="button-body">
-                                     <span class="button-inner" tal:content="item/Title" />
-                               </span>
-		        </a>  
-                </tal:item>         
+        <tal:item-block define="items view/getItems" condition="python: len(items)>0">
+
+	        <div class="highlights front-page-links">
+	                <tal:item repeat="item items">
+	                        <a tal:define="screenshot item/screenshot|nothing" tal:attributes="href item/getURL; class python:screenshot != None and 'screenshot' or ''">
+	                               <span class="button-body">
+	                                     <span class="button-inner" tal:content="item/Title" />
+	                               </span>
+			        </a>  
+	                </tal:item>         
+			
+			<div class="list-end" style="clear: both"><!-- --></div>       				
+	        </div>
+
+                <a class="all-link" tal:attributes="href master/absolute_url">Show all..</a>
+	
+	</tal:item-block>
 		
-		<div class="list-end" style="clear: both"><!-- --></div>       				
-        </div>
-	
-	<a class="all-link" tal:attributes="href master/absolute_url">Show all..</a>
-	
 	<div class="front-page-slots front-page-links" tal:define="slots view/getSlots" tal:condition="python:len(slots) > 0">
 		<h2 tal:content="view/slotTitle" />
 		<tal:item repeat="item slots">
