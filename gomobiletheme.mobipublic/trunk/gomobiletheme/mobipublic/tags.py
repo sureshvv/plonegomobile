@@ -25,7 +25,7 @@ class FrontPageBlockTag(object):
     def getName(self):
         return "front_page_block"
     
-    def render(self, scriptingContext, path, itemPortalType, folderPortalType,  title, count):
+    def render(self, scriptingContext, path, itemPortalType, itemPortalType2, folderPortalType,  title, slotTitle, count):
         """ """
         
         # Look up the view by name
@@ -37,8 +37,10 @@ class FrontPageBlockTag(object):
         
         view.path = path
         view.itemPortalType = itemPortalType
+        view.itemPortalType2 = itemPortalType2
         view.folderPortalType = folderPortalType
         view.title = title
+        view.slotTitle = slotTitle
         view.count = count
         return view()
         
@@ -71,10 +73,19 @@ class BlockView(grok.View):
             
             path = "/".join(site_path) + "/" + self.path         
             
-            items = self.context.portal_catalog(path={ "query": path, "depth" :4 }, 
-                                                portal_type=self.itemPortalType,  
+            types = [self.itemPortalType]
+            
+            items = []
+                                
+            if self.itemPortalType2 != None:
+                types.append(self.itemPortalType2) 
+            
+            #print "Querying by:" + type + " " + path
+            content_by_type = self.context.portal_catalog(path={ "query": path, "depth" :9 }, 
+                                                portal_type=types,  
                                                 sort_on="created", 
                                                 sort_order="reverse")[0:self.count]
+            items += list(content_by_type)
         else:
             items = []
                     
