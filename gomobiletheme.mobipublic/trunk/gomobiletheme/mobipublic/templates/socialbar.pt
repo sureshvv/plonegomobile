@@ -16,8 +16,10 @@
 	       Comments ( <span tal:content="view/getDiscussionCount" /> ) 
 	</a>
 
-        <a rel="nofollow" tal:attributes="href view/getOrignalURL">
-                <span>Orignal</span>                
-        </a>
+        <tal:comment replace="nothing">
+	        <a rel="nofollow" tal:attributes="href view/getOrignalURL">
+	                <span>Orignal</span>                
+	        </a>
+	</tal:comment>
 
 </div>
