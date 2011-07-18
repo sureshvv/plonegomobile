@@ -25,7 +25,7 @@ class FrontPageBlockTag(object):
     def getName(self):
         return "front_page_block"
     
-    def render(self, scriptingContext, path, itemPortalType, itemPortalType2, folderPortalType,  title, slotTitle, count):
+    def render(self, scriptingContext, path, itemPortalType, itemPortalType2, folderPortalType,  title, slotTitle, itemCount, slotCount):
         """ """
         
         # Look up the view by name
@@ -41,7 +41,8 @@ class FrontPageBlockTag(object):
         view.folderPortalType = folderPortalType
         view.title = title
         view.slotTitle = slotTitle
-        view.count = count
+        view.itemCount = itemCount
+        view.slotCount = slotCount
         return view()
         
         
@@ -62,7 +63,7 @@ class BlockView(grok.View):
         """
         Get X amount of nested item from folder hierarchy by portal type, sorted by creation.
         """        
-        if self.count > 0:
+        if self.itemCount > 0:
             
             site = getSite()
             
@@ -84,7 +85,7 @@ class BlockView(grok.View):
             content_by_type = self.context.portal_catalog(path={ "query": path, "depth" :9 }, 
                                                 portal_type=types,  
                                                 sort_on="created", 
-                                                sort_order="reverse")[0:self.count]
+                                                sort_order="reverse")[0:self.itemCount]
             items += list(content_by_type)
         else:
             items = []
@@ -99,7 +100,7 @@ class BlockView(grok.View):
         
         if self.path != "":
             folder = site.unrestrictedTraverse(self.path)
-            items = folder.listFolderContents()
+            items = folder.listFolderContents(contentFilter={"portal_type" : self.folderPortalType})
         else:
             items = []
         
