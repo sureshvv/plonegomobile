@@ -242,3 +242,42 @@
 }
 .info-box td {
 }
+
+.front-page-block h2 a {
+	color: black;
+}
+
+.front-page-block .all-link {
+	display: block;
+	text-align: right;
+}
+
+.front-page-links a {
+	display: block;
+	border-top: 1px solid black;
+	background: #eee url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat scroll right center;
+}
+
+.front-page-links .list-end {
+	border-top: 1px solid black;
+}
+
+.front-page-links .button-body {
+	display: block;
+	padding: 5px 15px;
+}
+
+.front-page-links a:hover {
+        color: white;
+	background: grey;
+	text-decoration: none;        
+}
+
+.front-page-slots a {
+	width: 50%;
+	float: left;
+}
+
+.front-page-slots a:nth-child(2n+0) .button-body {
+        border-right: 1px solid black;	
+}
