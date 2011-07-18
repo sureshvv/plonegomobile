@@ -281,3 +281,10 @@
 .front-page-slots a:nth-child(2n+0) .button-body {
         border-right: 1px solid black;	
 }
+
+/* Hide grey bar below logo */
+
+#actions-header {
+	display: none;
+}
+ 
