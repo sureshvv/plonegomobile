@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 import zope.interface
 from zope.component import getMultiAdapter
@@ -78,17 +79,45 @@ class BlockView(grok.View):
             
             items = []
                                 
-            if self.itemPortalType2 != None:
-                types.append(self.itemPortalType2) 
+            #if self.itemPortalType2 != None:
+            #    types.append(self.itemPortalType2) 
             
             #print "Querying by:" + type + " " + path
             content_by_type = self.context.portal_catalog(path={ "query": path, "depth" :9 }, 
-                                                portal_type=types,  
+                                                portal_type=self.itemPortalType,  
                                                 sort_on="created", 
                                                 sort_order="reverse")[0:self.itemCount]
+
+            content_by_type = list(content_by_type)
+            
+            if self.itemPortalType2 != None:
+                content_by_type2 = self.context.portal_catalog(path={ "query": path, "depth" :9 }, 
+                                                    portal_type=self.itemPortalType2,  
+                                                    sort_on="created", 
+                                                    sort_order="reverse")[0:self.itemCount]
+
+                content_by_type += list(content_by_type2)
+
+            
             items += [ brain.getObject() for brain in content_by_type ]
         else:
             items = []
+            
+        #if self.title == "Daily deals":
+        #    import pdb ; pdb.set_trace()
+            
+        # XXX: custom hack for deals
+        def is_expired_deal(i):
+            """
+            """
+            if hasattr(i, "validUntil"):
+                now = datetime.datetime.utcnow()
+                if now > i.validUntil:
+                    return True
+                
+            return False
+        
+        items = [ i for i in items if not is_expired_deal(i) ]
                     
         return items
         
