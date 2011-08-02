@@ -136,6 +136,7 @@ class Deals(grok.View):
         result = []
         variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
 
+
         for i in items:
             t = {}
             for v in variables:
@@ -154,11 +155,15 @@ class Deals(grok.View):
             result.append(t)
             
             
+        now = datetime.datetime.utcnow()
+            
         # Add manual pages
         try:
             deals = getSite().unrestrictedTraverse("deals-discounts")
             
             pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
+
+
     
             for i in pages:
                 t = {}
@@ -168,11 +173,18 @@ class Deals(grok.View):
                 t["Title"] = i.Title()
                 t["Description"] = i.Description()
                 t["object"] = i
-                
+
+                                    
                 if hasattr(i, "validUntil") and i.validUntil is not None:
+
+                    if now > i.validUntil:
+                        # No longer valid
+                        continue 
+
                     t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
                 else:
                     t["validUntil"] = None
+
                 
                 try:
                     t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
