@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="example.dexterityforms"
+      metal:use-macro="context/main_template/macros/master">
+      
+   <div metal:fill-slot="body"
+      tal:define="items context/listFolderContents">
+
+      <h1>Mobile sites about <span tal:content="context/title_or_id" /></h1>
+
+      <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+      <div class="mobile-site-listing feed-folder">
+            <p class="documentDescription"
+                 tal:content="context/Description"
+                 tal:condition="context/Description"></p>
+
+
+            <tal:item tal:repeat="child items">
+
+                  <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
+
+		      <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl">          
+		               
+		                <img alt="" tal:attributes="src screenshot/url;
+		                                     width screenshot/width;
+		                                     height screenshot/height" />           
+		      </a>
+		             
+
+
+                       <h3>
+                          <a tal:attributes="href child/remoteUrl" tal:content="structure child/title">My Title </a>
+                       </h3>                             
+                                
+                        <p tal:condition="child/Description"
+                             tal:content="structure child/Description"> My summary </p>
+                             
+                       <tal:social-bar define="socialbar python:view.getSocialBar(child)">
+                              <div tal:replace="structure socialbar" />
+                       </tal:social-bar>
+
+                 </div>
+            </tal:item>
+      </div>
+       
+      <div tal:replace="structure provider:plone.documentactions" />      
+	
+    </div>
+    
+</html>

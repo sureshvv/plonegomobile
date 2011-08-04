@@ -42,5 +42,12 @@
         description="Do not summarize content"
         />
 
+ <browser:menuItem
+        for="Products.ATContentTypes.interface.IATFolder"
+        menu="plone_displayviews"
+        title="Mobile site folder listing"
+        action="@@mobile_site_folder_listing"
+        description="Display thumbnails of the site in the listing"
+        />
 
 </configure>
