@@ -10,6 +10,7 @@ i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- We retrofit these new views for Folders in portal_types info -->
   <element value="empty"/>
-
+  <element value="mobile_site_folder_listing"/>
+  
  </property>
 </object>

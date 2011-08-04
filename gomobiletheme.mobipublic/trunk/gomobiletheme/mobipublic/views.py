@@ -3,6 +3,7 @@ import logging
 from zope.interface import Interface
 import urllib
 from zope.component import getMultiAdapter
+from zope.component import getMultiAdapter, ComponentLookupError
 
 from five import grok
 
@@ -162,3 +163,34 @@ class Empty(grok.View):
     """
     
     grok.context(Interface)
+
+
+class MobileSiteFolderListing(grok.View):
+    """
+    Empty folder listing
+    """
+    
+    grok.name("mobile_site_folder_listing")
+    grok.template("mobile_site_folder_listing")
+    grok.context(Interface)
+    
+    def getSocialBar(self, obj):
+        """
+        """
+        try:
+            bar = getMultiAdapter((self.context, self.request), name="socialbar")
+            bar.setTargetContent(obj)
+            return bar
+        except ComponentLookupError, e:
+            return None    
+
+    def getImage(self, obj):
+        """
+        
+        """
+        images = obj.unrestrictedTraverse("@@images")
+        try:
+            img = images.scale('screenshot', width=200, height=200);
+            return img
+        except Exception, e:
+            return None
