@@ -59,6 +59,12 @@ def flush_cache(name, context):
     global_key is function specific key, key is context specific key.
     
     """
+    if context.UID() is None:
+        return
+    
+    if name is None:
+        return
+    
     key = context.UID() + "." + name
     xhtml_cache.invalidate(key)    
     
