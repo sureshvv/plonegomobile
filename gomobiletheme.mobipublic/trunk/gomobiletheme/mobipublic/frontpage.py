@@ -126,6 +126,7 @@ class Deals(grok.View):
               
                 
         items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
+                                             "path" : {"query" : "/mobipublic/deals-discounts" },
                                              "sort_on":"created",
                                              "sort_order":"reverse",
                                              "sort_limit":1,
