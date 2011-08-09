@@ -298,4 +298,32 @@
 	margin: 5px auto;
 	border: 1px solid black;
 }
+
+/* Lifestyle block on FP */
+
+.front-page-block-lifestyle {
+        background: #eee;
+        border: 0;
+	padding: 10px 5px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;	
+}
+
+.front-page-block-lifestyle .image-wrapper {
+	float: left;
+	width: 33%;
+}
+
+.front-page-block-lifestyle img {
+	width: 80%;
+	margin: 10px;
+}
  
+.front-page-block-lifestyle a:nth-child(2n) .button-body  {
+	width: 51%;
+	border-right: 0;
+}
+
+.front-page-block-lifestyle .list-end {
+	border: 0;
+}
