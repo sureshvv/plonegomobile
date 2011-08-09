@@ -126,7 +126,7 @@ class Deals(grok.View):
               
                 
         items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
-                                             "sort_on":"positive_ratings",
+                                             "sort_on":"created",
                                              "sort_order":"reverse",
                                              "sort_limit":1,
                                              "review_state":"published"})
