@@ -74,7 +74,7 @@ class FeedFolderView(base.FeedFolderView):
         """
         obj = item["item"].getObject() # from catalog brain to our page
         try:
-            bar = getMultiAdapter((self.context, self.request), name="socialbar")
+            bar = getMultiAdapter((obj, self.request), name="socialbar")
             bar.setTargetContent(obj)
             return bar
         except ComponentLookupError, e:
