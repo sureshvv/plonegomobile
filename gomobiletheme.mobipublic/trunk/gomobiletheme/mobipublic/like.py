@@ -5,7 +5,8 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from cioppino.twothumbs import _
-from cioppino.twothumbs import rate
+
+import rate
 
 from five import grok
 
@@ -17,6 +18,8 @@ grok.context(Interface)
 
 # Use templates directory to search for templates.
 grok.templatedir('templates')
+
+
 
 
 class Thumbs(grok.View):
@@ -71,3 +74,5 @@ class LikeForm(grok.CodeView):
         self.request.response.redirect(self.context.absolute_url())
         return ""
         
+
+            

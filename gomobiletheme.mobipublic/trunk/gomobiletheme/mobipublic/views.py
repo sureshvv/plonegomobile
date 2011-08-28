@@ -38,6 +38,7 @@ class SocialBar(grok.View):
         Which item we use as Facebook et. al. link target
         """
         self.targetContent = targetContent
+        
     
     def getOutgoingURL(self):        
         """ What we share in social media """
@@ -47,6 +48,7 @@ class SocialBar(grok.View):
         """ RSS feed link """
         
         remote_url = getattr(self.targetContent, "remote_url", None)
+    
         if remote_url:
             return remote_url()
         
@@ -82,6 +84,7 @@ class SocialBar(grok.View):
             
         except Exception, e:
             # API down, wrong API key?
+            logger.error("bit.ly API failed. Login:" + settings.bitly_login + " API key:" + settings.bitly_api_key)
             logger.exception(e)
             return None
 
@@ -134,7 +137,8 @@ class SocialBar(grok.View):
         return link + "/@@vote"
     
     def getThumbsForm(self):
-        view = getMultiAdapter((self.context, self.request), name="thumbs")
+        context = self.context.aq_inner
+        view = getMultiAdapter((context, self.request), name="thumbs")
         
         #import pdb ;pdb.set_trace()
         return view
