@@ -33,6 +33,15 @@ class SocialBar(grok.View):
     
     grok.context(Interface)
     
+    def hasOrignal(self):
+        """
+        @return True if this social bar should have "orignal link"
+        """
+        return getattr(self, "showOrignal", False)
+    
+    def setShowOrignal(self, visible):
+        self.showOrignal = visible
+    
     def setTargetContent(self, targetContent):
         """
         Which item we use as Facebook et. al. link target
@@ -107,10 +116,11 @@ class SocialBar(grok.View):
         title = self.targetContent.Title().decode("utf-8")
         
         if len(title) > 120:
-            status = title[0:120] + u"... " + link
+            status = title[0:100] + u"... " + link
         else:
             status = title + u" " + link
-                 
+
+        status += " @mobipublic"                
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
         
         status = status.encode("utf-8")
