@@ -1,4 +1,8 @@
 <div class="social-bar">
+
+        <a rel="nofollow" tal:condition="view/hasOrignal" tal:attributes="href view/getOrignalURL">
+                <span>Orignal article (long)</span>                
+        </a>
 	
         <a rel="nofollow" tal:attributes="href view/getFacebookSharingLink">
         	<img alt="" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/facebook.png" />
@@ -15,11 +19,5 @@
 	<a tal:attributes="href view/getDiscussionLink">
 	       Comments ( <span tal:content="view/getDiscussionCount" /> ) 
 	</a>
-
-        <tal:comment replace="nothing">
-	        <a rel="nofollow" tal:attributes="href view/getOrignalURL">
-	                <span>Orignal</span>                
-	        </a>
-	</tal:comment>
 
 </div>

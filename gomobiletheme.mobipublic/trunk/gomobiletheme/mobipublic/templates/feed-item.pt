@@ -28,20 +28,6 @@
              i18n:attributes="title label_document_locked;"
              />
 
-        <tal:name tal:condition="creator"
-                  tal:define="author python:mtool.getMemberInfo(creator)">
-          <span i18n:translate="label_by_author">
-            by
-            <span tal:replace="context/getFeedItemAuthor"></span>
-          </span>
-
-          &#8212;
-
-        </tal:name>
-
-        <span i18n:translate="box_last_modified">
-          last modified
-        </span>
         <span tal:replace="python:toLocalizedTime(context.getFeedItemUpdated(),long_format=0)">
           August 16, 2001
         </span>
@@ -80,16 +66,10 @@
 
       <p class="documentDescription"
          tal:content="structure context/Description"
-         tal:condition="context/Description"></p>
-
-      <p tal:condition="python: not text and is_editable"
-         i18n:translate="no_body_text"
-         class="discreet">
-        This item does not have any body text, click the edit tab to change it.
-      </p>
+         tal:condition="python:context.Description() and not text"></p>
 
       <div class="plain"
-           tal:condition="text">
+           tal:condition="python:text">
         <div tal:replace="structure text" />
       </div>
 
@@ -107,7 +87,7 @@
 
       <a name="discussion"></a>        
 
-      <div tal:replace="structure context/socialbar" />
+      <div tal:define="socialbar nocall:context/@@socialbar; foobar python:socialbar.setShowOrignal(True)" tal:replace="structure socialbar" />
 
       <div tal:replace="structure context/@@viewlets/plone.comments" />
 	  
