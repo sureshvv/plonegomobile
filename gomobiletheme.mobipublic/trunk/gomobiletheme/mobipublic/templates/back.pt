@@ -1,0 +1,21 @@
+<div class="mobipublic-back" tal:condition="not:viewlet/isHome">
+	<a class="up" tal:attributes="href viewlet/backUrl">
+					   	
+		<nobr>
+	              <span class="arrow">&lt; Back to</span>
+		      <span tal:replace="viewlet/backTitle"/>
+		</nobr>
+		
+        </a>
+	
+	|
+
+        <a class="home" tal:attributes="href viewlet/homeUrl;">
+                                                
+                <nobr>
+                      <span class="arrow">Home</span>
+                </nobr>                     
+        </a>
+
+   
+</div>

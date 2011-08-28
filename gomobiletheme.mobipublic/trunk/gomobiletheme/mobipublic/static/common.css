@@ -23,6 +23,12 @@
 	float: right;
 }
 
+.main-menu {
+	border-top: 1px dotted #888;
+	border-bottom: 1px dotted #888;
+	padding: 5px 0;
+}
+
 .main-menu ul,
 .main-menu li {
 	display: inline;
@@ -102,6 +108,12 @@
 	background: transparent;
 	color: #205C90;
 	border: none;
+}
+
+.portaltype-feedfeederitem .social-bar {
+	border-top: 1px dashed #888;
+        border-bottom: 1px dashed #888;
+	padding: 5px 0;
 }
 
 .thumb-rating button:hover {
@@ -327,3 +339,11 @@
 .front-page-block-lifestyle .list-end {
 	border: 0;
 }
+
+
+/* Back button */
+
+.mobipublic-back {
+      padding-left: 0.5em;
+}
+

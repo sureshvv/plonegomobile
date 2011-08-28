@@ -14,6 +14,8 @@
 __docformat__ = "epytext"
 __license__ = "GPL"
 
+from Acquisition import aq_inner, aq_parent
+
 from zope.component import getMultiAdapter
 
 from zope.interface import Interface
@@ -22,6 +24,7 @@ from five import grok
 from Products.CMFCore.interfaces import IFolderish
 
 from gomobiletheme.basic import viewlets as base
+from gomobiletheme.basic.viewlets import getView
 from gomobile.mobile.interfaces import IMobileImageProcessor
 
 from gomobiletheme.mobipublic import MessageFactory as _
@@ -94,5 +97,39 @@ class TopActions(base.TopActions):
 class Sections(base.Sections):
     """ """
         
-    
+class ActionsHeader(base.ActionsHeader):
+    """ """
 
+class Back(base.Back):
+    """ """
+    
+    def update(self):
+        context= aq_inner(self.context)
+        
+        context_helper = getMultiAdapter((context, self.request), name="plone_context_state")
+        
+        portal_helper = getMultiAdapter((context, self.request), name="plone_portal_state")
+        
+        canonical = context_helper.canonical_object()
+        
+        parent = aq_parent(canonical)
+        
+        breadcrumbs_view = getView(self.context, self.request, 'breadcrumbs_view')
+        breadcrumbs = breadcrumbs_view.breadcrumbs()
+        
+        if (len(breadcrumbs)==1):
+            self.backTitle = _(u"Home")
+        else:
+            if hasattr(parent, "Title"):
+                self.backTitle = parent.Title()
+            else:
+                self.backTitle = _(u"Back")
+        
+        if hasattr(parent, "absolute_url"):
+            self.backUrl = parent.absolute_url()
+        else:
+            self.backUrl = portal_helper.portal_url()
+            
+        self.isHome = len(breadcrumbs)==0    
+        
+        self.homeUrl = portal_helper.portal_url()
