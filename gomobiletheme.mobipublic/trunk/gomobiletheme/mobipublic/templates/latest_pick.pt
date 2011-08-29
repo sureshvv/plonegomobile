@@ -1,0 +1,30 @@
+<div class="latest-pick">
+
+        <tal:item-block define="items view/getItems" condition="python: len(items)>0">
+
+	        <div class="highlights front-page-links">
+	                <tal:item repeat="item items">
+	                        <tal:item tal:define="image item/image|nothing; url item/absolute_url">
+
+                                       <a class="weekly-fashion-image" tal:attributes="href url">
+				            <img tal:define="scales item/@@images;
+				                         image python: scales.scale('image', width=200, height=200);"
+				             tal:condition="image"
+				             tal:attributes="src image/url;
+				                             width image/width;
+				                             height image/height" />           
+
+	                                       <span class="button-body">
+	                                             Weekly featured fashion blog: <span class="button-inner" tal:content="item/Title" />
+	                                       </span>				       	
+				       </a>
+			        </tal:item>
+	                </tal:item>         
+			
+			<div class="list-end" style="clear: both"><!-- --></div>       				
+	        </div>
+	
+	</tal:item-block>
+		
+</div>
+

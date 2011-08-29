@@ -312,6 +312,9 @@
 }
 
 /* Lifestyle block on FP */
+.weekly-fashion-image {
+        text-align: center;	
+}
 
 .front-page-block-lifestyle {
         background: #eee;
@@ -322,15 +325,12 @@
 }
 
 .front-page-block-lifestyle .image-wrapper {
-	float: left;
-	width: 33%;
 }
 
 .front-page-block-lifestyle img {
-	width: 80%;
 	margin: 10px;
 }
- 
+
 .front-page-block-lifestyle a:nth-child(2n) .button-body  {
 	width: 51%;
 	border-right: 0;

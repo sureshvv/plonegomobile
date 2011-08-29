@@ -139,5 +139,66 @@ class BlockView(grok.View):
 from collective.easytemplate.tagconfig import tags as tag_list
 from collective.easytemplate.engine import setDefaultEngine 
 
-tag_list.append(FrontPageBlockTag())        
+class LatestPickTag(object):
+    """ """
+    zope.interface.implements(ITag)
+    
+    def getName(self):
+        return "latest_pick"
+    
+    def render(self, scriptingContext, path, itemCount):
+        """ """
+        
+        # Look up the view by name
+        
+        mappings = scriptingContext.getMappings()
+        context = mappings['context']
+        request = mappings['request']
+        view = getMultiAdapter((context, request), name="latest_pick")
+        
+        view.path = path
+        view.itemCount = itemCount
+        return view()
+    
+class LatestPickView(grok.View):
+    """
+    Define a view which is called thru script tag, with special parameters 
+    set up by the tag class.
+    """
+    
+    grok.name("latest_pick")        
+    grok.template("latest_pick")    
+    
+    def getItems(self):
+        """
+        Get X amount of nested item from folder hierarchy by portal type, sorted by creation.
+        """        
+        items = []
+        if self.itemCount > 0:
+            
+            site = getSite()
+            
+            
+            # Make string path relative to the site root
+            # E.g. string path "news" becomes "/yoursiteid/news"
+            site_path = site.getPhysicalPath();
+            
+            path = "/".join(site_path) + "/" + self.path         
+                                            
+            #if self.itemPortalType2 != None:
+            #    types.append(self.itemPortalType2) 
+            
+            #print "Querying by:" + type + " " + path
+            content_by_type = self.context.portal_catalog(path={ "query": path, "depth" :9 }, 
+                                                sort_on="created", 
+                                                sort_order="reverse")[0:self.itemCount]
+
+                   
+            items += [ brain.getObject() for brain in content_by_type ]
+
+        return items    
+    
+        
+
+tag_list += [FrontPageBlockTag(), LatestPickTag()]
 setDefaultEngine() # Refresh tag list        
