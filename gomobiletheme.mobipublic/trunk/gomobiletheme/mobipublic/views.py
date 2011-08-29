@@ -203,8 +203,15 @@ class MobileSiteFolderListing(grok.View):
         
         """
         images = obj.unrestrictedTraverse("@@images")
+        
+        if hasattr(obj, "image"):
+            imageName = "image"
+        else:
+            imageName = "screenshot"
+        
         try:
-            img = images.scale('screenshot', width=200, height=200);
+            img = images.scale(imageName, width=200, height=200);
             return img
         except Exception, e:
             return None
+ 

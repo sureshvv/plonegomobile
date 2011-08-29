@@ -8,7 +8,9 @@
    <div metal:fill-slot="body"
       tal:define="items context/listFolderContents">
 
+      <!--
       <h1>Mobile sites about <span tal:content="context/title_or_id" /></h1>
+        -->
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
 
@@ -22,7 +24,7 @@
 
                   <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
 
-		      <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl">          
+		      <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl|child/absolute_url">          
 		               
 		                <img alt="" tal:attributes="src screenshot/url;
 		                                     width screenshot/width;
@@ -32,7 +34,7 @@
 
 
                        <h3>
-                          <a tal:attributes="href child/remoteUrl" tal:content="structure child/title">My Title </a>
+                          <a tal:attributes="href child/remoteUrl|child/absolute_url" tal:content="structure child/title">My Title </a>
                        </h3>                             
                                 
                         <p tal:condition="child/Description"
