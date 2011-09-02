@@ -1,7 +1,7 @@
 from Products.feedfeeder.browser import feed as base
 
 class FeedFolderView(base.FeedFolderView):
-    
+
     def get_batched_items(self):
         """Return all feed items.
 
@@ -10,24 +10,24 @@ class FeedFolderView(base.FeedFolderView):
         """
 
         print "Getting results"
-        
+
         listing = self.context.getFolderContents
 
         results = listing({'sort_on': 'getFeedItemUpdated',
                            'sort_order': 'descending',
                            'portal_type': 'FeedFeederItem'}, batch=True)
-        
+
         if not results and self.context.portal_type == 'Topic':
             # Use the queryCatalog of the Topic itself.
             results = self.context.queryCatalog(
                 portal_type='FeedFeederItem')
 
-        
+
         from Products.CMFPlone import Batch
         b_start = self.context.REQUEST.get('b_start', 0)
         b_size = 7
         batch = Batch(results, b_size, int(b_start), pagerange=1, orphan=0)
-            
+
         result = []
         for index, x in enumerate(batch):
             content_url = x.getURL()
@@ -49,11 +49,11 @@ class FeedFolderView(base.FeedFolderView):
                 # to sole enclosure, unless there is some body text.
                 if not int(x.getHasBody):
                     item['url'] = item['url'] + '/' + enclosures[0]
-            
-            result.append(item)        
+
+            result.append(item)
 
         return batch, result
-    
+
     def __call__(self):
         # return Batch object for Plone batching controls
         # and internally use batched_item list when rendering this folder contents

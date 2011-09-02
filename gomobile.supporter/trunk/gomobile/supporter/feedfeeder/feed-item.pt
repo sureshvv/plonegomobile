@@ -107,16 +107,16 @@
 
 	  <ul>
 	      <li i18n:translate="source_available"
-	           class="feed-source-link">        
+	           class="feed-source-link">
 	        <a href="#"
 	           tal:attributes="href context/remote_url"
 	           i18n:attributes="name string:here"
 	           i18n:translate="link_here">View orignal post</a>
 	      </li>
 	  </ul>
-	  
+	
         <div tal:replace="structure provider:plone.documentactions" />
-	  
+	
     </div>
   </body>
 </html>

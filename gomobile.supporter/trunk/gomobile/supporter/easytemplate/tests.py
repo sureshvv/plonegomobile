@@ -55,8 +55,8 @@ class TestEasyTemplateOverrides(BaseTestCase):
         BaseTestCase.afterSetUp(self)
         self._refreshSkinData()
         self.setDiscriminateMode("mobile")
-        
-        
+
+
 
     def create_doc(self):
         self.loginAsPortalOwner()
@@ -121,9 +121,9 @@ class TestEasyTemplateOverrides(BaseTestCase):
     def test_override_not_enabled(self):
         """ Do not enable override, but have the field filled in
         """
-        
+
         self.setDiscriminateMode("web")
-        
+
         self.create_doc()
         doc = self.portal.doc
         overrider = IOverrider(doc)
@@ -139,7 +139,7 @@ class TestEasyTemplateOverrides(BaseTestCase):
 
     def test_convergence_form(self):
         self.setDiscriminateMode("web")
-        
+
         self.create_doc()
 
         result = self.portal.doc.restrictedTraverse("@@convergence")
@@ -162,7 +162,7 @@ class BrowingTestCase(ptc.FunctionalTestCase):
 
         @param: "mobile", "web" or other MobileRequestType pseudo-constant
         """
-        
+
         from gomobile.mobile.tests.utils import TestMobileRequestDiscriminator
         TestMobileRequestDiscriminator.setModes([mode])
 
@@ -212,8 +212,8 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         """
         self.create_doc()
         doc = self.portal.doc
-        
-        
+
+
         overrider = IOverrider(doc)
 
         doc.setTitle("Foobar")
@@ -230,15 +230,15 @@ class BrowingTestCase(ptc.FunctionalTestCase):
         html = self.browser.contents
 
         if "The page structure contains errors" in html:
-            
-            messages = IStatusMessage(self.portal.REQUEST).showStatusMessages()        
-        
+
+            messages = IStatusMessage(self.portal.REQUEST).showStatusMessages()
+
             if messages:
                 for m in messages: print str(m.message)
-        
-            
+
+
             raise RuntimeError("Bad templated page")
-            
+
         self.assertTrue(MOBILE_HTML_MARKER in html) # See that we are rendering mobile mode
         self.assertTrue("Title Foobar" in html)
 
