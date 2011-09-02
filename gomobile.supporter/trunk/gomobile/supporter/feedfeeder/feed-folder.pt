@@ -25,7 +25,7 @@
                   <div class="feed-folder-item-wrapped">
 		       <h3>
 		          <a tal:attributes="href child/url" tal:content="structure child/title"> My Title </a>
-		       </h3>				 
+		       </h3>				
 	
 		       <div class="discreet">
 		
@@ -54,9 +54,9 @@
       <!-- Navigation -->
       <div metal:use-macro="here/batch_macros/macros/navigation" />
 
-       
+
       <div tal:replace="structure provider:plone.documentactions" />
-      
+
    </div>
    </body>
 </html>
