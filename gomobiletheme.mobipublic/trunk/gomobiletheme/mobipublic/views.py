@@ -93,7 +93,10 @@ class SocialBar(grok.View):
             
         except Exception, e:
             # API down, wrong API key?
-            logger.error("bit.ly API failed. Login:" + settings.bitly_login + " API key:" + settings.bitly_api_key)
+            if "localhost" in link:
+                return None
+        
+            logger.error("bit.ly API failed. Login:" + settings.bitly_login + " API key:" + settings.bitly_api_key + " url:" + link)
             logger.exception(e)
             return None
 
