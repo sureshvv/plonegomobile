@@ -21,6 +21,7 @@ import datetime
 import DateTime
 from DateTime import DateTime as DateTimeClass
 import logging
+import urlparse
 
 import pytz  # 3rd party
 
@@ -100,6 +101,105 @@ class HotNewsToday(grok.View):
         self.items = result
         
 
+def get_deals(context, request):
+    """
+    """
+
+    portal_catalog = context.portal_catalog
+        
+    #end = datetime.datetime.utcnow() + datetime.timedelta(3600)
+    #start = datetime.datetime.utcnow()- datetime.timedelta(3600*24)
+    
+    #end = dt2DT(end)
+    #start = dt2DT(start)
+          
+            
+    items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
+                                         "path" : {"query" : "/mobipublic/deals-discounts" },
+                                         "sort_on":"created",
+                                         "sort_order":"reverse",
+                                         "sort_limit":999,
+                                         "review_state":"published"})
+    
+    
+    # Convert brain objects to dictionaries and stuff in some custom variables
+    result = []
+    variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
+
+    sources = []
+
+    for i in items:
+        t = {}
+        for v in variables:
+            t[v] = i[v]
+        
+        t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
+        t["link"] = i.getURL()
+        t["object"] = i.getObject()
+        t["Description"] = shorten_description(i.Description)
+        try:
+            t["socialbar"] = getMultiAdapter((t["object"].aq_inner, request), name="socialbar")
+        except:
+            # Web mode
+            t["socialbar"] = None
+
+        # Add from each domain only once
+        url = t["object"].getLink()
+        print url
+        if url:
+            parts = urlparse.urlparse(url)
+            
+            if not parts.netloc in sources:
+                result.append(t)
+                sources.append(parts.netloc)
+                print "Added feed for:" + parts.netloc
+                
+    now = datetime.datetime.utcnow()
+        
+    # Add manual pages
+    try:
+        deals = getSite().unrestrictedTraverse("deals-discounts")
+        
+        pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
+
+        
+
+        for i in pages:
+            t = {}
+        
+            #t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
+            t["link"] = i.absolute_url()
+            t["Title"] = i.Title()
+            t["Description"] = i.Description()
+            t["object"] = i
+
+            
+                                
+            if hasattr(i, "validUntil") and i.validUntil is not None:
+
+                if now > i.validUntil:
+                    # No longer valid
+                    continue 
+
+                t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
+            else:
+                t["validUntil"] = None
+
+            
+            try:
+                t["socialbar"] = getMultiAdapter((t["object"].aq_inner, request), name="socialbar")
+            except:
+                # Web mode
+                t["socialbar"] = None
+
+            result.append(t)
+        
+    except Exception, e:
+        logger.exception(e)
+        
+    return result
+        
+                                     
 
 class Deals(grok.View):    
     """  
@@ -113,92 +213,7 @@ class Deals(grok.View):
     def update(self):
         """
         """
-        
-        portal_catalog = self.context.portal_catalog
-        
-        count = 1
-        
-        #end = datetime.datetime.utcnow() + datetime.timedelta(3600)
-        #start = datetime.datetime.utcnow()- datetime.timedelta(3600*24)
-        
-        #end = dt2DT(end)
-        #start = dt2DT(start)
-              
-                
-        items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
-                                             "path" : {"query" : "/mobipublic/deals-discounts" },
-                                             "sort_on":"created",
-                                             "sort_order":"reverse",
-                                             "sort_limit":1,
-                                             "review_state":"published"})
-        
-        
-        # Convert brain objects to dictionaries and stuff in some custom variables
-        result = []
-        variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
-
-
-        for i in items:
-            t = {}
-            for v in variables:
-                t[v] = i[v]
-            
-            t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
-            t["link"] = i.getURL()
-            t["object"] = i.getObject()
-            t["Description"] = shorten_description(i.Description)
-            try:
-                t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
-            except:
-                # Web mode
-                t["socialbar"] = None
-                
-            result.append(t)
-            
-            
-        now = datetime.datetime.utcnow()
-            
-        # Add manual pages
-        try:
-            deals = getSite().unrestrictedTraverse("deals-discounts")
-            
-            pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
-
-
-    
-            for i in pages:
-                t = {}
-            
-                #t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
-                t["link"] = i.absolute_url()
-                t["Title"] = i.Title()
-                t["Description"] = i.Description()
-                t["object"] = i
-
-                                    
-                if hasattr(i, "validUntil") and i.validUntil is not None:
-
-                    if now > i.validUntil:
-                        # No longer valid
-                        continue 
-
-                    t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
-                else:
-                    t["validUntil"] = None
-
-                
-                try:
-                    t["socialbar"] = getMultiAdapter((t["object"].aq_inner, self.request), name="socialbar")
-                except:
-                    # Web mode
-                    t["socialbar"] = None
-
-                result.append(t)
-            
-        except Exception, e:
-            logger.exception(e)
-            
-                                                                    
+        result = get_deals(self.context, self.request)                               
         self.items = result
                     
 

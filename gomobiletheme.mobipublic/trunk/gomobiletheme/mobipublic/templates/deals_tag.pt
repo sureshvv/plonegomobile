@@ -1,0 +1,26 @@
+<div class="front-page-block" tal:define="master view/getMasterItem">
+
+        <h2>
+        	Deals
+        </h2>
+
+        <tal:item-block define="items view/getItems" condition="python: len(items)>0">
+
+	        <div class="highlights front-page-links">
+	                <tal:item repeat="item items">
+	                        <a tal:define="screenshot nothing; url item/link" tal:attributes="href url; class python:screenshot != None and 'screenshot' or ''">
+	                               <span class="button-body">
+	                                     <span class="button-inner" tal:content="item/Title" />
+	                               </span>
+			        </a>  
+	                </tal:item>         
+			
+			<div class="list-end" style="clear: both"><!-- --></div>       				
+	        </div>
+
+                <a class="all-link" tal:attributes="href master/absolute_url">Show all..</a>
+	
+	</tal:item-block>
+		
+</div>
+

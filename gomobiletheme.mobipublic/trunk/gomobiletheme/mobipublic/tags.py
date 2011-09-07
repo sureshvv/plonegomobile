@@ -46,6 +46,8 @@ class FrontPageBlockTag(object):
         view.slotCount = slotCount
         return view()
         
+
+
         
 class BlockView(grok.View):
     """
@@ -199,6 +201,44 @@ class LatestPickView(grok.View):
         return items    
     
         
+        
+class DealsTag(object):
+    """ """
+    zope.interface.implements(ITag)
+    
+    def getName(self):
+        return "deals"
+    
+    def render(self, scriptingContext):
+        """ """
+        
+        # Look up the view by name
+        mappings = scriptingContext.getMappings()
+        context = mappings['context']
+        request = mappings['request']
+        view = getMultiAdapter((context, request), name="deals_tag")
+        return view()
+    
+class DealsTagView(grok.View):
+    """
+    Define a view which is called thru script tag, with special parameters 
+    set up by the tag class.
+    """
+    
+    grok.name("deals_tag")        
+    grok.template("deals_tag")    
+    
+    def getItems(self):
+        """
+        Get X amount of nested item from folder hierarchy by portal type, sorted by creation.
+        """        
+        from frontpage import get_deals
+        items = get_deals(self.context, self.request)
+        return items    
+    
+    def getMasterItem(self):
+        return self.context.portal_url.getPortalObject()["deals-discounts"]
+        
 
-tag_list += [FrontPageBlockTag(), LatestPickTag()]
+tag_list += [FrontPageBlockTag(), LatestPickTag(), DealsTag()]
 setDefaultEngine() # Refresh tag list        
