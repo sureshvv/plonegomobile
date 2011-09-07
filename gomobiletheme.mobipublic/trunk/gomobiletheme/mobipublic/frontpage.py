@@ -112,7 +112,7 @@ def get_deals(context, request):
     
     #end = dt2DT(end)
     #start = dt2DT(start)
-          
+    
             
     items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
                                          "path" : {"query" : "/mobipublic/deals-discounts" },
@@ -126,8 +126,12 @@ def get_deals(context, request):
     result = []
     variables = ["getFeedItemUpdated", "Title", "Description", "getLink", "getFeedItemAuthor"]
 
-    sources = []
-
+    sources = {}
+   
+    max = {
+           "deals.mocality.co.ke" : 3
+    }
+    
     for i in items:
         t = {}
         for v in variables:
@@ -151,8 +155,17 @@ def get_deals(context, request):
             
             if not parts.netloc in sources:
                 result.append(t)
-                sources.append(parts.netloc)
+                sources[parts.netloc] = 1
                 print "Added feed for:" + parts.netloc
+            else:
+                if sources[parts.netloc] >= max.get(parts.netloc, 1):
+                    print "Full:"+ parts.netloc
+                    continue
+                    
+                result.append(t)
+                sources[parts.netloc] += 1
+                    
+                print "Added additional feed for:" + parts.netloc
                 
     now = datetime.datetime.utcnow()
         
