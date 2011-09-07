@@ -329,6 +329,7 @@
 
 .front-page-block-lifestyle img {
 	margin: 10px;
+	max-width: 100%;
 }
 
 .front-page-block-lifestyle a:nth-child(2n) .button-body  {
@@ -345,5 +346,9 @@
 
 .mobipublic-back {
       padding-left: 0.5em;
+}
+
+#search-box-bottom .button {
+        background: black !important;		
 }
 

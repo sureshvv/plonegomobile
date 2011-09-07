@@ -8,7 +8,7 @@
 
                                        <a class="weekly-fashion-image" tal:attributes="href url">
 				            <img tal:define="scales item/@@images;
-				                         image python: scales.scale('image', width=200, height=200);"
+				                         image python: scales.scale('image', width=100, height=100);"
 				             tal:condition="image"
 				             tal:attributes="src image/url;
 				                             width image/width;

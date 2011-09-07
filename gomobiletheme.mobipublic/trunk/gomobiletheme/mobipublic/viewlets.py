@@ -96,6 +96,9 @@ class TopActions(base.TopActions):
 
 class Sections(base.Sections):
     """ """
+    
+class SearchBoxBottom(base.Sections):
+    """ """    
         
 class ActionsHeader(base.ActionsHeader):
     """ """
