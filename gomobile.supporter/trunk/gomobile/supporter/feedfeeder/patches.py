@@ -25,7 +25,7 @@ logger.info("Running in feedfeeder monkey-patches")
 
 # Cache storing transformed XHTML
 xhtml_cache = ram.RAMCache()
-xhtml_cache.update(maxAge=86400, maxEntries=1000)
+xhtml_cache.update(maxAge=600, maxEntries=1000)
 
 # Dummy object to mark missing values from cache
 _marker = object()
