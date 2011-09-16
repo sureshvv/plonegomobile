@@ -124,7 +124,7 @@ class BlockView(grok.View):
         return items
         
     def getSlots(self):
-        """
+        """ Get folder slots for the blog.
         """
         
         site = getSite()
@@ -132,6 +132,7 @@ class BlockView(grok.View):
         if self.path != "":
             folder = site.unrestrictedTraverse(self.path)
             items = folder.listFolderContents(contentFilter={"portal_type" : self.folderPortalType})
+            #print "List:" + str(folder) + " " + self.folderPortalType
         else:
             items = []
         

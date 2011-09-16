@@ -137,9 +137,9 @@ def get_deals(context, request):
         for v in variables:
             t[v] = i[v]
         
-        t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
-        t["link"] = i.getURL()
+        t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])        
         t["object"] = i.getObject()
+        t["link"] = t["object"].getLink()
         t["Description"] = shorten_description(i.Description)
         try:
             t["socialbar"] = getMultiAdapter((t["object"].aq_inner, request), name="socialbar")

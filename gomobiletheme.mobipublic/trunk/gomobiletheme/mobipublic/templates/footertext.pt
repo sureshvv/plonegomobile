@@ -4,7 +4,7 @@
     </p>
     
     <p>
-    	<a tal:attributes="href string:${context/portal_url}/contact-info">Contact MobiPublic.com team</a>
+    	<a tal:attributes="href string:${context/portal_url}/contact-info">Contact us</a>
     </p>
 </div>
 
