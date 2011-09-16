@@ -149,23 +149,23 @@ def get_deals(context, request):
 
         # Add from each domain only once
         url = t["object"].getLink()
-        print url
+        #print url
         if url:
             parts = urlparse.urlparse(url)
             
             if not parts.netloc in sources:
                 result.append(t)
                 sources[parts.netloc] = 1
-                print "Added feed for:" + parts.netloc
+                #print "Added feed for:" + parts.netloc
             else:
                 if sources[parts.netloc] >= max.get(parts.netloc, 1):
-                    print "Full:"+ parts.netloc
+                    #print "Full:"+ parts.netloc
                     continue
                     
                 result.append(t)
                 sources[parts.netloc] += 1
                     
-                print "Added additional feed for:" + parts.netloc
+                #print "Added additional feed for:" + parts.netloc
                 
     now = datetime.datetime.utcnow()
         
