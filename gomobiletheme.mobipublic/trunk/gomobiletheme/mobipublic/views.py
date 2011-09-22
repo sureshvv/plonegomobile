@@ -39,6 +39,11 @@ class SocialBar(grok.View):
         """
         return getattr(self, "showOrignal", False)
     
+    def allowed(self):
+        """
+        """
+        return self.targetContent.portal_type not in ["Folder","FeedfeederFolder"]
+                                                                                   
     def setShowOrignal(self, visible):
         self.showOrignal = visible
     
