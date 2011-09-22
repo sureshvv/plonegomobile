@@ -26,7 +26,7 @@ class FrontPageBlockTag(object):
     def getName(self):
         return "front_page_block"
     
-    def render(self, scriptingContext, path, itemPortalType, itemPortalType2, folderPortalType,  title, slotTitle, itemCount, slotCount):
+    def render(self, scriptingContext, path, itemPortalType, itemPortalType2, folderPortalType, title, slotTitle, itemCount, slotCount):
         """ """
         
         # Look up the view by name
@@ -129,9 +129,14 @@ class BlockView(grok.View):
         
         site = getSite()
         
+        folderPortalType = self.folderPortalType
+        
+        if "," in folderPortalType:
+            folderPortalType = folderPortalType.split(",")
+        
         if self.path != "":
             folder = site.unrestrictedTraverse(self.path)
-            items = folder.listFolderContents(contentFilter={"portal_type" : self.folderPortalType})
+            items = folder.listFolderContents(contentFilter={"portal_type" : folderPortalType})
             #print "List:" + str(folder) + " " + self.folderPortalType
         else:
             items = []
