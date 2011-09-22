@@ -13,13 +13,12 @@
 }
 
 #logo img {
-	float: left;
+	float: left;	
 }
 
 .slogan {
-	color: black;
-	padding: 5px;
-	margin-left: 10px;
+	color: #E1293E;
+	padding-top: 20px;        
 	float: none;
 }
 
