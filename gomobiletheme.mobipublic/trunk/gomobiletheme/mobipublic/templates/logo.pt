@@ -5,17 +5,17 @@
          alt context/@@plone_portal_state/portal_title" 
          />
   </a>
-  
-  <p class="slogan">Your doorway to mobile internet.......News, event deals/discounts and other exciting stuff!</p>
-  
-  <div style="clear: both"><!-- --></div>
-  
-  <ul class="main-menu">
-  	<li tal:repeat="section viewlet/getSections">
-  		<a tal:condition="python:section != None" tal:attributes="href section/absolute_url">
-  			<span tal:content="section/Title" />
-  		</a>
-  	</li>
-  </ul>
-  
+      
 </div>
+
+<div class="slogan">Your doorway to mobile internet.......News, event deals/discounts and other exciting stuff!</div>
+
+<div style="clear: both"><!-- --></div>
+
+<ul class="main-menu">
+	<li tal:repeat="section viewlet/getSections">
+	        <a tal:condition="python:section != None" tal:attributes="href section/absolute_url">
+	                <span tal:content="section/Title" />
+	        </a>
+	</li>
+</ul>
