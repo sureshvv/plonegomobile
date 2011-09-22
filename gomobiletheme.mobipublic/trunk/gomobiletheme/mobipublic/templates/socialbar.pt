@@ -1,4 +1,4 @@
-<div class="social-bar">
+<div class="social-bar" tal:condition="view/allowed">
 
         <a rel="nofollow" tal:condition="view/hasOrignal" tal:attributes="href view/getOrignalURL">
                 <span>Orignal article (long)</span>                
