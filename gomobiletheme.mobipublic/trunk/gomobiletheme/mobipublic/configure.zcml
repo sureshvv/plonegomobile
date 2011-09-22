@@ -49,5 +49,9 @@
         action="@@mobile_site_folder_listing"
         description="Display thumbnails of the site in the listing"
         />
+        
+	
+     <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
+
 
 </configure>
