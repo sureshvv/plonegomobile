@@ -23,7 +23,16 @@
 	text-align: right;
 	padding-right: 10px;
 	font-style: italic;
+	clear:right;
 }
+
+#socialmedia-logos {
+	float:right;
+	clear:right;
+	padding: 0.5em;
+}
+#socialmedia-logos a { padding: 0.5em; }
+
 
 .main-menu {
 	border-top: 1px dotted #888;
