@@ -12,7 +12,7 @@ i18ndude=$INS/bin/i18ndude
 echo using $i18ndude
 
 # List of languages
-LANGUAGES="en es fi"
+LANGUAGES="en es fi nl"
 
 # Create locales folder structure for languages
 install -d locales
