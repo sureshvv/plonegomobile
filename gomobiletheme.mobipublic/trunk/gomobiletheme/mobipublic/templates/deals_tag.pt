@@ -1,7 +1,7 @@
 <div class="front-page-block" tal:define="master view/getMasterItem">
 
         <h2>
-        	Deals
+             Deals/Discounts and Sales
         </h2>
 
         <tal:item-block define="items view/getItems" condition="python: len(items)>0">
