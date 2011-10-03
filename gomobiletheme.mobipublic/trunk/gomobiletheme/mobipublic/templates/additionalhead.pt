@@ -10,3 +10,5 @@
 <meta property="og:image" tal:attributes="content string:${context/portal_url}/++resource++gomobiletheme.mobipublic/logo.png"/>
 
 <meta property="fb:admins" content="611693032" />
+
+<script type='text/javascript' src='http://d1.openx.org/spcjs.php?id=52641'></script>
