@@ -18,7 +18,7 @@
 
 .slogan {
 	color: #E1293E;
-	font-size: 12px;
+	font-size: 10px;
 	float: right;
 	text-align: right;
 	padding-right: 10px;
@@ -363,11 +363,16 @@
         background: black !important;		
 }
 
+#language-chooser,
+.section-welcome-to-mobipublic-com .documentFirstHeading,
+.section-welcome-to-mobipublic-com .description { display:none;}
+
+
+.section-find-it .description { display: none; }
+
+
 #add-content-links { 
         font-size:9px;
-}
-#add-content-links { 
-        margin-right: 2px;
 }
 
 .section-find-it .description { display: none; }
