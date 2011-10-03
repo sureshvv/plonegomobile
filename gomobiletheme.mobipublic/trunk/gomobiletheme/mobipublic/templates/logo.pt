@@ -9,8 +9,9 @@
 </div>
 
 <div id="socialmedia-logos">
-	<a href="http://www.facebook.com/"><img width="30" height="30" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/facebook-logo.png" alt="Facebook" /></a>
-	<a href="http://www.twitter.com/"><img width="30" height="30" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/twitter-logo.png" alt="Twitter" /></a>
+	<a href="http://www.facebook.com/pages/MobiPublic/228499637207085?v=wall"><img width="30" height="30" tal:attributes="src 
+string:${context/portal_url}/++resource++gomobiletheme.mobipublic/facebook-logo.png" alt="Facebook" /></a>
+	<a href="http://www.twitter.com/mobipublic"><img width="30" height="30" tal:attributes="src string:${context/portal_url}/++resource++gomobiletheme.mobipublic/twitter-logo.png" alt="Twitter" /></a>
 </div>
 <div class="slogan">Your doorway to mobile internet</div>
 
