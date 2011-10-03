@@ -1,8 +1,6 @@
 <div class="front-page-block" tal:define="master view/getMasterItem">
 
-        <h2>
-             Deals/Discounts and Sales
-        </h2>
+        <h2><a tal:attributes="href string:${context/portal_url}/deals-discounts">Deals/Discounts and Sales</a></h2>
 
         <tal:item-block define="items view/getItems" condition="python: len(items)>0">
 
