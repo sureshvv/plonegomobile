@@ -363,6 +363,17 @@
         background: black !important;		
 }
 
+#add-content-links a { 
+        background: #EEFFD3;
+        border-color: #FFF;
+        font-size:10px;
+        width: auto;
+        margin-right: 2px;
+}
+#add-content-links a:hover { background-color: grey;}
+#add-content-links .button-body { min-width: 80px; }
+#add-content-links .list-end { border-color:#FFF; }
 
+#add-content-links a:nth-child(2n) .button-body { border-right: 0; }
 
-
+.section-find-it .description { display: none; }
