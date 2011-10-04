@@ -364,8 +364,8 @@
 }
 
 #language-chooser,
-.section-welcome-to-mobipublic-com .documentFirstHeading,
-.section-welcome-to-mobipublic-com .description { display:none;}
+.section-welcome-to-mobipublic-com #content .documentFirstHeading,
+.section-welcome-to-mobipublic-com #content .description { display:none;}
 
 
 .section-find-it .description { display: none; }
@@ -376,3 +376,5 @@
 }
 
 .section-find-it .description { display: none; }
+
+.add-banners { text-align:center; }
