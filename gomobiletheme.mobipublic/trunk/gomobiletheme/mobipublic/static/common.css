@@ -8,6 +8,9 @@
  *
  */
 
+#header { background-color: #EBEBEB; }
+
+
 #logo {
 	color: black;
 }
@@ -35,19 +38,22 @@
 
 
 .main-menu {
+	background-color: #6FA8DC;
 	border-top: 1px dotted #888;
 	border-bottom: 1px dotted #888;
-	padding: 5px 0;
+	padding: 5px 0.5em;
 }
 
 .main-menu ul,
 .main-menu li {
 	display: inline;
 	list-style: none;
-	border-left: 1px solid #888;
+	border-left: 1px solid #fff;
 	margin-left: 5px;
 	padding-left: 5px;
 }
+
+.main-menu li a { color: #fff !important; }
 
 .main-menu li:first-child {
         border-left: 0;
@@ -141,12 +147,19 @@
 
 /* Front page */
 
- * 
 .hot-now .news-item {
         background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
         padding: 0.3em;         
         border-bottom: 1px solid #ddd;
         padding-right: 20px;
+}
+
+.front-page-links a {
+    background: url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") right center no-repeat #EEE !important;
+}
+
+.front-page-links a:hover {
+    background: none repeat scroll 0 0 gray !important;
 }
 
 .hot-now .news-item:first-child  {
