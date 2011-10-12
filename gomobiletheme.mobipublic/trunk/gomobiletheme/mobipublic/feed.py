@@ -22,8 +22,6 @@ class FeedFolderView(base.FeedFolderView):
         Currently implemented as a generator since there could
         theoretically be tens of thousands of items.
         """
-
-        print "Trolololo"
         
         listing = self.context.getFolderContents
 
