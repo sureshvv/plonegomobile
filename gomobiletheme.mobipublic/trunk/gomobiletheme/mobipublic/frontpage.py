@@ -101,7 +101,7 @@ class HotNewsToday(grok.View):
         self.items = result
         
 
-def get_deals(context, request):
+def get_deals(context, request, **kwargs):
     """
     """
 
@@ -112,14 +112,15 @@ def get_deals(context, request):
     
     #end = dt2DT(end)
     #start = dt2DT(start)
-    
-            
+    max_defaults = {"deals.mocality.co.ke" : 3, "www.zetu.co.ke":3, "manual":9999}
+
+    sort_limit = kwargs.get("sort_limit", 999)
     items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
                                          "path" : {"query" : "/mobipublic/deals-discounts" },
                                          "sort_on":"created",
                                          "sort_order":"reverse",
-                                         "sort_limit":999,
-                                         "review_state":"published"})
+                                         "sort_limit":sort_limit,
+                                         "review_state":"published"})[:sort_limit]
     
     
     # Convert brain objects to dictionaries and stuff in some custom variables
@@ -128,10 +129,7 @@ def get_deals(context, request):
 
     sources = {}
    
-    max = {
-           "deals.mocality.co.ke" : 3
-    }
-    
+    max = kwargs.get("max", max_defaults)
     for i in items:
         t = {}
         for v in variables:
@@ -169,47 +167,55 @@ def get_deals(context, request):
                 
     now = datetime.datetime.utcnow()
         
+    
     # Add manual pages
-    try:
-        deals = getSite().unrestrictedTraverse("deals-discounts")
-        
-        pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
-
-        
-
-        for i in pages:
-            t = {}
-        
-            #t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
-            t["link"] = i.absolute_url()
-            t["Title"] = i.Title()
-            t["Description"] = i.Description()
-            t["object"] = i
+    if(max["manual"] > 0):
+        try:
+            deals = getSite().unrestrictedTraverse("deals-discounts")
+            
+            pages = deals.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.deal"})
 
             
-                                
-            if hasattr(i, "validUntil") and i.validUntil is not None:
+            manual_deals = []
 
-                if now > i.validUntil:
-                    # No longer valid
-                    continue 
-
-                t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
-            else:
-                t["validUntil"] = None
-
+            for i in pages:
+                t = {}
             
-            try:
-                t["socialbar"] = getMultiAdapter((t["object"].aq_inner, request), name="socialbar")
-            except:
-                # Web mode
-                t["socialbar"] = None
+                #t["friendlyTime"] = format_datetime_friendly_ago(i["getFeedItemUpdated"])
+                t["link"] = i.absolute_url()
+                t["Title"] = i.Title()
+                t["Description"] = i.Description()
+                t["object"] = i
 
-            result.append(t)
-        
-    except Exception, e:
-        logger.exception(e)
-        
+                
+                                    
+                if hasattr(i, "validUntil") and i.validUntil is not None:
+
+                    if now > i.validUntil:
+                        # No longer valid
+                        continue 
+
+                    t["validUntil"] =  format_datetime_friendly_ago(i.validUntil)
+                else:
+                    t["validUntil"] = None
+
+                
+                try:
+                    t["socialbar"] = getMultiAdapter((t["object"].aq_inner, request), name="socialbar")
+                except:
+                    # Web mode
+                    t["socialbar"] = None
+
+                manual_deals.append(t)
+
+                if len(manual_deals) >= max["manual"]:
+                    break
+            
+            result.extend(manual_deals)
+
+        except Exception, e:
+            logger.exception(e)
+
     return result
         
                                      

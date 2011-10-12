@@ -238,8 +238,11 @@ class DealsTagView(grok.View):
         """
         Get X amount of nested item from folder hierarchy by portal type, sorted by creation.
         """        
+    
+        kwargs = {}
+        kwargs["max"] = {"deals.mocality.co.ke" : 1, "www.zetu.co.ke":1, "manual":2}
         from frontpage import get_deals
-        items = get_deals(self.context, self.request)
+        items = get_deals(self.context, self.request, **kwargs)
         return items    
     
     def getMasterItem(self):
