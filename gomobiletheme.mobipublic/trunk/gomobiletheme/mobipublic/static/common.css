@@ -70,7 +70,7 @@
         padding: 0.5em;
 /*      word-break: break-all;
         word-wrap: break-word;*/
-        background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        background: white url(++resource++gomobiletheme.mobipublic/navigation_arrow_red.png) no-repeat right center;  
         padding: 0.3em;         
         border-bottom: 1px solid #888;
 }
@@ -148,14 +148,18 @@
 /* Front page */
 
 .hot-now .news-item {
-        background: white url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat right center;  
+        background: white url(++resource++gomobiletheme.mobipublic/navigation_arrow_red.png) no-repeat right center;  
         padding: 0.3em;         
         border-bottom: 1px solid #ddd;
         padding-right: 20px;
 }
 
 .front-page-links a {
-    background: url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") right center no-repeat #EEE !important;
+    background: #EEE url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") no-repeat right center !important;
+}
+
+.button-links li a {
+    background: url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") no-repeat scroll right center transparent;
 }
 
 .front-page-links a:hover {
@@ -291,7 +295,7 @@
 .front-page-links a {
 	display: block;
 	border-top: 1px solid black;
-	background: #eee url(++resource++gomobiletheme.basic/navigation_arrow_grey.png) no-repeat scroll right center;
+	background: #eee url(++resource++gomobiletheme.mobipublic/navigation_arrow_red.png) no-repeat scroll right center;
 }
 
 .front-page-links .list-end {

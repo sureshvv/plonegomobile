@@ -86,6 +86,10 @@ class AdditionalHead(base.AdditionalHead):
         # Absolute URL refering to the static media folder
         self.resource_url = self.portal_url + "/" + "++resource++gomobiletheme.mobipublic"
 
+
+class MobileTracker(base.MobileTracker):
+    """ Site visitors tracking code for mobile analytics """
+
 class FooterText(base.FooterText):
     """
     Override footer text, set by templates/footertext.pt.
