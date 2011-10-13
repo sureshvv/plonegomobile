@@ -395,3 +395,12 @@
 .section-find-it .description { display: none; }
 
 .add-banners { text-align:center; }
+
+.template-local_movie_listing h2 { margin: 0.3em 0;}
+.movie-theater {margin-left: 1em;}
+.movie-theater td { vertical-align:top; }
+
+.movie-list,
+.movie-screen { padding:0.3em 0; margin-right: 1em; }
+.movie-screen { width:90px; }
+.movie-list li { display:block; padding: 0.1em 0; }
