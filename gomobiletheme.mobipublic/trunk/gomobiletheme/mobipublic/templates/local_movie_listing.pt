@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="example.dexterityforms"
+      metal:use-macro="context/main_template/macros/master">
+      
+   <div metal:fill-slot="body"
+      tal:define="items context/listFolderContents">
+
+      <h1 tal:content="context/title_or_id" />
+
+      <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+      <tal:movies tal:define="movies view/getMovies">
+            <p class="documentDescription"
+                 tal:content="context/Description"
+                 tal:condition="context/Description"></p>
+
+
+            <tal:theater tal:repeat="theater python:movies.keys()">
+                  <h2 tal:content="theater">Theater name</h2>
+
+                  <table class="movie-theater">
+                    <tr tal:repeat="screen python:movies[theater].keys()">
+                      <td class="movie-screen"><strong tal:content="string:Screen ${screen}" /></td>
+                      <td class="movie-list"><ul>
+                        <tal:movie tal:repeat="movie python:movies[theater][screen]">
+                           <li><span tal:replace="python: movie['title']" /> at
+                           <span tal:replace="python:movie['openingTimes']" /><span tal:omit-tag="" tal:condition="not:repeat/movie/end">,</span></li>
+
+                           <!--tal:social-bar define="socialbar python:view.getSocialBar(child)">
+                                  <div tal:replace="structure socialbar" />
+                           </tal:social-bar-->
+                        </tal:movie>
+                    </ul></td>
+                   </tr>
+                  </table>
+            </tal:theater>
+      </tal:movies>
+       
+      <div tal:replace="structure provider:plone.documentactions" />      
+	
+    </div>
+    
+</html>

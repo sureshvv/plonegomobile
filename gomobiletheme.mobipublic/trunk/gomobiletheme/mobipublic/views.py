@@ -223,3 +223,43 @@ class MobileSiteFolderListing(grok.View):
         except Exception, e:
             return None
  
+class LocalMovieListing(grok.View):
+    """
+    List currently played movies categorized under theaters
+    """
+    
+    grok.name("local_movie_listing")
+    grok.template("local_movie_listing")
+    grok.context(Interface)
+
+    def getMovies(self):
+        portal_catalog = self.context.portal_catalog
+
+        folder_path = '/'.join(self.context.getPhysicalPath())
+
+        movie_brains = portal_catalog.queryCatalog({"portal_type":"mobipublic.content.movie",
+                                         "path" : {"query" : folder_path },
+                                         "sort_on":"created",
+                                         "sort_order":"reverse",
+                                         "review_state":"published"})
+        
+        movies = {}
+
+        #{'Finnkino' : {1:[ {'title':'Drive', 'openingTimes':'12 em'}, {...} ], {2: [ {'title..'}] } }, 'Plaza' : {1 : ...} }
+
+        for movie in movie_brains:
+            movie = movie.getObject()
+        
+            theater = movie.location
+            screen = movie.screen
+
+            movies.setdefault(theater, {})
+            movies[theater].setdefault(screen, [])
+
+            movies[theater][screen].append({"openingTimes":movie.openingTimes, "title":movie.Title()})
+
+
+        return movies
+
+            
+        
