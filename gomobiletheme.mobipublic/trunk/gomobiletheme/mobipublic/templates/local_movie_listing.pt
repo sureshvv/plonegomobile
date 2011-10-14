@@ -7,10 +7,6 @@
       
    <metal:block fill-slot="content">
       <div id="portal-column-content" metal:define-macro="content">
-
-          <div tal:replace="structure context/@@viewlets/messages">
-            <tal:comment replace="nothing">Portal status message</tal:comment>
-          </div>
           <div id="content">
             <h1 tal:content="context/title_or_id" />
 
