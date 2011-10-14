@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="example.dexterityforms"
+      metal:use-macro="context/main_template/macros/master">
+      
+   <metal:block fill-slot="content">
+      <div id="portal-column-content" metal:define-macro="content">
+
+          <div tal:replace="structure context/@@viewlets/messages">
+            <tal:comment replace="nothing">Portal status message</tal:comment>
+          </div>
+          <div id="content" tal:define="contacts view/getContacts">
+            <h1 tal:content="context/title_or_id" />
+            <p class="documentDescription"
+                       tal:content="context/Description"
+                       tal:condition="context/Description"></p>
+            <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+            <tal:contacts tal:repeat="contact contacts">
+
+                  <div tal:attributes="class python:'mobile-site-folder-item contact-folder-item contact-folder-item-' + (repeat['contact'].even() and 'even' or 'odd')">
+
+                  <h2 tal:content="contact/Title">Contact name</h2>
+                  
+                  <p class="documentDescription"
+                       tal:content="contact/Description"
+                       tal:condition="contact/Description"></p>
+
+                  <p><a title="Landline number" tal:attributes="href contact/phoneNumber/link" tal:content="contact/phoneNumber/number" />
+                      <a title="Mobile number" tal:attributes="href contact/mobileNumber/link" tal:content="contact/mobileNumber/number" /></p>
+
+                  </div>
+            </tal:contacts>
+          </div>
+           
+          <div tal:replace="structure provider:plone.documentactions" />      
+    	
+      </div>
+    </metal:block>
+    
+</html>

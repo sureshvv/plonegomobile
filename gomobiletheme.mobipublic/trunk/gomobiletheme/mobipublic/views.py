@@ -222,7 +222,34 @@ class MobileSiteFolderListing(grok.View):
             return img
         except Exception, e:
             return None
- 
+
+class ContactFolderListing(grok.View):
+    """
+    List contacts in the folder with the numbers of the contact
+    """
+    
+    grok.name("contact_folder_listing")
+    grok.template("contact_folder_listing")
+    grok.context(Interface)
+
+
+    def getContacts(self):
+        contacts = self.context.listFolderContents(contentFilter={"portal_type" : "mobipublic.content.contact"})
+        results = []
+
+        for contact in contacts:
+            t = {}
+
+            t["phoneNumber"] = {"number":contact.phoneNumber, "link":contact.restrictedTraverse("@@view").getPhoneNumberLink()}
+            t["mobileNumber"] = {"number":contact.mobileNumber, "link":contact.restrictedTraverse("@@view").getMobileNumberLink()}
+            t["Title"] = contact.Title()
+            t["Description"] = contact.Description()
+
+            results.append(t)
+
+        return results
+
+     
 class LocalMovieListing(grok.View):
     """
     List currently played movies categorized under theaters

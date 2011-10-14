@@ -84,10 +84,12 @@
     margin-bottom: 0;
 }
 
+.contact-folder-item-odd,
 .feed-folder-item-odd {
     background-color: #e3e3e3;
 }
 
+.contact-folder-item-even,
 .feed-folder-item-even {
     background-color: #f4f4f4;  
 }
@@ -405,3 +407,7 @@
 .movie-screen { width:90px; }
 #content .movie-list ul { list-style:none; margin: 0;}
 #content .movie-list li { display:block; padding: 0.1em 0; margin:0; }
+
+.contact-folder-item .documentDescription { font-size: 100%; margin-bottom: 0.2em !important; }
+.contact-folder-item { padding: 0.5em 0.3em; border-bottom:1px solid #888;}
+#content .contact-folder-item a { display:block; margin: 0.3em 0;}
