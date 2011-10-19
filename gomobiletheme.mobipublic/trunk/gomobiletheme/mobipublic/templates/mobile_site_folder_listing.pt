@@ -21,30 +21,29 @@
 
 
             <tal:item tal:repeat="child items">
+              <tal:child tal:condition="python:child.portal_type!='Image'">
+                <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
 
-                  <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
+  		              <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl|child/absolute_url">          
+  		               
+  		                <img alt="" tal:attributes="src screenshot/url;
+  		                                     width screenshot/width;
+  		                                     height screenshot/height" />           
+  		              </a>
 
-		      <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl|child/absolute_url">          
-		               
-		                <img alt="" tal:attributes="src screenshot/url;
-		                                     width screenshot/width;
-		                                     height screenshot/height" />           
-		      </a>
-		             
+                    <h3>
+                        <a tal:attributes="href child/remoteUrl|child/absolute_url" tal:content="structure child/title">My Title </a>
+                    </h3>                             
+                                  
+                    <p tal:condition="child/Description"
+                               tal:content="structure child/Description"> My summary </p>
+                               
+                    <tal:social-bar define="socialbar python:view.getSocialBar(child)">
+                                <div tal:replace="structure socialbar" />
+                    </tal:social-bar>
 
-
-                       <h3>
-                          <a tal:attributes="href child/remoteUrl|child/absolute_url" tal:content="structure child/title">My Title </a>
-                       </h3>                             
-                                
-                        <p tal:condition="child/Description"
-                             tal:content="structure child/Description"> My summary </p>
-                             
-                       <tal:social-bar define="socialbar python:view.getSocialBar(child)">
-                              <div tal:replace="structure socialbar" />
-                       </tal:social-bar>
-
-                 </div>
+                </div>
+            </tal:child>
             </tal:item>
       </div>
        
