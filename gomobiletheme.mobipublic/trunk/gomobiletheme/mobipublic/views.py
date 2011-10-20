@@ -201,7 +201,7 @@ class MobileSiteFolderListing(grok.View):
         """
         """
         try:
-            bar = getMultiAdapter((self.context, self.request), name="socialbar")
+            bar = getMultiAdapter((obj, self.request), name="socialbar")
             bar.setTargetContent(obj)
             return bar
         except ComponentLookupError, e:
