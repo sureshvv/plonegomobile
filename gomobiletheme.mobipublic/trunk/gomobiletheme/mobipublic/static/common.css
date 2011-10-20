@@ -426,7 +426,8 @@
 	margin: 5px 0;	
 }
 
-.external-content p {
+.external-content p,
+.external-content br {
 	margin-bottom: 1em;
 }
 

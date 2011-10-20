@@ -7,7 +7,10 @@
 <meta property="og:description" tal:attributes="content context/Description|nothing"/>
 
 <tal:comment replace="nothing"><!-- News item image support --></tal:comment>
-<meta property="og:image" tal:attributes="content string:${context/portal_url}/++resource++gomobiletheme.mobipublic/logo.png"/>
+
+<tal:image define="image_helper context/@@content_image_helper" condition="image_helper/hasImage">
+<meta property="og:image" tal:attributes="content python:image_helper.getImageURL(128, 128)" />
+</tal:image> 
 
 <meta property="fb:admins" content="611693032" />
 
