@@ -23,6 +23,11 @@
 
                <div tal:attributes="class python:'feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
                   <div class="feed-folder-item-wrapped">
+
+                       <a class="image-link" tal:attributes="href child/target_link" tal:define="image_helper python:view.getImageHelper(child)" tal:condition="image_helper/hasImage">
+                       	        <img tal:replace="structure python: image_helper.getImageTag(64, 64)" />
+                       </a>
+
 		       <h3>
 		          <a tal:attributes="href child/target_link" tal:content="structure child/title"> My Title </a>
 		       </h3>				 

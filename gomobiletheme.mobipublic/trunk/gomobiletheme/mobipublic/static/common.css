@@ -172,8 +172,13 @@
         border-top: 1px solid #ddd;
 }
 
+.hot-now h3 {
+	display: inline;
+}
+
 .hot-now .byline {
         color: #888;
+	display: inline;
 }
 
 .hot-now .news-0 {
@@ -411,3 +416,21 @@
 .contact-folder-item .documentDescription { font-size: 100%; margin-bottom: 0.2em !important; }
 .contact-folder-item { padding: 0.5em 0.3em; border-bottom:1px solid #888;}
 #content .contact-folder-item a { display:block; margin: 0.3em 0;}
+
+/* Feedfeeder item view */
+
+.external-content img {
+	display: block;
+	margin: 5px 0;	
+}
+
+.external-content p {
+	margin-bottom: 1em;
+}
+
+/* Feedfolder listing */
+
+.image-link {
+	float: left;
+	margin: 0 5px 5px 0;
+}

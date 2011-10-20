@@ -3,6 +3,10 @@
 	<tal:news tal:repeat="news view/items">	
 	
 		<div tal:attributes="class string:news-item news-${repeat/news/index}">
+                        <a class="image-link" tal:define="image_helper news/object/@@content_image_helper" tal:attributes="href news/link">
+                                <img tal:replace="structure python:image_helper.getImageTag(64,64)" />                                   
+                        </a>
+			
 			<h3>
 			<a tal:attributes="href string:${news/link}" tal:content="news/Title" />
 			</h3>
