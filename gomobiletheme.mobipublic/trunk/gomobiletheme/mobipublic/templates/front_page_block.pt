@@ -8,8 +8,12 @@
 
 	        <div class="highlights front-page-links">
 	                <tal:item repeat="item items">
-	                        <a tal:define="screenshot item/screenshot|nothing; url item/absolute_url" tal:attributes="href url; class python:screenshot != None and 'screenshot' or ''">
+	                        <a tal:define="image_helper item/@@content_image_helper; url item/absolute_url" tal:attributes="href url; class python:image_helper.hasImage() and 'imaged' or 'non-imaged'">
+                                            	                                               								
 	                               <span class="button-body">
+                                             
+					     <img tal:replace="structure python:image_helper.getImageTag(32, 32)" />          
+	                               					
 	                                     <span class="button-inner" tal:content="item/Title" />
 	                               </span>
 			        </a>  

@@ -24,11 +24,11 @@
               <tal:child tal:condition="python:child.portal_type!='Image'">
                 <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
 
-  		              <a tal:define="screenshot python:view.getImage(child)" tal:condition="screenshot" class="image-link" tal:attributes="href child/remoteUrl|child/absolute_url">          
+  		              <a tal:define="image_helper child/@@content_image_helper)" tal:condition="image_helper.hasImage()" 
+			         class="image-link" 
+				 tal:attributes="href child/remoteUrl|child/absolute_url">          
   		               
-  		                <img alt="" tal:attributes="src screenshot/url;
-  		                                     width screenshot/width;
-  		                                     height screenshot/height" />           
+  		                <img tal:replace="structure python:image_helper.getImageTag(64, 64)" />           
   		              </a>
 
                     <h3>

@@ -288,5 +288,46 @@ class LocalMovieListing(grok.View):
 
         return movies
 
-            
+class ContentImageHelper(grok.CodeView):
+    """
+    Help dealing with resized versions of various content images-
+    """
+    
+    grok.name("content_image_helper")
+    grok.context(Interface)    
+                    
+    def init(self):
+        """
+        """
+        self.imageFieldName = self.getImageFieldName()
+        if self.imageFieldName is not None:
+            self.scales = self.context.unrestrictedTraverse("@@images")
         
+    def getImageFieldName(self):
+        image_fields = ["image", "leadImage", "screenshot"]
+        for i in image_fields:
+            content = getattr(self.context, i, None)
+            if content not in ["", None]:
+                return i               
+        return None 
+
+    def hasImage(self):
+        """
+        """
+        self.init()
+        return self.imageFieldName is not None
+    
+    def getImageTag(self, width, height):
+        """
+        """
+        
+        if self.hasImage():        
+            return self.scales.scale(self.getImageFieldName(), width=width, height=height)        
+        else:
+            return ""
+        
+    def render(self):
+        """
+        Expose this class instance methods as code traversable
+        """
+        return self

@@ -78,6 +78,11 @@ class FeedFolderView(base.FeedFolderView):
         except ComponentLookupError, e:
             return None
         
+    def getImageHelper(self, item):
+        obj = item["item"].getObject() # from catalog brain to our page
+        helper = getMultiAdapter((obj, self.request), name="content_image_helper")
+        return helper
+        
     def __call__(self):
         # return Batch object for Plone batching controls
         # and internally use batched_item list when rendering this folder contents
