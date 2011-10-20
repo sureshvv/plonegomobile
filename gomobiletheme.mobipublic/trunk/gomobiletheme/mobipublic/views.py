@@ -224,6 +224,15 @@ class MobileSiteFolderListing(grok.View):
         except Exception, e:
             return None
 
+class MobileSiteFolderListingNoSocial(MobileSiteFolderListing):
+    
+    grok.name("mobile_site_folder_listing_no_social")
+    grok.template("mobile_site_folder_listing")
+    grok.context(Interface)    
+
+    def getSocialBar(self, obj):
+        return None
+
 class ContactFolderListing(grok.View):
     """
     List contacts in the folder with the numbers of the contact
