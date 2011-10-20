@@ -44,6 +44,15 @@ grok.layer(IThemeLayer)
 # All viewlets are registered against this dummy viewlet manager
 grok.viewletmanager(base.MainViewletManager)
 
+class Head(base.Head):
+    
+    def favicon_url(self):
+        """ Get url for favicon
+        """
+        portal_state = getView(self.context, self.request, "plone_portal_state")
+        self.portal_url = portal_state.portal_url()
+        return self.portal_url + "/favicon.ico"
+
 class Logo(base.Logo):
     """ Render site logo with link back to the site root.
 
