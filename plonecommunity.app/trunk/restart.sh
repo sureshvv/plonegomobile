@@ -2,4 +2,4 @@
 #
 # Helper restart script for cron et. al.
 #
-bin/instance restart
+bin/plonectl restart
