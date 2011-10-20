@@ -106,7 +106,9 @@ class SocialBar(grok.View):
             return None
 
     def getFacebookSharingLink(self):
-        link = self.getOutgoingURL()
+        #link = self.getOutgoingURL()
+        link = self.targetContent.absolute_url()
+        
         # http://m.facebook.com/sharer.php?u=http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229&t=Eduskuntaryhm%C3%A4t+koolle+hallitusneuvotteluista+tiistaina
         return "http://m.facebook.com/sharer.php?u=" + urllib.quote(link)
         #return "http://m.facebook.com/sharer.php?u=" + link
@@ -136,7 +138,6 @@ class SocialBar(grok.View):
         return u"http://mobile.twitter.com/home?status=" + urllib.quote(status)
 
     def getDiscussionLink(self):
-        link = "foobar"
         # http://mobile.twitter.com/home?status=Lukee%20nyt%20http%3A%2F%2Fm.yle.fi%2Fw%2Fuutiset%2Ftalous%2Fns-yduu-3-2638229
         return self.targetContent.absolute_url() + "#discussion"
 
@@ -323,6 +324,16 @@ class ContentImageHelper(grok.CodeView):
         
         if self.hasImage():        
             return self.scales.scale(self.getImageFieldName(), width=width, height=height)        
+        else:
+            return ""
+        
+        
+    def getImageURL(self, width, height):
+        """
+        """
+        if self.hasImage():        
+            scale = self.scales.scale(self.getImageFieldName(), width=width, height=height)
+            return scale.url        
         else:
             return ""
         
