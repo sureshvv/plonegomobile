@@ -323,7 +323,7 @@ class ContentImageHelper(grok.CodeView):
         """
         
         if self.hasImage():        
-            return self.scales.scale(self.getImageFieldName(), width=width, height=height)        
+            return self.scales.scale(self.getImageFieldName(), width=width, height=height).decode("utf-8")        
         else:
             return ""
         
