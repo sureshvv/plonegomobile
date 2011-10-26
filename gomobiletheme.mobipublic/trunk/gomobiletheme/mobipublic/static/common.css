@@ -75,6 +75,7 @@
         background: white url(++resource++gomobiletheme.mobipublic/navigation_arrow_red.png) no-repeat right center;  
         padding: 0.3em;         
         border-bottom: 1px solid #888;
+        overflow: hidden;
 }
 
 /* there is p description before */
@@ -438,3 +439,4 @@
 	float: left;
 	margin: 0 5px 5px 0;
 }
+
