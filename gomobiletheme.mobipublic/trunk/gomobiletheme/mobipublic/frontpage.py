@@ -112,7 +112,7 @@ def get_deals(context, request, **kwargs):
     
     #end = dt2DT(end)
     #start = dt2DT(start)
-    max_defaults = {"deals.mocality.co.ke" : 3, "www.zetu.co.ke":3, "manual":9999}
+    max_defaults = {"deals.mocality.co.ke" : 2, "www.zetu.co.ke":1, "manual":9999}
 
     sort_limit = kwargs.get("sort_limit", 999)
     items = portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
@@ -154,10 +154,10 @@ def get_deals(context, request, **kwargs):
             if not parts.netloc in sources:
                 result.append(t)
                 sources[parts.netloc] = 1
-                #print "Added feed for:" + parts.netloc
+                logger.info("Added feed for:" + parts.netloc)
             else:
                 if sources[parts.netloc] >= max.get(parts.netloc, 1):
-                    #print "Full:"+ parts.netloc
+                    logger.info("Feed slot full:"+ parts.netloc)
                     continue
                     
                 result.append(t)
@@ -222,7 +222,7 @@ def get_deals(context, request, **kwargs):
 
 class Deals(grok.View):    
     """  
-    Show 1 automatic deal (RSS) + all manual deals
+    Show selected automatic deals (RSS) + all manual deals
     """
     
 
