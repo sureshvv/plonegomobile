@@ -134,8 +134,9 @@
 
 .portaltype-feedfeederitem .social-bar {
 	border-top: 1px dashed #888;
-        border-bottom: 1px dashed #888;
+        border-bottom: 1px dashed #888;	
 	padding: 5px 0;
+	margin-top: 20px;
 }
 
 .thumb-rating button:hover {
@@ -440,9 +441,13 @@
 
 /* Feedfeeder item view */
 
-.external-content img {
+.external-content img.mobile-resized {
 	display: block;
 	margin: 5px 0;	
+	float: none;
+}
+
+.external-content img.wp-smiley {
 }
 
 .external-content p,
