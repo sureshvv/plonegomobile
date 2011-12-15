@@ -40,8 +40,8 @@
                                </span>				
 		         </a>
 		    </tal:item>
+                    <div class="list-end" style="clear: both"><!-- --></div>
 		</div>
-		<div class="list-end" style="clear: both"><!-- --></div>
 	</div>
 </div>
 
