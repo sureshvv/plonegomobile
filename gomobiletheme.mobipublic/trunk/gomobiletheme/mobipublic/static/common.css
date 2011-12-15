@@ -160,7 +160,11 @@
 }
 
 .front-page-links a {
-    background: #EEE url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") no-repeat right center !important;
+    background: #EEE url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") no-repeat right center !important;    
+}
+
+.highlights a {
+    min-height: 52px;
 }
 
 .button-links li a {
