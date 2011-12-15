@@ -56,7 +56,7 @@ class SocialBar(grok.View):
     
     def getOutgoingURL(self):        
         """ What we share in social media """
-        return self.getOrignalURL()
+        return self.targetContent.absolute_url()
 
     def getOrignalURL(self):        
         """ RSS feed link """
