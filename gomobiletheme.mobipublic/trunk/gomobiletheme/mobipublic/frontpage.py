@@ -154,10 +154,10 @@ def get_deals(context, request, **kwargs):
             if not parts.netloc in sources:
                 result.append(t)
                 sources[parts.netloc] = 1
-                logger.info("Added feed for:" + parts.netloc)
+                #logger.info("Added feed for:" + parts.netloc)
             else:
                 if sources[parts.netloc] >= max.get(parts.netloc, 1):
-                    logger.info("Feed slot full:"+ parts.netloc)
+                    #logger.info("Feed slot full:"+ parts.netloc)
                     continue
                     
                 result.append(t)
