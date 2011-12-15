@@ -87,7 +87,7 @@ class ImageResizer(BasicCleaner):
 
         # Blaclisted by CSS
         css_class = el.attrib.get("class", None)
-        import pdb ; pdb.set_trace()
+        
         if css_class:
             for bad_class in NO_TRANSFORM_CLASSES:
                 if bad_class in css_class:
