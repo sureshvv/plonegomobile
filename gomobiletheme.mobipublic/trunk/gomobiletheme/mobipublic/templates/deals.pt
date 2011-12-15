@@ -18,8 +18,8 @@
 				<tal:content replace="structure news/Description" />
 			</div>
 			
-			<div class="valid-until" tal:condition="news/validUntil|nothing">
-		              Valid thru: <span tal:content="news/validUntil" />
+			<div class="valid-until" tal:condition="news/getVisitorValidUntil|nothing">
+		              Valid thru: <span tal:content="news/getVisitorValidUntil" />
 		        </div>
 			
 			<div tal:replace="structure news/socialbar" />
