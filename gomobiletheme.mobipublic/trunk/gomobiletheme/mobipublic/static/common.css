@@ -68,6 +68,8 @@
         
 }
 
+
+
 .feed-folder-item {
         padding: 0.5em;
 /*      word-break: break-all;
@@ -76,11 +78,25 @@
         padding: 0.3em;         
         border-bottom: 1px solid #888;
         overflow: hidden;
+	display: block;
+}
+
+.feed-folder-item img {
+	float: left;
+	margin-right: 10px;
 }
 
 /* there is p description before */
 .feed-folder-item:nth-child(2)  {
-        border-top: 1px solid #888;
+}
+
+a.feed-folder-item:hover {
+	text-decoration: none;
+	background: gray;
+}
+
+.mobile-site-listing .feed-folder-item:last-child {
+	border-bottom: 0;
 }
 
 #content .feed-folder-item p:last-child {
@@ -211,7 +227,8 @@
     min-height: 44px;
 }
 
-.highlights .image-wrapper {
+.highlights .image-wrapper,
+.mobile-site-listing .image-wrapper {
     min-width: 64px;
     float: left;
     text-align: left;

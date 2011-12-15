@@ -22,27 +22,21 @@
 
             <tal:item tal:repeat="child items">
               <tal:child tal:condition="python:child.portal_type!='Image'">
-                <div tal:attributes="class python:'mobile-site-folder-item feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">
-
-  		              <a tal:define="image_helper child/@@content_image_helper" tal:condition="image_helper/hasImage" 
-			         class="image-link" 
-				 tal:attributes="href child/remoteUrl|child/absolute_url">          
-  		               
-  		                <img tal:replace="structure python:image_helper.getImageTag(64, 64)" />           
-  		              </a>
-
-                    <h3>
-                        <a tal:attributes="href child/remoteUrl|child/absolute_url" tal:content="structure child/title">My Title </a>
-                    </h3>                             
-                                  
-                    <p tal:condition="child/Description"
-                               tal:content="structure child/Description"> My summary </p>
-                               
-                    <tal:social-bar define="socialbar python:view.getSocialBar(child)">
-                                <div tal:replace="structure socialbar" />
-                    </tal:social-bar>
-
-                </div>
+               <a tal:attributes="href child/remote_url|child/absolute_url; class python:'feed-folder-item feed-folder-item-' + (repeat['child'].even() and 'even' or 'odd')">              	
+              	       <div class="feed-folder-item-wrapped">
+                        <tal:helper tal:define="image_helper child/@@content_image_helper" tal:attributes="class python:image_helper.hasImage() and 'imaged' or 'non-imaged'">                                                                                                                                                        
+	                 <span class="button-body">	                             
+                             <div class="image-wrapper">
+                                  <img tal:replace="structure python:image_helper.getImageTag(56, 56)" />          
+                             </div>          
+                                                                                
+                             <span class="button-inner" tal:content="child/Title" />
+                             
+                             <div style="clear: both"><!-- --></div>
+			</span>
+                       </tal:helper>  		
+		 </div>
+              </a>
             </tal:child>
             </tal:item>
       </div>
