@@ -167,6 +167,15 @@
     min-height: 52px;
 }
 
+.highlights .image-wrapper {
+    min-width: 64px;
+    float: left;
+    text-align: left;
+}
+
+.highlights a img {
+}
+
 .button-links li a {
     background: url("++resource++gomobiletheme.mobipublic/navigation_arrow_red.png") no-repeat scroll right center transparent;
 }
