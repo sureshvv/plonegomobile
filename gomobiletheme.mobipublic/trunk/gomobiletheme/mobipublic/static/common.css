@@ -70,7 +70,9 @@
 
 
 
-.feed-folder-item {
+.feed-folder-item,
+.feed-folder-item:active,
+.feed-folder-item:visited {
         padding: 0.5em;
 /*      word-break: break-all;
         word-wrap: break-word;*/
@@ -104,12 +106,16 @@ a.feed-folder-item:hover {
 }
 
 .contact-folder-item-odd,
-.feed-folder-item-odd {
+.feed-folder-item-odd,
+.feed-folder-item-odd:active,
+.feed-folder-item-odd:visited {
     background-color: #e3e3e3;
 }
 
 .contact-folder-item-even,
-.feed-folder-item-even {
+.feed-folder-item-even,
+.feed-folder-item-even:active,
+.feed-folder-item-even:visited {
     background-color: #f4f4f4;  
 }
 
