@@ -12,7 +12,7 @@
                                             	                                               								
 	                               <span class="button-body">
                                              
-					     <img tal:replace="structure python:image_helper.getImageTag(32, 32)" />          
+					     <img tal:replace="structure python:image_helper.getImageTag(56, 56)" />          
 	                               					
 	                                     <span class="button-inner" tal:content="item/Title" />
 	                               </span>

@@ -8,7 +8,7 @@
 	                <tal:item repeat="item items">
 	                        <a tal:define="image_helper item/object/@@content_image_helper" tal:attributes="href item/link; class python:image_helper.hasImage() and 'imaged' or 'not-imaged'">
 	                               <span class="button-body">
-	                               	     <img tal:replace="structure python:image_helper.getImageTag(32, 32)" />
+	                               	     <img tal:replace="structure python:image_helper.getImageTag(56, 56)" />
 	                                     <span class="button-inner" tal:content="item/Title" />
 	                               </span>
 			        </a>  
