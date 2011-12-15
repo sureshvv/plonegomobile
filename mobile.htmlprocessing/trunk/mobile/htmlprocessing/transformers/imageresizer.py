@@ -18,6 +18,9 @@ from mobile.htmlprocessing.utilities import set_style, add_class
 
 from basic import BasicCleaner
 
+# CSS image classes we know we don't want to transform 
+NO_TRANSFORM_CLASSES = ["wp-smiley"]
+
 class ImageResizer(BasicCleaner):
     """
     1. Rewrite all image links to point to resized versions
@@ -81,6 +84,14 @@ class ImageResizer(BasicCleaner):
         
         """
         self.add_alt_tags(el)
+
+        # Blaclisted by CSS
+        css_class = el.attrib.get("class", None)
+        import pdb ; pdb.set_trace()
+        if css_class:
+            for bad_class in NO_TRANSFORM_CLASSES:
+                if bad_class in css_class:
+                    return
         
         src = el.attrib.get("src", None)
         if src:
