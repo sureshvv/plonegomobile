@@ -486,7 +486,7 @@ a.feed-folder-item:hover {
 }
 
 #footer-text {
-	font-size:  85%;
+	font-size:  85% !important;
 }
 
 .slogan-footer {
@@ -495,9 +495,11 @@ a.feed-folder-item:hover {
 
 #footer-text a {
 	text-decoration: underline;
+	font-weight: normal;		
 }
 
 #footer-text a:hover {
 	text-decoration: underline;
         background: yellow;
+	font-weight: normal;   
 }
