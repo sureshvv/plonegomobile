@@ -485,3 +485,19 @@ a.feed-folder-item:hover {
 	margin: 0 5px 5px 0;
 }
 
+#footer-text {
+	font-size:  85%;
+}
+
+.slogan-footer {
+	margin-bottom: 1em;
+}
+
+#footer-text a {
+	text-decoration: underline;
+}
+
+#footer-text a:hover {
+	text-decoration: underline;
+        background: yellow;
+}

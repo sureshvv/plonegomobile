@@ -4,7 +4,7 @@
     </p>
     
     <p>
-    	<a tal:attributes="href string:${context/portal_url}/contact-info">Contact us</a>
+    	<a tal:attributes="href string:${context/portal_url}/about-us/about-mobipublic">MobiPublic team can help you with mobile advertisement and sites in Kenya</a>
     </p>
 </div>
 
