@@ -140,6 +140,10 @@ a.feed-folder-item:hover {
         font-size: 100%;	
 }
 
+.social-bar img {
+	float: none;
+}
+
 
 .thumb-rating,
 .thumb-rating form {
