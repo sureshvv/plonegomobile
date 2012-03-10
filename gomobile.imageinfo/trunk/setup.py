@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.9.1'
+version = '0.9.3'
 
 setup(name='gomobile.imageinfo',
       version=version,
@@ -35,6 +35,6 @@ setup(name='gomobile.imageinfo',
 
 
       [z3c.autoinclude.plugin]
-      target = plone        
+      target = plone
       """,
       )
