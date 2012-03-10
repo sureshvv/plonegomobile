@@ -2,8 +2,8 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:cmf="http://namespaces.zope.org/cmf"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"   
-    xmlns:browser="http://namespaces.zope.org/browser"	 
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="gomobile.supporter">
 
         <!-- Fix feed listing for mobile compatibility -->
@@ -18,7 +18,7 @@
 
       />
 
-  <!-- Move document actions to the end of the page -->   
+  <!-- Move document actions to the end of the page -->
   <browser:page
       name="feed-item.html"
       for="Products.feedfeeder.interfaces.item.IFeedItem"
@@ -26,6 +26,19 @@
       template="templates/feed-item.pt"
       layer=".interfaces.IThemeLayer"
       />
-	  
-   
+
+
+      <!-- Force usage of captcha -->
+
+       <adapter
+            factory="plone.app.discussion.browser.captcha.Captcha"
+            provides="plone.app.discussion.interfaces.ICaptcha" />
+        <adapter
+            factory="plone.app.discussion.browser.captcha.CaptchaExtender"
+            provides="plone.z3cform.fieldsets.interfaces.IFormExtender" />
+        <adapter
+            factory="plone.app.discussion.browser.validator.CaptchaValidator"
+            provides="z3c.form.interfaces.IValidator"
+            />
+
 </configure>
