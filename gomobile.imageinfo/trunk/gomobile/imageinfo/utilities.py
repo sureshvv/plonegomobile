@@ -102,15 +102,15 @@ class ImageInfoUtility(object):
             return img.size
         else:
             return [img.width, img.height]
-    
+
     def getImageObject(self, path):
         """ Get image handle to traversable Zope object, assuming object is some sort of image
 
         Path must not start with slash.
         Path is relative to the site root.
-        
+
         @param path: Path to Zope object
-        
+
         @return: Image-like object (heterogenous return values)
         """
         site = getSite()
@@ -162,27 +162,32 @@ class ImageInfoUtility(object):
             if isinstance(img, ATFieldImage):
                 return img
 
-                
+
             raise RuntimeError("Unknown image object %s:%s" % (path, str(img.__class__)))
 
         return info
-    
+
     def downloadImage(self, url):
         """ Get remote image data and store.
         """
         req = urllib2.Request(url)
-        response = urllib2.urlopen(req)
-        data = response.read()
+        try:
+            response = urllib2.urlopen(req)
+            data = response.read()
+        except Exception, e:
+            # Downlaod error, HTTP parse error, socket io error, ect.
+            return None
+
         io = cStringIO.StringIO(data)
         return PIL.Image.open(io)
-        
-        
+
+
     def getOrDownloadImageObject(self, url):
         """ Get Zope internal or external image object.
-        
+
         @param: http:// URL or Zope path
         """
-        
+
         if "//" in url:
             return self.downloadImage(url)
         else:
@@ -205,15 +210,15 @@ class ImageInfoUtility(object):
         elif isinstance(obj, ATFieldImage):
             # Read data from object
             pimage = obj.data
-            
+
             # TODO
             # Not sure what's going on here...
-            # 
+            #
             if hasattr(pimage, "data"):
                 data = pimage.data
             else:
                 data = pimage
-            
+
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
         elif IATImage.providedBy(obj):
@@ -224,17 +229,17 @@ class ImageInfoUtility(object):
         elif isinstance(obj, OFS.Image.Image):
             # OFS Image
             # Held in the portal_skins folder, uploaded via ZMI
-            data = obj.data            
+            data = obj.data
             io = cStringIO.StringIO(data)
             return PIL.Image.open(io)
         elif HAS_BLOBS and isinstance(obj, BlobWrapper):
             # Plone 4 BLOB images
-            data = obj.data            
+            data = obj.data
             io = cStringIO.StringIO(data)
-            return PIL.Image.open(io) 
+            return PIL.Image.open(io)
         else:
             raise RuntimeError("Can't handle:" + str(obj))
-        
+
     def getPILFromPath(self, path):
         """ Return Python Imaging Library manipulation object
 
@@ -256,11 +261,11 @@ class ImageInfoUtility(object):
         default_format = "PNG"
 
         pil_quality = 88
-        
+
         # Extract the orignal image format from data
         format = image.format
         if format == None:
-            format = default_format        
+            format = default_format
 
         # consider image mode when scaling
         # source images can be mode '1','L,','P','RGB(A)'
@@ -281,22 +286,22 @@ class ImageInfoUtility(object):
             # PIL has different API for image.thumbnail and resize
             # Now give me vodka....
             image = image.resize([w,h], PIL.Image.ANTIALIAS)
-        
-    
+
+
         # decided to only preserve palletted mode
         # for GIF, could also use image.format in ('GIF','PNG')
         if original_mode == 'P' and format == 'GIF':
             image = image.convert('P')
         thumbnail_file = cStringIO.StringIO()
         # quality parameter doesn't affect lossless formats
-        
+
         image.save(thumbnail_file, format, quality=pil_quality)
         thumbnail_file.seek(0)
         return thumbnail_file, format.lower()
 
     def getResizedImage(self, path, w, h, conserve_aspect_ration=True):
         """ Return resized image payload and its format.
-        
+
         Format is PIL format string: GIF, PNG or JPG.
 
         @param path: Zope traversing path to the image
@@ -310,7 +315,7 @@ class ImageInfoUtility(object):
 
     def resizeImage(self, obj, w, h, conserve_aspect_ration=True):
         """ Return resized image payload and its format.
-        
+
         Format is PIL format string: GIF, PNG or JPG.
 
         @param obj: Any image-like Zope object
@@ -325,16 +330,22 @@ class ImageInfoUtility(object):
 
     def getURLResizedImage(self, path, w, h, conserve_aspect_ration=True):
         """ Return resized image payload and its format.
-        
+
         Format is PIL format string: GIF, PNG or JPG.
+        Path can be full URL. If the image download fails,
+        None is returned.
 
         @param path: Zope traversing path to the image or http:// URL to the image
 
         @param conserve_aspect_ration: Do not stretch image
 
-        @param return: [Image data, format]
+        @param return: [Image data, format] or [None, None] if image data is not available
         """
         image = self.getOrDownloadImageObject(path)
+
+        if image is None:
+            return (None, None)
+
         return self.performResize(image, w, h, conserve_aspect_ration)
 
 
