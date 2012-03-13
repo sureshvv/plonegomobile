@@ -1,14 +1,14 @@
 Changelog
 =========
 
-0.9.2 - current
+0.9.2 - 0.9.3
 ---------------------
 
 * Fixed output issue with collective.easytemplate: was escaping HTML unnecessarily [miohtama]
 
-* Feedfeeder lxml parse error fixes 
+* Feedfeeder lxml parse error fixes [miohtama]
 
-* plone.app.discussion support
+* plone.app.discussion support  [miohtama]
 
 0.9.1 - 0.9.2
 --------------
