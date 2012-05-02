@@ -1,5 +1,5 @@
-__license__ = "GPL 2.1"
-__copyright__ = "2009 Twinapex Research"
+__license__ = "GPL 2"
+__copyright__ = "2009-2012 mFabrik Research Oy"
 
 import logging
 from Products.CMFCore.utils import getToolByName
