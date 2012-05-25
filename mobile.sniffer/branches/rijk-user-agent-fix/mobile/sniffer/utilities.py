@@ -4,6 +4,9 @@
 
 """
 
+from logging import getLogger
+LOG = getLogger('mobile.sniffer')
+
 try:
     from hashlib import md5
 except ImportError:
@@ -40,14 +43,16 @@ def get_user_agent(request):
 
     # We might have conflicting request types - assume request.environ is used
     environ = get_environ(request)
-
-    agent = None
+    agent = 'No agent found'
 
     if "HTTP_X_OPERAMINI_PHONE_UA" in environ:
-        # Opera mini proxy specia case
+        # Opera mini proxy special case
         agent = environ["HTTP_X_OPERAMINI_PHONE_UA"]
     elif "HTTP_USER_AGENT" in environ:
         agent = environ["HTTP_USER_AGENT"]
+    else:
+        # we don't know what user agent, so we log the environment. 
+        LOG.debug(environ)
 
     return agent
 
