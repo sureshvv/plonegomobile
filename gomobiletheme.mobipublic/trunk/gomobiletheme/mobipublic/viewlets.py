@@ -1,12 +1,12 @@
 """
 
    This module contains all viewlet overrides and new viewlets
-   for the mobile theme. 
-   
+   for the mobile theme.
+
    For more information about how to deal with Grok viewlets see
-   
+
    * http://vincentfretin.ecreall.com/articles/creating-a-viewlet-with-grok
-   
+
    * http://grok.zope.org/doc/current/reference/directives.html
 
 """
@@ -45,7 +45,7 @@ grok.layer(IThemeLayer)
 grok.viewletmanager(base.MainViewletManager)
 
 class Head(base.Head):
-    
+
     def favicon_url(self):
         """ Get url for favicon
         """
@@ -63,12 +63,12 @@ class Logo(base.Logo):
     def getLogoPath(self):
         """ Use Zope 3 resource directory mechanism to pick up the logo file from the static media folder registered by Grok """
         return "++resource++gomobiletheme.mobipublic/logo.png"
-    
+
     def update(self):
-        self.portal_state = portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")        
+        self.portal_state = portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         self.portal_url = portal_state.portal_url()
         self.logo_url = self.portal_url + "/" + self.getLogoPath()
-        
+
     def getSections(self):
         portal = self.portal_state.portal()
         items = portal.getFolderContents()
@@ -76,22 +76,22 @@ class Logo(base.Logo):
             obj = brain.getObject()
             if IFolderish.providedBy(obj):
                 yield obj
-        
+
 class AdditionalHead(base.AdditionalHead):
     """ Include our custom CSS and JS in the theme.
-    
+
     If you want to override the base versions, please consider customizing base.Head instead.
     """
-    
+
     def update(self):
-        
+
         base.AdditionalHead.update(self)
-        
+
         context = self.context.aq_inner
-        
+
         portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         self.portal_url = portal_state.portal_url()
-        
+
         # Absolute URL refering to the static media folder
         self.resource_url = self.portal_url + "/" + "++resource++gomobiletheme.mobipublic"
 
@@ -109,30 +109,30 @@ class TopActions(base.TopActions):
 
 class Sections(base.Sections):
     """ """
-    
+
 class SearchBoxBottom(base.Sections):
-    """ """    
-        
+    """ """
+
 class ActionsHeader(base.ActionsHeader):
     """ """
 
 class Back(base.Back):
     """ """
-    
+
     def update(self):
         context= aq_inner(self.context)
-        
+
         context_helper = getMultiAdapter((context, self.request), name="plone_context_state")
-        
+
         portal_helper = getMultiAdapter((context, self.request), name="plone_portal_state")
-        
+
         canonical = context_helper.canonical_object()
-        
+
         parent = aq_parent(canonical)
-        
+
         breadcrumbs_view = getView(self.context, self.request, 'breadcrumbs_view')
         breadcrumbs = breadcrumbs_view.breadcrumbs()
-        
+
         if (len(breadcrumbs)==1):
             self.backTitle = _(u"Home")
         else:
@@ -140,12 +140,27 @@ class Back(base.Back):
                 self.backTitle = parent.Title()
             else:
                 self.backTitle = _(u"Back")
-        
+
         if hasattr(parent, "absolute_url"):
             self.backUrl = parent.absolute_url()
         else:
             self.backUrl = portal_helper.portal_url()
-            
-        self.isHome = len(breadcrumbs)==0    
-        
+
+        self.isHome = len(breadcrumbs)==0
+
         self.homeUrl = portal_helper.portal_url()
+
+
+from plone.app.layout.viewlets.interfaces import IAboveContentTitle
+
+
+class AdSenseViewlet(grok.Viewlet):
+    """
+    """
+    grok.name("adsense")
+    grok.template("adsense")
+    grok.viewletmanager(IAboveContentTitle)
+
+
+
+
