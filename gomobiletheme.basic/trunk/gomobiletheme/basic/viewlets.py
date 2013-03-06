@@ -6,7 +6,11 @@
 
 import sys, os
 
-import json
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 import zope.i18n
 
 from Acquisition import aq_inner, aq_parent
@@ -24,11 +28,11 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.app.layout.viewlets import common as plone_common_viewlets
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
-try: 
-    # Plone 4 and higher 
-    import plone.app.upgrade 
-    PLONE_VERSION = 4 
-except ImportError: 
+try:
+    # Plone 4 and higher
+    import plone.app.upgrade
+    PLONE_VERSION = 4
+except ImportError:
     PLONE_VERSION = 3
 
 from gomobile.mobile.interfaces import IMobileSiteLocationManager, MobileRequestType, IMobileImageProcessor
@@ -38,16 +42,16 @@ from gomobile.mobile.browser.resizer import getUserAgentBasedResizedImageURL
 
 from mobile.heurestics.contenttype import get_content_type_and_doctype
 
-from gomobiletheme.basic import MessageFactory as _ 
+from gomobiletheme.basic import MessageFactory as _
 
 from interfaces import IThemeLayer
 
-try: 
-    # Plone 4 and higher 
-    import plone.app.upgrade 
-    PLONE_VERSION = 4 
-except ImportError: 
-    PLONE_VERSION = 3 
+try:
+    # Plone 4 and higher
+    import plone.app.upgrade
+    PLONE_VERSION = 4
+except ImportError:
+    PLONE_VERSION = 3
 
 # Resolve templatedir and export it as an variable so that other
 # packages can use our templates as well
@@ -75,7 +79,7 @@ def getView(context, request, name):
 def fixActionText(text):
     """ Use non-breaking spacebar to make sure that section name will stay on one line.
     """
-    
+
     # &#160; == &nbsp;
     # but we must remain XML compatible
     return text.replace(" ", "&#160;")
@@ -94,7 +98,7 @@ grok.viewletmanager(MainViewletManager)
 class MobileViewletBase(grok.Viewlet):
     """
     Superclass for all mobile viewlets. Provides some helper methods.
-    
+
     It is not strictly necessary to inherit other viewlets from this.
     """
 
@@ -103,7 +107,7 @@ class MobileViewletBase(grok.Viewlet):
     def is_plone4(self):
         """ Allow major viewlet change compatiblity between Plone versions from tempalte """
         return PLONE_VERSION > 3
-    
+
 
 class Head(MobileViewletBase):
     """ Render <head> section for every page.
@@ -120,37 +124,37 @@ class Head(MobileViewletBase):
 
     def resource_url(self):
         """ Get static resource URL.
-        
-        This will point to Zope 3 resource directory from where to load 
+
+        This will point to Zope 3 resource directory from where to load
         resources for the head.
-        
+
         * common.css
-        
+
         * highend.css
-        
+
         * lowend.css
-        
+
         * logo.png
-        
-        The actual registration of static media is performed 
+
+        The actual registration of static media is performed
         by five.grok, by picking up *static* folder in your add-on
-        product.        
+        product.
 
         See favicon_url and apple_icon_url for custom favicon and apple-touch-icon urls.
 
         """
         return self.portal_url + "/" + "++resource++gomobiletheme.basic"
-    
+
     def favicon_url(self):
         """ Get url for favicon
         """
         return "/".join([self.resource_url(), "favicon.ico"])
-    
+
     def apple_icon_url(self):
         """ Get url for apple-touch-icon used on Apple devices.
         """
         return "/".join([self.resource_url(), "touch_icon.png"])
-     
+
     def apple_icon_type(self):
         """ Used by template to get rel attribute string for apple-touch-icon.
         To change behavior, set apple_icon_precomposed property to True or False
@@ -162,7 +166,7 @@ class Head(MobileViewletBase):
 
     def generator(self):
         """
-        @return: Exposed generator name 
+        @return: Exposed generator name
         """
         return "Plone - http://plone.org"
 
@@ -176,31 +180,31 @@ class Head(MobileViewletBase):
             self.base = self.context.absolute_url()+'/'
         else:
             self.base = self.context.absolute_url()
-            
-        
+
+
 class AdditionalHead(Head):
     """
     Extra tags included in <head> which do not conflict with gomobiletheme.basic resources.
-    
+
     See plonecommunity.app for usage example.
     """
-    
+
     grok.template("additionalhead")
-    
+
     def update(self):
         portal_state = getView(self.context, self.request, "plone_portal_state")
-        self.portal_url = portal_state.portal_url()    
-            
+        self.portal_url = portal_state.portal_url()
+
 class Doctype(grok.Viewlet):
     """ Spit out document type according to what the HTTP user agent expects.
-    
+
     NOTE: Hardcoded for XHTML basic now
     """
     grok.name("doctype")
-            
+
     def render(self):
-        content_type, doctype = get_content_type_and_doctype(self.request) 
-        return doctype 
+        content_type, doctype = get_content_type_and_doctype(self.request)
+        return doctype
 
 class Header(grok.Viewlet):
     """ Render items at the top of the page.
@@ -214,13 +218,13 @@ class Header(grok.Viewlet):
 
 class ActionsHeader(grok.Viewlet):
     """ Render items in the secondary header
-    
+
     This includes
-    
+
     * Back button
-    
+
     * Site actions
-    
+
     * Search box top
     """
 
@@ -234,7 +238,7 @@ class Logo(grok.Viewlet):
 
     def getLogoPath(self):
         """ Subclass to get link to a logo image which will be automatically resized """
-        return "++resource++gomobiletheme.basic/24/logo.png"        
+        return "++resource++gomobiletheme.basic/24/logo.png"
 
     def updateResizer(self):
         """
@@ -242,14 +246,14 @@ class Logo(grok.Viewlet):
         """
 
         path = self.getLogoPath()
-        
+
         portal_state = getView(self.context, self.request, "plone_portal_state")
         self.portal_url = portal_state.portal_url()
 
         url = self.getLogoPath()
-                        
+
         processor = getMultiAdapter((self.context, self.request), IMobileImageProcessor)
-                
+
         parameters = {
                          "width" : "auto",
                          "height" : "49", # Maximum logo height
@@ -258,7 +262,7 @@ class Logo(grok.Viewlet):
                     }
 
         self.logo_url = processor.getImageDownloadURL(url, parameters)
-    
+
     def update(self):
         portal_state = getView(self.context, self.request, "plone_portal_state")
         self.portal_url = portal_state.portal_url()
@@ -310,18 +314,18 @@ class Back(grok.Viewlet):
 
     def update(self):
         context= aq_inner(self.context)
-        
+
         context_helper = getMultiAdapter((context, self.request), name="plone_context_state")
-        
+
         portal_helper = getMultiAdapter((context, self.request), name="plone_portal_state")
-        
+
         canonical = context_helper.canonical_object()
-        
+
         parent = aq_parent(canonical)
-        
+
         breadcrumbs_view = getView(self.context, self.request, 'breadcrumbs_view')
         breadcrumbs = breadcrumbs_view.breadcrumbs()
-        
+
         if (len(breadcrumbs)==1):
             self.backTitle = _(u"Home")
         else:
@@ -329,32 +333,32 @@ class Back(grok.Viewlet):
                 self.backTitle = parent.Title()
             else:
                 self.backTitle = _(u"Back")
-        
+
         if hasattr(parent, "absolute_url"):
             self.backUrl = parent.absolute_url()
         else:
             self.backUrl = portal_helper.portal_url()
-            
+
         self.isHome = len(breadcrumbs)==0
 
 class SearchBoxTop(grok.Viewlet):
     """ Search box top
     """
-    
+
     # def render(self):
     #     mobile_tool = getMultiAdapter((self.context.inner, self.request), "mobile_tool")
-    #     if mobile_tool.isLowEndPhone(): 
+    #     if mobile_tool.isLowEndPhone():
     #         return u""
 
 class SearchBoxBottom(grok.Viewlet):
     """ Search box bottom
     """
-    
+
     # def render(self):
     #     mobile_tool = getMultiAdapter((self.context.inner, self.request), "mobile_tool")
-    #     if mobile_tool.isLowEndPhone(): 
+    #     if mobile_tool.isLowEndPhone():
     #         return u""
-    
+
 class Login(grok.Viewlet):
     """ Login viewlet
     """
@@ -400,12 +404,12 @@ class Navigation(grok.Viewlet):
 
     def fixSections(self, tabs):
         """ Make sure that the text of sections is not broken across two lines in narrow mobile screen.
-        
+
         @param tabs: Sequence of tabs to be fixed in-place
         """
         for tab in tabs:
             tab.name = fixActionText(tab.name)
-    
+
     def update(self):
 
         if PLONE_VERSION <= 3:
@@ -417,17 +421,17 @@ class Navigation(grok.Viewlet):
 
         # Get tabs (top level navigation links)
         context_state = getView(self.context, self.request, u'plone_context_state')
-                
+
         try:
             self.navigation = context_state.actions("mobile_navigation")
         except:
             self.navigation = []
-        
+
         for a in self.navigation:
             a["title"] = fixActionText(a["title"])
 
-    
-    
+
+
 
 class Sections(grok.Viewlet):
     """ List top level folders.
@@ -437,16 +441,16 @@ class Sections(grok.Viewlet):
     This is placed at the bottom of the page.
     This is equivalent of portal_tabs in normal Plone.
     """
-        
-    
+
+
     def fixSections(self, tabs):
         """ Make sure that the text of sections is not broken across two lines in narrow mobile screen.
-        
+
         @param tabs: Sequence of tabs to be fixed in-place
         """
         for tab in tabs:
             tab.name = fixActionText(tab.name)
-    
+
     def update(self):
 
         if PLONE_VERSION <= 3:
@@ -471,7 +475,7 @@ class Sections(grok.Viewlet):
     def get_web_site_url(self):
         """
         @return: string url, web version of the same page
-        """        
+        """
         return self.context.absolute_url() + "/@@go_to_web_site"
 
 
@@ -479,7 +483,7 @@ class TopActions(grok.Viewlet):
     """ Render button like actions for mobile.
 
     """
-    
+
     def update(self):
 
         if PLONE_VERSION <= 3:
@@ -491,12 +495,12 @@ class TopActions(grok.Viewlet):
 
         # Get tabs (top level navigation links)
         context_state = getView(self.context, self.request, u'plone_context_state')
-                
+
         try:
             self.actions = context_state.actions("mobile_site_actions")
         except:
             self.actions = []
-        
+
         for a in self.actions:
             a["title"] = fixActionText(a["title"])
 
@@ -505,7 +509,7 @@ class FooterText(grok.Viewlet):
 
     def update(self):
         super(grok.Viewlet, self).update()
-        
+
         portal_state = getView(self.context, self.request, "plone_portal_state")
         self.portal_url = portal_state.portal_url()
 
@@ -535,16 +539,16 @@ class MobileFolderListing(grok.Viewlet):
     def hasListing(self):
         """
         Check whether mobile folder listing is enabled for a particular content type.
-        """        
+        """
         return len(self.items) > 0
 
 
 class MobileTracker(grok.Viewlet):
     """ Site visitors tracking code for mobile analytics """
-    
+
     def getMobileTrackerId(self):
         """ Subclasses may override to return different tracker e.g. by language settings.
-        
+
         The default behavior is that tracker_renderer view gets one from mobile_properties
         if None is given.
         """
@@ -565,12 +569,12 @@ class Description(grok.Viewlet):
     """
     Render <meta description>
     """
-    
+
     def hasDescription(self):
         """
         """
         return self.getDescription() != None
-    
+
     def getDescription(self):
         """
         Dublin core metadata should provide Description() function on context.
@@ -580,8 +584,8 @@ class Description(grok.Viewlet):
             return description_cb()
         else:
             return None
-    
-    
+
+
 
 class DocumentActions(plone_common_viewlets.ViewletBase):
     """
@@ -603,14 +607,14 @@ class DocumentActions(plone_common_viewlets.ViewletBase):
 js_i18n_strings = {
     'search_field_default_text': _(u"Search..."),
 }
-    
+
 class JSTranslations(MobileViewletBase):
     """
     Used to pass translated strings to JS.
     """
-    
+
     grok.name('gomobiletheme.basic.viewlets.JSTranslations')
-        
+
     def update(self):
         pass
     def render(self):
@@ -618,9 +622,9 @@ class JSTranslations(MobileViewletBase):
             lang = self.request.get('LANGUAGE', 'en')
         except AttributeError:
             lang = "en"
-        
+
         translated = {}
-        
+
         for msgid, msgstr in js_i18n_strings.items():
             translated[msgid] = zope.i18n.translate(msgid=msgstr,
                                                     domain="gomobiletheme.basic",
