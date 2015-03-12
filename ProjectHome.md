@@ -1,0 +1,1 @@
+Please visit [Web and Mobile on readthedocs.org](https://web-and-mobile.readthedocs.org/) for the new project home.
